@@ -1,6 +1,6 @@
 {
-  "name": "Roomie Split",
-  "version": 1,
+  "name": "roomie split",
+  "version": "1",
   "description": "A web app app to help split the cost of rent fairly",
   "author": "Tyler Brown",
   "private": true,
