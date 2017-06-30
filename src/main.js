@@ -12,21 +12,9 @@ import App from './views/App.vue';
 import Home from './views/Home.vue';
 import About from './views/About.vue';
 
-const router = new VueRouter({
-    routes: [
-      {
-        path: '/',
-        name: 'home',
-        component: Home
-    },
 
-    {
-        path: '/about',
-        name: 'about',
-        component: About
-    },
-    ]
-});
+//Router
+import router from './routes';
 
 const app = new Vue({
     router,
