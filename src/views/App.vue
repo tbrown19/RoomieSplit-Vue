@@ -29,10 +29,16 @@ export default {
 
 
 <style>
-body {
-    margin: 0px !important;
-}
+@import url('https://fonts.googleapis.com/css?family=Lato:300');
+@import url('https://fonts.googleapis.com/css?family=Righteous');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
 
+body {
+    margin: 0 !important;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Lato', sans-serif;
+}
 .box-card {
     min-height: 75vh;
 }

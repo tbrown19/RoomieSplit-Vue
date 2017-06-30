@@ -1,8 +1,12 @@
 <template>
     <div>
         <el-row type="flex" justify="center">
-            <h2>Calculate a fair way to split the cost of rent.</h2>
+            <h1>Calculate a fair way to split the cost of rent.</h1>            
         </el-row>
+        <el-row type="flex" justify="center">
+            <h1>Start by filling out the information below</h1>            
+        </el-row>
+
         <input v-model="count" :keyDown="checkInput()" placeholder="0" type="number" min="1" max="100" maxlength="2">
         <p>Message is: {{ count }}</p>
         <div>
@@ -15,18 +19,18 @@
 <script>
 export default {
 
-    methods : {
+    methods: {
 
-        checkInput: function() {
-            if (this.count > 10){
+        checkInput: function () {
+            if (this.count > 10) {
                 this.count = 10;
             }
         }
     },
 
     computed: {
-        intInput: function() {
-            if (this.count == ""){
+        intInput: function () {
+            if (this.count == "") {
                 return 0;
             }
             return parseInt(this.count);
@@ -43,7 +47,5 @@ export default {
 
 
 <style>
-    h2 {
-        font-family: "Roboto";
-    }
+
 </style>

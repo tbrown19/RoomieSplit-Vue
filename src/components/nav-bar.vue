@@ -40,8 +40,11 @@ export default {
 </script>
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Righteous');
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+.el-menu{
+    border-radius: 0 !important;
+}
+
 
 #site-header {
     color: #dfe5ec;
