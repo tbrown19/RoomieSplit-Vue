@@ -1,45 +1,36 @@
 <template>
     <div>
-        <el-row type="flex" justify="center">
-            <h1>Calculate a fair way to split the cost of rent.</h1>            
-        </el-row>
-        <el-row type="flex" justify="center">
-            <h1>Start by filling out the information below</h1>            
-        </el-row>
-
-        <input v-model="count" :keyDown="checkInput()" placeholder="0" type="number" min="1" max="100" maxlength="2">
-        <p>Message is: {{ count }}</p>
-        <div>
-            <span v-for="n in intInput" :key='n'>{{ n }} </span>
-        </div>
+    
+        <!--<div style="margin-top: 20px; height: 200px;">
+                <el-collapse-transition>
+                    <div v-show="showTitleText">
+                        <el-row type="flex" justify="center">
+                            <h1>Calculate a fair way to split the cost of rent.</h1>
+                        </el-row>
+                        <el-row type="flex" justify="center">
+                            <h1>Start by filling out the information below</h1>
+                        </el-row>
+                    </div>
+                </el-collapse-transition>
+            </div>
+        -->
+        <MainInputs></MainInputs>
     </div>
 </template>
 
 
 <script>
+import MainInputs from '../components/main-inputs.vue'
+
 export default {
 
-    methods: {
-
-        checkInput: function () {
-            if (this.count > 10) {
-                this.count = 10;
-            }
-        }
-    },
-
-    computed: {
-        intInput: function () {
-            if (this.count == "") {
-                return 0;
-            }
-            return parseInt(this.count);
-        }
+    components: {
+        MainInputs
     },
 
     data: function () {
         return {
-            count: 0
+            showTitleText: true,
         }
     }
 }

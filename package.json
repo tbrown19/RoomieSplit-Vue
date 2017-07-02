@@ -9,6 +9,7 @@
     "build": "rimraf dist && webpack -p --progress --hide-modules"
   },
   "dependencies": {
+    "bulma": "^0.4.2",
     "element-ui": "^1.1.2",
     "vee-validate": "^2.0.0-rc.6",
     "vue": "^2.1.8",
