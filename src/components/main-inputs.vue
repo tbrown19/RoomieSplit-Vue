@@ -2,12 +2,12 @@
     <div>
         <el-row justify="center">
             <el-col :span="6" :offset="2">
-                <MainInput v-on:input="inputSuccess" name="Rooms" minVal="1" maxVal="10">
+                <MainInput v-on:input="userInput" name="Rooms" minVal="1" maxVal="10">
                     <div slot="inputDescription"> Number Of Rooms</div>
                 </MainInput>
             </el-col>
             <el-col :span="6" :offset="2">
-                <MainInput v-on:inputSuccess="inputSuccess('footage')" name="Footage" minVal="1" maxVal="10">
+                <MainInput v-on:input="userInput" name="Footage" minVal="1" maxVal="10">
                     <div slot="inputDescription"> Total Square Footage</div>
                 </MainInput>
             </el-col>
@@ -24,18 +24,55 @@ export default {
         MainInput
     },
 
-    methods: {
-        inputSuccess(inputName, inputValue, success){
-            this.inputProgress += 100/3;
-            console.log(inputName  + " " + inputValue  + " " + success);
+    watch: {
+        'inputs': function (value) {
+            console.log("the input validity changed");
         }
     },
+
+    methods: {
+        userInput(inputName, inputValue, valid) {
+            console.log(inputName + " " + inputValue + " " + valid);
+            this.$set(this.inputs[inputName], 'value', inputValue);
+            this.$set(this.inputs[inputName], 'valid', valid);
+
+            this.updateInputProgress()
+        },
+
+        updateInputProgress() {
+            let inputProgress = 0;
+            for (const input of Object.keys(this.inputs)) {
+                if (this.inputs[input].valid) {
+                    inputProgress += 100 / 3;
+                }
+            }
+        
+            this.inputProgress = inputProgress;
+        }
+    },
+
+
 
     data: function () {
         return {
             inputProgress: 0,
-            rooms: "",
-            count: 1
+            inputs: {
+                'Rooms': {
+                    'value': 0,
+                    'valid': false
+                },
+
+                'Footage': {
+                    'value': 0,
+                    'valid': false
+                },
+
+                'Rent': {
+                    'value': 0,
+                    'valid': false
+                }
+
+            },
         }
     }
 }

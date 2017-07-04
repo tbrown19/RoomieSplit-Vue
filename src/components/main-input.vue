@@ -4,11 +4,10 @@
             <slot name="inputDescription"></slot>
         </label>
         <p class="control">
-            <input v-model="value" 
+            <input v-model.number="value" 
             v-validate="`required|between:${minVal},${maxVal}`" 
-            :class="{'input': true, 'is-danger': errors.has(name) }" 
+            :class="{'input': true, 'is-danger': errors.has(name), 'is-success': !errors.has(name) }" 
             type="number"
-            min="1" max="10"
             :placeholder="name" :name="name" >
         </p>
         <span v-show="errors.has(name)" class="help is-danger">{{ errors.first(name) }}</span>
@@ -29,14 +28,17 @@ export default {
 
     methods: {
         checkInput(val){
-            this.validInput = true;
+            console.log(val);
             if(val < this.minVal){
                 this.validInput = false;
-                this.value = this.minVal
+                //this.value = this.minVal
             }
-            else if(val < this.minVal){
+            else if(val > this.maxVal){
                 this.validInput = false;
-                this.value = this.minVal
+                //this.value = this.maxVal
+            }
+            else{
+                this.validInput = true;
             }
             this.$emit("input", this.name, this.value, this.validInput);
         }
