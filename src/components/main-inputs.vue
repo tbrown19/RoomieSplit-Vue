@@ -1,50 +1,41 @@
 <template>
-    <el-row justify="center">
-        <el-col :span="6" :offset="2">
-            <div class="field">
-                <label class="label is-large">Username</label>
-                <p class="control has-icons-left has-icons-right">
-                    <input class="input is-success" type="text" placeholder="Text input" value="bulma">
-                </p>
-                <p class="help is-success">This username is available</p>
-            </div>
-        </el-col>
-        <el-col :span="6" :offset="2">
-            <h2>Total Square Footage:</h2>
-            <el-input v-validate data-vv-name="count" v-model="count" v-validate="'required|between:0,1'" type="number" name="count" max-length:1></el-input>
-            <!--<input v-model.number="count" v-validate="'required|between:0,1'" type="number" name="count">-->
-            <span v-show="errors.has('count')">{{ errors.first('count') }}</span>
-            <p>Message is: {{ count }}</p>
-        </el-col>
-        <el-col :span="6" :offset="2">
-            <h2>Rent:</h2>
-            <el-input v-validate data-vv-name="count" v-model="count" v-validate="'required|between:0,1'" type="number" name="count"></el-input>
-            <!--<input v-model.number="count" v-validate="'required|between:0,1'" type="number" name="count">-->
-            <span v-show="errors.has('count')">{{ errors.first('count') }}</span>
-            <p>Message is: {{ count }}</p>
-        </el-col>
-    </el-row>
+    <div>
+        <el-row justify="center">
+            <el-col :span="6" :offset="2">
+                <MainInput v-on:input="inputSuccess" name="Rooms" minVal="1" maxVal="10">
+                    <div slot="inputDescription"> Number Of Rooms</div>
+                </MainInput>
+            </el-col>
+            <el-col :span="6" :offset="2">
+                <MainInput v-on:inputSuccess="inputSuccess('footage')" name="Footage" minVal="1" maxVal="10">
+                    <div slot="inputDescription"> Total Square Footage</div>
+                </MainInput>
+            </el-col>
+        </el-row>
+        <hr>
+        <progress class="progress is-primary" :value="inputProgress" max="100">30%</progress>
+    </div>
 </template>
 
 <script>
+import MainInput from './main-input.vue';
 export default {
-    watch: {
-        rooms: function (val) {
-            if (this.rooms > 10) {
-                this.rooms = 10;
-            }
-            console.log(val)
-        }
+    components: {
+        MainInput
     },
 
     methods: {
-
+        inputSuccess(inputName, inputValue, success){
+            this.inputProgress += 100/3;
+            console.log(inputName  + " " + inputValue  + " " + success);
+        }
     },
 
     data: function () {
         return {
+            inputProgress: 0,
             rooms: "",
-            count: 1,
+            count: 1
         }
     }
 }
@@ -52,5 +43,7 @@ export default {
 
 
 <style>
-
+label {
+    font-family: 'Lato', sans-serif;
+}
 </style>
