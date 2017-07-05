@@ -1,41 +1,56 @@
 <template>
     <div>
-        <el-row justify="center">
-            <el-col :span="6" :offset="2">
-                <MainInput v-on:input="userInput" name="Rooms" minVal="1" maxVal="10">
-                    <div slot="inputDescription"> Number Of Rooms</div>
+        <el-row type="flex" justify="center">
+            <el-col :span="6">
+                <MainInput v-on:input="userInput" name="rooms" minVal="1" maxVal="10">
+                    <div slot="inputDescription">Number Of Rooms</div>
                 </MainInput>
             </el-col>
+    
             <el-col :span="6" :offset="2">
-                <MainInput v-on:input="userInput" name="Footage" minVal="1" maxVal="10">
-                    <div slot="inputDescription"> Total Square Footage</div>
+                <MainInput v-on:input="userInput" name="footage" minVal="1" maxVal="20000">
+                    <div slot="inputDescription">Square Footage</div>
                 </MainInput>
             </el-col>
+    
+            <el-col :span="6" :offset="2">
+                <MainInput v-on:input="userInput" name="rent" minVal="1" maxVal="10000">
+                    <div slot="inputDescription">Rent</div>
+                </MainInput>
+            </el-col>
+    
         </el-row>
-        <hr>
-        <progress class="progress is-primary" :value="inputProgress" max="100">30%</progress>
+    
+
+        <MainInputProgressBar :visible="!showRoomsTable" :inputProgress="inputProgress"></MainInputProgressBar>
+    
+        <NextButton v-on:click="nextStep()" :visible="mainInputsCompleted && !showRoomsTable"></NextButton>
+
+    
     </div>
 </template>
 
 <script>
 import MainInput from './main-input.vue';
+import MainInputProgressBar from './main-input-progress.vue'
+import NextButton from './main-inputs-next.vue'
+
 export default {
     components: {
-        MainInput
+        MainInput, MainInputProgressBar, NextButton
     },
 
     watch: {
-        'inputs': function (value) {
-            console.log("the input validity changed");
+        inputProgress: function (progress) {
+            this.mainInputsCompleted = progress >= 99;
         }
     },
 
     methods: {
+        //Update the input objet, and then update the status bar
         userInput(inputName, inputValue, valid) {
-            console.log(inputName + " " + inputValue + " " + valid);
             this.$set(this.inputs[inputName], 'value', inputValue);
             this.$set(this.inputs[inputName], 'valid', valid);
-
             this.updateInputProgress()
         },
 
@@ -46,8 +61,17 @@ export default {
                     inputProgress += 100 / 3;
                 }
             }
-        
             this.inputProgress = inputProgress;
+        },
+
+        nextStep(){
+            this.showRoomsTable = true;
+            this.$store.commmit('housingInformation', this.inputs);
+            this.$emit('mainInputStepComplete', this.inputs);
+        },
+
+        inputsToArrayValues(){
+            
         }
     },
 
@@ -55,24 +79,26 @@ export default {
 
     data: function () {
         return {
-            inputProgress: 0,
             inputs: {
-                'Rooms': {
-                    'value': 0,
+                'rooms': {
+                    'value': 5,
                     'valid': false
                 },
 
-                'Footage': {
-                    'value': 0,
+                'footage': {
+                    'value': 5000,
                     'valid': false
                 },
 
-                'Rent': {
-                    'value': 0,
+                'rent': {
+                    'value': 500,
                     'valid': false
                 }
 
             },
+            inputProgress: 0,
+            mainInputsCompleted: false,
+            showRoomsTable: false
         }
     }
 }

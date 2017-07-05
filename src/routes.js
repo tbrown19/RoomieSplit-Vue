@@ -1,7 +1,6 @@
 import VueRouter from 'vue-router';
 
-let routes = [
-    {
+let routes = [{
         path: '/about',
         component: require('./views/About.vue')
     },
@@ -14,9 +13,15 @@ let routes = [
     {
         path: '/',
         component: require('./views/Home.vue')
+    },
+
+    {
+        path: '/calculator',
+        component: require('./views/Calculator.vue')
     }
 ]
 
 export default new VueRouter({
+    mode: 'history',
     routes,
 })
