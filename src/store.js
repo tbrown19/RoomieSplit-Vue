@@ -6,7 +6,7 @@ export const store = new Vuex.Store({
     state: {
         housingInformation: {
             'rooms': {
-                'value': 5,
+                'value': 2,
                 'valid': false
             },
 

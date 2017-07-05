@@ -1,32 +1,65 @@
 <template>
     <el-table :data="roomData" style="width: 100%">
         <el-table-column label="Actions" type="expand">
+
             <template scope="scope">
                 <el-button size="small" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
                 <el-button size="small" type="danger" @click="handleClear(scope.$index, scope.row)">Clear</el-button>
             </template>
         </el-table-column>
-        <el-table-column label="Room" prop="room">
-        </el-table-column>
-        <el-table-column label="Footage">
+
+        <el-table-column label="Room" prop="room"></el-table-column>
+
+        <el-table-column label="Length" min-width='120px'>
             <template scope="scope">
-                <MeasurementInput type='feet' :scope="scope"></MeasurementInput>
+                <MeasurementInput type='length' :scope="scope"></MeasurementInput>
             </template>
         </el-table-column>
-        <el-table-column>
-    
+
+        <el-table-column label="Width" min-width='120px'>
+            <template scope="scope">
+                <MeasurementInput  type='width' :scope="scope" ></MeasurementInput>
+            </template>
         </el-table-column>
+
+
+        <el-table-column label="Footage">
+            <template scope="scope">
+               <FootageInput  :scope="scope"></FootageInput>
+            </template>
+        </el-table-column>
+
+        <el-table-column label="% Total" prop="percentageTotal"></el-table-column>
+
+
+
+        <el-table-column>
+            <template scope="scope">
+                {{ scope.row.length.feet }}
+                - 
+                {{ scope.row.footage }}
+            </template>
+        </el-table-column>
+
     </el-table>
 </template>
 
 
 <script>
 import MeasurementInput from './measurement-input.vue';
+import FootageInput from './footage-input.vue';
+
 export default {
     props: ['rooms'],
 
     components: {
-        MeasurementInput
+        MeasurementInput, FootageInput
+    },
+
+    computed: {
+        derp: function() {
+            return 1;
+        }
     },
 
     methods: {
@@ -35,8 +68,14 @@ export default {
             for (let i = 1; i <= rooms; i++) {
                 roomData.push({
                     room: i,
-                    length: [],
-                    width: [],
+                    length: {
+                        feet: '',
+                        inches: ''
+                    },
+                    width: {
+                        feet: '',
+                        inches: ''
+                    },
                     footage: '',
                     occupants: 0,
                     percentageTotal: 0,
@@ -46,21 +85,24 @@ export default {
             return roomData;
         },
 
-        handleDelete(test, test2) {
-            console.log(test);
-            console.log(test2);
+        measurementInput(row) {
+            
+        },
+
+        FootageInput(row){
+
         },
 
         handleClear(index, rowScope) {
-            this.roomData[index].footage = 0;
+            this.roomData[index].footage = '';
         }
     },
     data() {
-        console.log(this.rooms);
         let roomData = this.createEmptyRoomInputs(this.rooms);
-        console.log(roomData);
         return {
-            roomData
+            roomData,
+            measurementsInputed: false,
+            footageInputed: true
         }
     }
 
