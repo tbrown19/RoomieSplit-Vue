@@ -14,7 +14,6 @@
 
 
 <script>
-require('vue');
 export default {
     props: ['name', 'minVal', 'maxVal'],
 
