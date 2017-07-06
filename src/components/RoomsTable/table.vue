@@ -1,10 +1,16 @@
 <template>
-    <el-table :data="roomData" style="width: 100%">
+    <el-table :data="roomData" style="width: 100%" stripe tooltip-effect="dark">
         <el-table-column label="Actions" type="expand">
-
             <template scope="scope">
-                <el-button size="small" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
-                <el-button size="small" type="danger" @click="handleClear(scope.$index, scope.row)">Clear</el-button>
+                <h1 style="font-size: 1.4rem">Extra Information:</h1>
+                <div style="font-size: 1.1rem">
+                    <p>Percent footage of the total: {{ scope.row.percentageTotal }}</p>
+                </div>
+                <div class="is-pulled-right">
+                    <el-button size="large" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
+                    <el-button size="large" type="danger" @click="handleClear(scope.$index, scope.row)">Clear</el-button>
+                </div>
+              
             </template>
         </el-table-column>
 
@@ -29,31 +35,31 @@
             </template>
         </el-table-column>
 
-        <el-table-column label="% Total" prop="percentageTotal"></el-table-column>
 
-
-
-        <el-table-column>
+        <el-table-column label="Occupants" min-width='100px'>
             <template scope="scope">
-                {{ scope.row.length.feet }}
-                - 
-                {{ scope.row.footage }}
+               <OccupantsInput  :scope="scope"></OccupantsInput>
             </template>
         </el-table-column>
 
+        <!--<el-table-column label="% Total" prop="percentageTotal"></el-table-column>-->
+
+        <el-table-column label="Payment" prop="percentageTotal" min-width='100px'></el-table-column>
     </el-table>
 </template>
 
 
 <script>
+let roomHelpers = require('../../helpers/room-helpers.js')
 import MeasurementInput from './measurement-input.vue';
 import FootageInput from './footage-input.vue';
+import OccupantsInput from './occupants-input.vue';
 
 export default {
     props: ['rooms'],
 
     components: {
-        MeasurementInput, FootageInput
+        MeasurementInput, FootageInput, OccupantsInput
     },
 
     computed: {
@@ -63,27 +69,7 @@ export default {
     },
 
     methods: {
-        createEmptyRoomInputs(rooms) {
-            let roomData = [];
-            for (let i = 1; i <= rooms; i++) {
-                roomData.push({
-                    room: i,
-                    length: {
-                        feet: '',
-                        inches: ''
-                    },
-                    width: {
-                        feet: '',
-                        inches: ''
-                    },
-                    footage: '',
-                    occupants: 0,
-                    percentageTotal: 0,
-                    payment: 0
-                });
-            }
-            return roomData;
-        },
+       
 
         measurementInput(row) {
             
@@ -98,7 +84,7 @@ export default {
         }
     },
     data() {
-        let roomData = this.createEmptyRoomInputs(this.rooms);
+        let roomData = roomHelpers.createEmptyRoomInputs(this.rooms);
         return {
             roomData,
             measurementsInputed: false,
@@ -108,3 +94,20 @@ export default {
 
 }
 </script>
+
+<style>
+
+    td .cell{
+        font-size: 1.2rem;
+    }
+
+    th{
+        background-color: rgb(50, 65, 87) !important;
+    }
+    th .cell{
+        font-family: 'Lato', sans-serif;
+        font-size: 1.4rem;
+        color: #dfe5ec !important;
+        background-color:  rgb(50, 65, 87) !important;
+    }
+</style>
