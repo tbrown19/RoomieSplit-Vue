@@ -20,13 +20,13 @@
     
             <el-table-column label="Length" min-width='120px'>
                 <template scope="scope">
-                    <MeasurementInput type='length' :scope="scope"></MeasurementInput>
+                    <MeasurementInput type='length' :scope="scope" @footageUpdated="calculatePayment"></MeasurementInput>
                 </template>
             </el-table-column>
     
             <el-table-column label="Width" min-width='120px'>
                 <template scope="scope">
-                    <MeasurementInput type='width' :scope="scope"></MeasurementInput>
+                    <MeasurementInput type='width' :scope="scope" @footageUpdated="calculatePayment"></MeasurementInput>
                 </template>
             </el-table-column>
     
@@ -67,14 +67,14 @@ export default {
 
     methods: {
         handleClear(index, rowScope) {
-
+            
+            // helper for rounding. use later. = parseFloat(footage).toFixed(2);
             this.roomData[index].footage = 0;
         },
 
         calculatePayment(method, row) {
             console.log(row)
-            calculationHelpers.calculatePercentageTotal(method, row, this.$store);
-            this.commonSpace = calculationHelpers.calculateCommonSpace(this.roomData);
+            calculationHelpers.updateAll(method, row, this.$store);
             console.log("derp herp")
         }
     },
