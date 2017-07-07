@@ -12,7 +12,6 @@ export default {
     methods: {
         checkOccupants(occupants) {
             this.currentRow.occupants = inputHelpers.validateInput(occupants, 1, 5);
-
         },
     },
 

@@ -1,6 +1,5 @@
 <template>
     <div>
-        {{ housingInformation }}
         <RoomsTable :rooms="housingInformation.rooms.value"></RoomsTable>
     </div>
 </template>
