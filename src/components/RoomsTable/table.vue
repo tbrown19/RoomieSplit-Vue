@@ -74,9 +74,11 @@ export default {
 
         calculatePayment(method, row) {
             console.log(row)
-            calculationHelpers.updateAll(method, row, this.$store);
+            calculationHelpers.updateAllValuesInRow(method, row, this.$store);
+            calculationHelpers.updateAllRows(this.roomData);
             console.log("derp herp")
         }
+
     },
 
     data() {

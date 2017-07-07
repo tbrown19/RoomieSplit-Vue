@@ -20,21 +20,11 @@ module.exports = {
         return currentRow.footage;
     },
 
-
-    updateCurrentRowFootage: function (method, currentRow) {
-        currentRow.footage = this.calculateFootage(method, currentRow);
-    },
-
-    updatePercentageTotal: function (currentRow, store) {
-        currentRow.percentageTotal = this.calculatePercentageTotal(currentRow, store);
-    },
-
     calculatePercentageTotal: function (currentRow, store) {
         const totalFootage = store.state.housingInformation.footage.value;
 
         return currentRow.footage / totalFootage * 100;
     },
-
 
     calculateCommonSpace: function (roomData, store) {
         const totalRoomsFootage = this.calculateTotalRoomsFootage(roomData);
@@ -44,22 +34,43 @@ module.exports = {
     },
 
     calculateTotalRoomsFootage: function (roomData) {
-        //Map the footage of each room or 0(this is because we don't store empty values as 0 but rather as "") to an array
-        const roomFootages = roomData.map(function (room) {
-            return parseInt(room.footage) || 0;
-        });
-
-        //Sum each rooms footage in order to get the total footage of all the rooms.
-        return roomFootages.reduce((totalFootage, currentRoom) => totalFootage + currentRoom);
+        return this.sumValueOfRoomData(roomData, 'footage');
     },
+
+    calculateTotalOccupants: function (roomData) {
+        return this.sumValueOfRoomData(roomData, 'occupants');
+    },
+
+    sumValueOfRoomData: function (roomData, valueToSum) {
+        let valuesToSum = roomData.map(function (room) {
+            return parseFloat(room[valueToSum]) || 0;
+        });
+        console.log(valuesToSum);
+        return valuesToSum.reduce((total, currentValue) => total + currentValue);
+    },
+
 
     calculatePayment: function () {
 
     },
 
+    updateCurrentRowFootage: function (method, currentRow) {
+        currentRow.footage = this.calculateFootage(method, currentRow);
+    },
 
-    updateAll: function (method, currentRow, store) {
+    updatePercentageTotal: function (currentRow, store) {
+        currentRow.percentageTotal = this.calculatePercentageTotal(currentRow, store);
+    },
+
+    updateAllValuesInRow: function (method, currentRow, store) {
         this.updateCurrentRowFootage(method, currentRow);
         this.updatePercentageTotal(currentRow, store);
+    },
+
+    updateAllRows: function (roomData){
+        console.log(this.calculateTotalRoomsFootage(roomData))
     }
+
+
+
 };
