@@ -56,6 +56,7 @@ export default {
 
         updateInputProgress() {
             let inputProgress = 0;
+            //For each input if its a valid we add a third to the progress bar
             for (const input of Object.keys(this.inputs)) {
                 if (this.inputs[input].valid) {
                     inputProgress += 100 / 3;
