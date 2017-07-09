@@ -41,7 +41,7 @@
     
             <el-table-column label="Occupants" min-width='100px'>
                 <template scope="scope">
-                    <OccupantsInput :scope="scope" @occupantsUpdated="occupantsUpdated"></OccupantsInput>
+                    <OccupantsInput v-if="scope.row.footage > 0" :scope="scope" @occupantsUpdated="occupantsUpdated"></OccupantsInput>
                 </template>
             </el-table-column>
     
@@ -54,18 +54,15 @@
                         </span>
                 </template>
             </el-table-column>
-    
+        
         </el-table>
     </div>
 </template>
 
-
 <script>
-let roomHelpers = require('../../helpers/room-helpers.js')
 import MeasurementInput from './measurement-input.vue';
 import FootageInput from './footage-input.vue';
 import OccupantsInput from './occupants-input.vue';
-let calculationHelpers = require('../../helpers/calculation-helpers.js')
 import RoomSplitter from '../../helpers/RoomSplitter.js';
 
 export default {

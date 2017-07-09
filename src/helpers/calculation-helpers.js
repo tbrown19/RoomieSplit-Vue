@@ -95,33 +95,33 @@ module.exports = {
     //     currentRow.percentageTotal = this.calculatePercentageTotal(currentRow, store);
     // },
 
-    updateFootageValuesInRow: function (method, currentRow, store) {
-        this.updateCurrentRowFootage(method, currentRow);
-        this.updatePercentageTotal(currentRow, store);
-    },
+    // updateFootageValuesInRow: function (method, currentRow, store) {
+    //     this.updateCurrentRowFootage(method, currentRow);
+    //     this.updatePercentageTotal(currentRow, store);
+    // },
 
-    updatePaymentValueInRow: function (currentRow, roomData, roomCalculations, store) {
-        console.log("calculating payment value derp derp");
+    // updatePaymentValueInRow: function (currentRow, roomData, roomCalculations, store) {
+    //     console.log("calculating payment value derp derp");
         
-        const basePayment = this.calculateBasePayment(roomData, roomCalculations);
-        console.log("Base payment: " + basePayment)
+    //     const basePayment = this.calculateBasePayment(roomData, roomCalculations);
+    //     console.log("Base payment: " + basePayment)
         
-        const occupantsPercentage = this.calculateOccupantsPercentageOfPrivateSpace(roomData,currentRow, roomCalculations, store);
-        console.log("occs percentage: " + occupantsPercentage);
+    //     const occupantsPercentage = this.calculateOccupantsPercentageOfPrivateSpace(roomData,currentRow, roomCalculations, store);
+    //     console.log("occs percentage: " + occupantsPercentage);
         
-        const eachOccupantsPercentage = occupantsPercentage / currentRow.occupants;
-        console.log("each occupants percentage: " + eachOccupantsPercentage);
+    //     const eachOccupantsPercentage = occupantsPercentage / currentRow.occupants;
+    //     console.log("each occupants percentage: " + eachOccupantsPercentage);
         
-        console.log("private space value: "  + roomCalculations.privateSpaceValue)
-        const eachOccupantsPrivatePayment = roomCalculations.privateSpaceValue * eachOccupantsPercentage;
-        console.log("each occupants private payment: " + eachOccupantsPrivatePayment);
+    //     console.log("private space value: "  + roomCalculations.privateSpaceValue)
+    //     const eachOccupantsPrivatePayment = roomCalculations.privateSpaceValue * eachOccupantsPercentage;
+    //     console.log("each occupants private payment: " + eachOccupantsPrivatePayment);
 
-        const eachOccupantsTotalPayment = basePayment + eachOccupantsPrivatePayment;
-        console.log("total payment per occupant in this room "  + eachOccupantsTotalPayment)
+    //     const eachOccupantsTotalPayment = basePayment + eachOccupantsPrivatePayment;
+    //     console.log("total payment per occupant in this room "  + eachOccupantsTotalPayment)
 
-        currentRow.payment = eachOccupantsTotalPayment;
+    //     currentRow.payment = eachOccupantsTotalPayment;
 
-    },
+    // },
 
     // updateAllValuesInRow: function (method, currentRow, store) {
     //     this.updateFootageValuesInRow(method, currentRow, store);
