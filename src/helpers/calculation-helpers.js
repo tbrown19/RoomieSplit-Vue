@@ -10,7 +10,6 @@ module.exports = {
         let totalWidth = widthFeet + (widthInches / 12);
 
         return totalLength * totalWidth;
-
     },
 
     calculateFootage: function (method, currentRow) {

@@ -3,7 +3,7 @@
         {{ roomCalculations }}
         <hr>
         <el-table :data="roomData" style="width: 100%" stripe tooltip-effect="dark">
-
+    
             <el-table-column label="Actions" type="expand">
                 <template scope="scope">
                     <h1 style="font-size: 1.4rem">Extra Information:</h1>
@@ -17,7 +17,7 @@
                 </template>
             </el-table-column>
     
-            <el-table-column label="Room" prop="room"></el-table-column>
+            <el-table-column label="Room" prop="roomNumber"></el-table-column>
     
             <el-table-column label="Length" min-width='120px'>
                 <template scope="scope">
@@ -33,7 +33,7 @@
     
             <el-table-column label="Footage" min-width='100px'>
                 <template scope="scope">
-                    <FootageInput :scope="scope" @footageUpdated="calculateFootage"></FootageInput>
+                    <FootageInput :scope="scope" @footageUpdated="footageUpdated"></FootageInput>
                 </template>
             </el-table-column>
     
@@ -69,26 +69,32 @@ export default {
 
     methods: {
         handleClear(index, rowScope) {
-            
             // helper for rounding. use later. = parseFloat(footage).toFixed(2);
             this.roomData[index].footage = 0;
         },
 
-        calculateFootage(method, row){
-            calculationHelpers.updateFootageValuesInRow(method, row, this.$store);
-            this.roomCalculations = calculationHelpers.calculateRoomsInformation(this.roomData, this.$store);
+        calculateFootage(room) {
+            console.log(room);
+            room.calculateFootage()
+            //calculationHelpers.updateFootageValuesInRow(method, row, this.$store);
+            //this.roomCalculations = calculationHelpers.calculateRoomsInformation(this.roomData, this.$store);
         },
 
         calculatePayment(row) {
             calculationHelpers.updatePaymentValueInRow(row, this.roomData, this.roomCalculations, this.$store);
-    }
+        },
 
+        footageUpdated(){
+            console.log("implement this method");
+        }
     },
 
     data() {
         const roomSplitter = new RoomSplitter();
-        
-        let roomData = roomHelpers.createEmptyRoomInputs(this.rooms);
+
+        //let roomData = roomHelpers.createEmptyRoomInputs(this.rooms);
+        let roomData = roomSplitter.rooms.roomData;
+        console.log(roomData);
         return {
             roomData,
             roomCalculations: {},
