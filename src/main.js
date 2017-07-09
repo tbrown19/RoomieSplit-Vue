@@ -3,6 +3,9 @@ import ElementUI from 'element-ui'
 import VueRouter from 'vue-router';
 import VeeValidate from 'vee-validate';
 import Vuex from 'vuex';
+import VueFire from 'vuefire';
+import Firebase from 'firebase';
+
 import 'element-ui/lib/theme-default/index.css';
 
 
@@ -10,6 +13,7 @@ import 'element-ui/lib/theme-default/index.css';
 Vue.use(ElementUI);
 Vue.use(VueRouter);
 Vue.use(Vuex);
+Vue.use(VueFire);
 
 //Router
 import router from './routes';

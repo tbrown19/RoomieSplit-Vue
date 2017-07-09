@@ -112,7 +112,7 @@ export default class Rooms {
             }
         });
     }
-
+    
     calculatePaymentForRoom(room) {
         room.percentOfPrivateSpace = room.footage / this.privateSpace;
         room.eachOccupantsPercentOfPrivateSpace = room.percentOfPrivateSpace / room.occupants;

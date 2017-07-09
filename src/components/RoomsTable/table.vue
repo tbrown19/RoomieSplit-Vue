@@ -1,6 +1,6 @@
 <template>
     <div>
-        {{ roomCalculations }}
+        <button @click="testAddToDB"> submit </button>
         <hr>
         <el-table :data="roomData" style="width: 100%" stripe tooltip-effect="dark">
     
@@ -48,18 +48,36 @@
             <!--<el-table-column label="% Total" prop="percentageTotal"></el-table-column>-->
     
             <el-table-column label="Payment" min-width='100px'>
-                <template scope="scope" >
-                        <span v-if="scope.row.payment > 0">
-                            {{ scope.row.payment }}
-                        </span>
+                <template scope="scope">
+                    <span v-if="scope.row.payment > 0">
+                        {{ scope.row.payment }}
+                    </span>
                 </template>
             </el-table-column>
-        
+    
         </el-table>
     </div>
 </template>
 
 <script>
+
+import Firebase from 'firebase'
+
+var config = {
+    apiKey: "AIzaSyB7z8iU-By9Yy752NpUlSdu5eyKgOQweyc",
+    authDomain: "roomie-split.firebaseapp.com",
+    databaseURL: "https://roomie-split.firebaseio.com",
+    projectId: "roomie-split",
+    storageBucket: "",
+    messagingSenderId: "170608881412"
+};
+let app = Firebase.initializeApp(config)
+let db = app.database()
+
+let RoomConfigurations = db.ref('RoomConfigurations');
+
+
+
 import MeasurementInput from './measurement-input.vue';
 import FootageInput from './footage-input.vue';
 import OccupantsInput from './occupants-input.vue';
@@ -72,19 +90,24 @@ export default {
     },
 
     computed: {
-        paymentValue:function(){
-            
+        paymentValue: function () {
+
         }
     },
 
     methods: {
+        testAddToDB() {
+            console.log("test add to firebase.")
+            this.newRoomConfiguration = { "rooms": { "value": 3, "valid": false }, "footage": { "value": 5000, "valid": false }, "rent": { "value": 500, "valid": false } };
+            RoomConfigurations.push(this.newRoomConfiguration);
+        },
         //Break these out to some helper class maybe? would have been nice as filters..
-        readablePercent(percent){
+        readablePercent(percent) {
             const decimalToPercent = percent * 100;
             return this.roundToTwoDecimalPlaces(decimalToPercent);
         },
 
-        roundToTwoDecimalPlaces(value){
+        roundToTwoDecimalPlaces(value) {
             return parseFloat(value).toFixed(2);
         },
 
@@ -100,14 +123,14 @@ export default {
             //calculationHelpers.updateFootageValuesInRow(method, row, this.$store);
             //this.roomCalculations = calculationHelpers.calculateRoomsInformation(this.roomData, this.$store);
         },
-        
-        footageUpdated(){
+
+        footageUpdated() {
             room.footageUpdated();
             roomSplitter.rooms.calculateCommonSpace();
             console.log("implement this method");
         },
 
-        occupantsUpdated(){
+        occupantsUpdated() {
             this.rooms.calculateFootageRelatedValues();
             this.rooms.calculatePaymentRelatedValues();
         }
