@@ -44,7 +44,7 @@
     
             <!--<el-table-column label="% Total" prop="percentageTotal"></el-table-column>-->
     
-            <el-table-column label="Payment" prop="percentageTotal" min-width='100px'></el-table-column>
+            <el-table-column label="Payment" prop="payment" min-width='100px'></el-table-column>
     
         </el-table>
     </div>
@@ -75,7 +75,7 @@ export default {
         calculatePayment(method, row) {
             console.log(row)
             calculationHelpers.updateAllValuesInRow(method, row, this.$store);
-            calculationHelpers.updateAllRows(this.roomData);
+            calculationHelpers.updateAllRows(this.roomData, this.$store);
             console.log("derp herp")
         }
 

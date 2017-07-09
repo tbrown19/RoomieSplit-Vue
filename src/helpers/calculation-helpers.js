@@ -33,6 +33,13 @@ module.exports = {
         return totalFootage - totalRoomsFootage;
     },
 
+    calculateCommonSpacePercentage: function(roomData, store){
+        const totalFootage = store.state.housingInformation.footage.value;
+        const commonSpaceFootage = this.calculateCommonSpace(roomData, store);
+
+        return (commonSpaceFootage / totalFootage) * 100;
+    },
+
     calculateTotalRoomsFootage: function (roomData) {
         return this.sumValueOfRoomData(roomData, 'footage');
     },
@@ -41,14 +48,19 @@ module.exports = {
         return this.sumValueOfRoomData(roomData, 'occupants');
     },
 
-    sumValueOfRoomData: function (roomData, valueToSum) {
-        let valuesToSum = roomData.map(function (room) {
-            return parseFloat(room[valueToSum]) || 0;
-        });
-        console.log(valuesToSum);
-        return valuesToSum.reduce((total, currentValue) => total + currentValue);
+
+    calculateValueCommonSpace: function(roomData, store){
+        const commonSpacePercentage = this.calculateCommonSpacePercentage(roomData, store);
+        const rent = store.state.housingInformation.rent.value;
+
+        //Divide by 100 to get commonSpacePercentage in percentage form
+        return rent * (commonSpacePercentage / 100);
     },
 
+
+    calculateBasePayment: function(){
+
+    },
 
     calculatePayment: function () {
 
@@ -67,10 +79,21 @@ module.exports = {
         this.updatePercentageTotal(currentRow, store);
     },
 
-    updateAllRows: function (roomData){
-        console.log(this.calculateTotalRoomsFootage(roomData))
-    }
+    updateAllRows: function (roomData, store){
+        //functions related to updating the values based off square footage.
+        console.log("total rooms footage: " + this.calculateTotalRoomsFootage(roomData))
+        console.log("common space percentage: " + this.calculateCommonSpacePercentage(roomData, store))
+        console.log("value of common space:" + this.calculateValueCommonSpace(roomData, store))
+    },
 
 
 
+
+    sumValueOfRoomData: function (roomData, valueToSum) {
+        let valuesToSum = roomData.map(function (room) {
+            return parseFloat(room[valueToSum]) || 0;
+        });
+        console.log(valuesToSum);
+        return valuesToSum.reduce((total, currentValue) => total + currentValue);
+    },
 };
