@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p> common space: {{ commonSpace }}</p>
+        {{ roomCalculations }}
         <hr>
         <el-table :data="roomData" style="width: 100%" stripe tooltip-effect="dark">
             <el-table-column label="Actions" type="expand">
@@ -20,25 +20,25 @@
     
             <el-table-column label="Length" min-width='120px'>
                 <template scope="scope">
-                    <MeasurementInput type='length' :scope="scope" @footageUpdated="calculatePayment"></MeasurementInput>
+                    <MeasurementInput type='length' :scope="scope" @footageUpdated="calculateFootage"></MeasurementInput>
                 </template>
             </el-table-column>
     
             <el-table-column label="Width" min-width='120px'>
                 <template scope="scope">
-                    <MeasurementInput type='width' :scope="scope" @footageUpdated="calculatePayment"></MeasurementInput>
+                    <MeasurementInput type='width' :scope="scope" @footageUpdated="calculateFootage"></MeasurementInput>
                 </template>
             </el-table-column>
     
             <el-table-column label="Footage" min-width='100px'>
                 <template scope="scope">
-                    <FootageInput :scope="scope" @footageUpdated="calculatePayment"></FootageInput>
+                    <FootageInput :scope="scope" @footageUpdated="calculateFootage"></FootageInput>
                 </template>
             </el-table-column>
     
             <el-table-column label="Occupants" min-width='100px'>
                 <template scope="scope">
-                    <OccupantsInput :scope="scope"></OccupantsInput>
+                    <OccupantsInput :scope="scope" @occupantsUpdated="calculatePayment"></OccupantsInput>
                 </template>
             </el-table-column>
     
@@ -72,11 +72,13 @@ export default {
             this.roomData[index].footage = 0;
         },
 
-        calculatePayment(method, row) {
-            console.log(row)
-            calculationHelpers.updateAllValuesInRow(method, row, this.$store);
-            calculationHelpers.updateAllRows(this.roomData, this.$store);
-            console.log("derp herp")
+        calculateFootage(method, row){
+            calculationHelpers.updateFootageValuesInRow(method, row, this.$store);
+            this.roomCalculations = calculationHelpers.calculateRoomsInformation(this.roomData, this.$store);
+        },
+
+        calculatePayment(row) {
+            calculationHelpers.updatePaymentValueInRow(row, this.roomData, this.roomCalculations, this.$store);
         }
 
     },
@@ -85,8 +87,8 @@ export default {
         let roomData = roomHelpers.createEmptyRoomInputs(this.rooms);
         return {
             roomData,
-            commonSpace: 0,
-
+            roomCalculations: {},
+            basePayment: 0,
         }
     }
 

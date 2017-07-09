@@ -21,7 +21,7 @@ export default {
 
     methods: {
         checkFeet(feetValue) {
-            this.measurement.feet = inputHelpers.validateInput(feetValue, 1, 99);
+            this.measurement.feet = inputHelpers.validateInput(feetValue, 0, 99);
             this.$emit("footageUpdated", "measurements", this.currentRow);
         },
 

@@ -33,11 +33,18 @@ module.exports = {
         return totalFootage - totalRoomsFootage;
     },
 
-    calculateCommonSpacePercentage: function(roomData, store){
+    calculateCommonSpacePercentage: function (roomData, store) {
         const totalFootage = store.state.housingInformation.footage.value;
         const commonSpaceFootage = this.calculateCommonSpace(roomData, store);
 
         return (commonSpaceFootage / totalFootage) * 100;
+    },
+
+
+    calculatePrivateSpacePercentage: function (roomData, store) {
+        const commonSpacePercentage = this.calculateCommonSpacePercentage(roomData, store);
+
+        return 100 - commonSpacePercentage;
     },
 
     calculateTotalRoomsFootage: function (roomData) {
@@ -48,8 +55,7 @@ module.exports = {
         return this.sumValueOfRoomData(roomData, 'occupants');
     },
 
-
-    calculateValueCommonSpace: function(roomData, store){
+    calculateValueCommonSpace: function (roomData, store) {
         const commonSpacePercentage = this.calculateCommonSpacePercentage(roomData, store);
         const rent = store.state.housingInformation.rent.value;
 
@@ -57,9 +63,26 @@ module.exports = {
         return rent * (commonSpacePercentage / 100);
     },
 
+    calculateValuePrivateSpace: function (roomData, store) {
+        const commonSpaceValue = this.calculateValueCommonSpace(roomData, store);
+        const rent = store.state.housingInformation.rent.value;
 
-    calculateBasePayment: function(){
+        return rent - commonSpaceValue;
+    },
 
+
+    calculateBasePayment: function (roomData, roomCalculations) {
+        const numberOccupants = this.sumValueOfRoomData(roomData, "occupants");
+        console.log(roomCalculations);
+        return roomCalculations.commonSpaceValue / numberOccupants;
+    },
+
+    calculateOccupantsPercentageOfPrivateSpace: function (roomData, currentRow, roomCalculations, store) {
+        console.log(roomData)
+        const totalPrivateSpace = this.calculateTotalRoomsFootage(roomData, store)
+        console.log("private space" + totalPrivateSpace);
+
+        return totalPrivateSpace / currentRow.footage;
     },
 
     calculatePayment: function () {
@@ -74,20 +97,39 @@ module.exports = {
         currentRow.percentageTotal = this.calculatePercentageTotal(currentRow, store);
     },
 
-    updateAllValuesInRow: function (method, currentRow, store) {
+    updateFootageValuesInRow: function (method, currentRow, store) {
         this.updateCurrentRowFootage(method, currentRow);
         this.updatePercentageTotal(currentRow, store);
     },
 
-    updateAllRows: function (roomData, store){
-        //functions related to updating the values based off square footage.
-        console.log("total rooms footage: " + this.calculateTotalRoomsFootage(roomData))
-        console.log("common space percentage: " + this.calculateCommonSpacePercentage(roomData, store))
-        console.log("value of common space:" + this.calculateValueCommonSpace(roomData, store))
+    updatePaymentValueInRow: function (currentRow, roomData, roomCalculations, store) {
+        console.log("calculating payment value derp derp");
+        const basePayment = this.calculateBasePayment(roomData, roomCalculations);
+        console.log("Base payment: " + basePayment)
+        const occupantsPercentage = this.calculateOccupantsPercentageOfPrivateSpace(roomData,currentRow, roomCalculations, store);
+        console.log("occs percentage: " + occupantsPercentage);
     },
 
+    updateAllValuesInRow: function (method, currentRow, store) {
+        this.updateFootageValuesInRow(method, currentRow, store);
+        this.updatePaymentValueInRow();
+    },
 
+    calculateRoomsInformation: function (roomData, store) {
+        //functions related to updating the values based off square footage.
+        // console.log("total rooms footage: " + this.calculateTotalRoomsFootage(roomData))
+        // console.log("common space percentage: " + this.calculateCommonSpacePercentage(roomData, store))
+        // console.log("value of common space:" + this.calculateValueCommonSpace(roomData, store))
+        // console.log("value of private space:" + this.calculateValuePrivateSpace(roomData, store))
 
+        return {
+            "privateSpaceValue": this.calculateValuePrivateSpace(roomData, store),
+            "commonSpaceValue": this.calculateValueCommonSpace(roomData, store),
+            "privateSpacePercentage": this.calculatePrivateSpacePercentage(roomData, store),
+            "commonSpacePercentage":  this.calculateCommonSpacePercentage(roomData, store),
+        }
+
+    },
 
     sumValueOfRoomData: function (roomData, valueToSum) {
         let valuesToSum = roomData.map(function (room) {

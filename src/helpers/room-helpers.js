@@ -13,7 +13,7 @@ module.exports = {
                         inches: ''
                     },
                     footage: '',
-                    occupants: 0,
+                    occupants: '',
                     percentageTotal: 0,
                     payment: 0
                 });
