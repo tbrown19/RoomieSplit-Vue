@@ -4,7 +4,6 @@ import VueRouter from 'vue-router';
 import VeeValidate from 'vee-validate';
 import Vuex from 'vuex';
 import VueFire from 'vuefire';
-import Firebase from 'firebase';
 
 import 'element-ui/lib/theme-default/index.css';
 
@@ -24,7 +23,9 @@ import Home from './views/Home.vue';
 import About from './views/About.vue';
 
 //Create the store instance
-import { store } from './store.js';
+import {
+    store
+} from './store.js';
 
 
 //Vee validate configuration must be changed so it can properly interact with element ui
@@ -48,7 +49,6 @@ const config = {
     inject: true
 };
 Vue.use(VeeValidate, config);
-
 
 const app = new Vue({
     router,

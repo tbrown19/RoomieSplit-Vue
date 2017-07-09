@@ -2,7 +2,7 @@
     <el-collapse-transition>
         <div v-show='visible'>
             <el-row type="flex" justify="center">
-                <button v-on:click='click()' class="button is-primary is-large">Next Step</button>
+                <button v-on:click='click' class="button is-primary is-large">Next Step</button>
             </el-row>
         </div>
     </el-collapse-transition>
@@ -15,8 +15,7 @@ export default {
 
   methods: {
       click() {
-        this.$router.push('Calculator');
-        //this.$emit('click');
+        this.$emit('click');
       }
   }
 }

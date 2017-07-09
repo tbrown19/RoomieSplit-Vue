@@ -60,24 +60,6 @@
 </template>
 
 <script>
-
-import Firebase from 'firebase'
-
-var config = {
-    apiKey: "AIzaSyB7z8iU-By9Yy752NpUlSdu5eyKgOQweyc",
-    authDomain: "roomie-split.firebaseapp.com",
-    databaseURL: "https://roomie-split.firebaseio.com",
-    projectId: "roomie-split",
-    storageBucket: "",
-    messagingSenderId: "170608881412"
-};
-let app = Firebase.initializeApp(config)
-let db = app.database()
-
-let RoomConfigurations = db.ref('RoomConfigurations');
-
-
-
 import MeasurementInput from './measurement-input.vue';
 import FootageInput from './footage-input.vue';
 import OccupantsInput from './occupants-input.vue';
@@ -96,11 +78,7 @@ export default {
     },
 
     methods: {
-        testAddToDB() {
-            console.log("test add to firebase.")
-            this.newRoomConfiguration = { "rooms": { "value": 3, "valid": false }, "footage": { "value": 5000, "valid": false }, "rent": { "value": 500, "valid": false } };
-            RoomConfigurations.push(this.newRoomConfiguration);
-        },
+        
         //Break these out to some helper class maybe? would have been nice as filters..
         readablePercent(percent) {
             const decimalToPercent = percent * 100;
@@ -141,7 +119,12 @@ export default {
         const roomSplitter = new RoomSplitter(this.$store);
         let rooms = roomSplitter.rooms;
         let roomData = rooms.roomData;
-        console.log(roomData);
+        roomData.forEach(room => {
+            //let roomJson = JSON.stringify(room);
+            console.log(room);
+        });
+
+        console.log(this);
         return {
             rooms,
             roomData,

@@ -24,7 +24,6 @@
 
         <MainInputProgressBar :visible="!showRoomsTable" :inputProgress="inputProgress"></MainInputProgressBar>
     
-        <NextButton v-on:click="nextStep()" :visible="mainInputsCompleted && !showRoomsTable"></NextButton>
 
     
     </div>
@@ -33,16 +32,21 @@
 <script>
 import MainInput from './main-input.vue';
 import MainInputProgressBar from './main-input-progress.vue'
-import NextButton from './main-inputs-next.vue'
 
 export default {
     components: {
-        MainInput, MainInputProgressBar, NextButton
+        MainInput, MainInputProgressBar
     },
 
     watch: {
         inputProgress: function (progress) {
-            this.mainInputsCompleted = progress >= 99;
+            //If theyve completed all the inputs (33+33+33 is about 99.. so we can't quite check 100.) then emit an action, true means all are complete
+            if (progress>99){
+                this.$emit('valueInputed', true, this.inputs);
+            }
+            else{
+                this.$emit('valueInputed', false, this.inputs);
+            }
         }
     },
 
@@ -63,12 +67,6 @@ export default {
                 }
             }
             this.inputProgress = inputProgress;
-        },
-
-        nextStep(){
-            this.showRoomsTable = true;
-            this.$store.commmit('housingInformation', this.inputs);
-            this.$emit('mainInputStepComplete', this.inputs);
         },
 
         inputsToArrayValues(){
