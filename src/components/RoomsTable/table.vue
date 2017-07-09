@@ -3,6 +3,7 @@
         {{ roomCalculations }}
         <hr>
         <el-table :data="roomData" style="width: 100%" stripe tooltip-effect="dark">
+
             <el-table-column label="Actions" type="expand">
                 <template scope="scope">
                     <h1 style="font-size: 1.4rem">Extra Information:</h1>
@@ -79,7 +80,7 @@ export default {
 
         calculatePayment(row) {
             calculationHelpers.updatePaymentValueInRow(row, this.roomData, this.roomCalculations, this.$store);
-        }
+    }
 
     },
 
