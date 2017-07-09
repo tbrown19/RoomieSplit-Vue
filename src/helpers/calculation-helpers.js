@@ -22,7 +22,6 @@ module.exports = {
 
     calculatePercentageTotal: function (currentRow, store) {
         const totalFootage = store.state.housingInformation.footage.value;
-
         return currentRow.footage / totalFootage * 100;
     },
 
@@ -43,9 +42,9 @@ module.exports = {
 
     calculatePrivateSpacePercentage: function (roomData, store) {
         const commonSpacePercentage = this.calculateCommonSpacePercentage(roomData, store);
-
         return 100 - commonSpacePercentage;
     },
+
 
     calculateTotalRoomsFootage: function (roomData) {
         return this.sumValueOfRoomData(roomData, 'footage');
@@ -132,11 +131,6 @@ module.exports = {
 
     calculateRoomsInformation: function (roomData, store) {
         //functions related to updating the values based off square footage.
-        // console.log("total rooms footage: " + this.calculateTotalRoomsFootage(roomData))
-        // console.log("common space percentage: " + this.calculateCommonSpacePercentage(roomData, store))
-        // console.log("value of common space:" + this.calculateValueCommonSpace(roomData, store))
-        // console.log("value of private space:" + this.calculateValuePrivateSpace(roomData, store))
-
         return {
             "privateSpaceValue": this.calculateValuePrivateSpace(roomData, store),
             "commonSpaceValue": this.calculateValueCommonSpace(roomData, store),

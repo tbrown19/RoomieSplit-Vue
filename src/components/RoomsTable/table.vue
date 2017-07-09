@@ -58,6 +58,7 @@ import MeasurementInput from './measurement-input.vue';
 import FootageInput from './footage-input.vue';
 import OccupantsInput from './occupants-input.vue';
 let calculationHelpers = require('../../helpers/calculation-helpers.js')
+import RoomSplitter from '../../helpers/RoomSplitter.js';
 
 export default {
     props: ['rooms'],
@@ -85,6 +86,8 @@ export default {
     },
 
     data() {
+        const roomSplitter = new RoomSplitter();
+        
         let roomData = roomHelpers.createEmptyRoomInputs(this.rooms);
         return {
             roomData,
