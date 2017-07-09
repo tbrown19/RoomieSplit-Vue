@@ -4,28 +4,11 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
     state: {
-        housingInformation: {
-            'rooms': {
-                'value': 3,
-                'valid': false
-            },
-
-            'footage': {
-                'value': 5000,
-                'valid': false
-            },
-
-            'rent': {
-                'value': 500,
-                'valid': false
-            }
-
-        },
-        count: 0
+        housingInformation: {},
     },
     mutations: {
-        increment(state) {
-            state.count++
+        addHousingInformation (state, housingInformation){
+            state.housingInformation = housingInformation;
         }
     },
 

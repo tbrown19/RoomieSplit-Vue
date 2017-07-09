@@ -10,7 +10,7 @@
 import MainInputs from '../components/main-inputs.vue';
 import RoomsTable from '../components/RoomsTable/table.vue';
 import NextButton from '../components/main-inputs-next.vue';
-import { RoomConfigurations } from '../firebase.js';
+import { Database } from '../firebase.js';
 
 export default {
 
@@ -23,19 +23,30 @@ export default {
             //this.roomData = inputs;
             this.mainInputsCompleted = inputsCompleted;
             this.roomConfiguration = roomConfiguration;
-            //this.$store.commmit('housingInformation', this.inputs);
         },
 
         proceedToNextStep() {
-            console.log('lets do the next step.');
-            this.testAddToDB();
+            console.log(this.$store);
+            this.$store.commit('addHousingInformation', this.roomConfiguration);
+            this.addConfigurationToDB().then((configId) => {
+                this.$router.push({ name: 'calculator', params: { configId: configId } })
+            });
         },
 
-        addConfigToDB() {
+        addConfigurationToDB() {
             //Add the newly created room configuration to the database and then return its unique key
-            RoomConfigurations.push(this.roomConfiguration).then((snap) => {
-                return snap.key;
-            })
+            return new Promise((resolve, reject) => {
+                Database.ref('RoomConfigurations').push(this.roomConfiguration).then((snap) => {
+                    if  (snap.key.length > 0){
+                        console.log("we stored that config manye." + snap.key)
+                        resolve(snap.key);
+                    }
+                    else{
+                        reject("Failed to store room configuration in database.");
+                    }
+                });
+            });
+            
         },
 
     },

@@ -1,6 +1,5 @@
 <template>
     <div>
-        <button @click="testAddToDB"> submit </button>
         <hr>
         <el-table :data="roomData" style="width: 100%" stripe tooltip-effect="dark">
     
@@ -119,12 +118,7 @@ export default {
         const roomSplitter = new RoomSplitter(this.$store);
         let rooms = roomSplitter.rooms;
         let roomData = rooms.roomData;
-        roomData.forEach(room => {
-            //let roomJson = JSON.stringify(room);
-            console.log(room);
-        });
 
-        console.log(this);
         return {
             rooms,
             roomData,

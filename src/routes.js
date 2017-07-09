@@ -16,7 +16,8 @@ let routes = [{
     },
 
     {
-        path: '/calculator',
+        path: '/calculator/:configId',
+        name: 'calculator',
         component: require('./views/Calculator.vue')
     }
 ]

@@ -11,4 +11,4 @@ var FirebaseConfig = {
 let FirebaseApp = Firebase.initializeApp(FirebaseConfig)
 let FirebaseDatabase = FirebaseApp.database()
 
-export const RoomConfigurations = FirebaseDatabase.ref('RoomConfigurations');
+export const Database = FirebaseDatabase;
