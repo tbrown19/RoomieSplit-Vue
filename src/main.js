@@ -20,9 +20,8 @@ import Home from './views/Home.vue';
 import About from './views/About.vue';
 
 //Create the store instance
-import {
-    store
-} from './store.js';
+import { store } from './store.js';
+
 
 //Vee validate configuration must be changed so it can properly interact with element ui
 const config = {

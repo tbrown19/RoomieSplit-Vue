@@ -1,7 +1,7 @@
 <template>
     <div>
         {{ housingInformation }}
-        <RoomsTable :rooms="housingInformation.rooms.value"></RoomsTable>
+        <RoomsTable></RoomsTable>
     </div>
 </template>
 

@@ -11,7 +11,7 @@ export default {
 
     methods: {
         checkOccupants(occupants) {
-            this.currentRow.occupants = inputHelpers.validateInput(occupants, 0, 5);
+            this.currentRow.occupants = inputHelpers.validateInput(occupants, 1, 5, 1);
             this.$emit("occupantsUpdated", this.currentRow);
         },
     },

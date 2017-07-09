@@ -21,12 +21,12 @@ export default {
 
     methods: {
         checkFeet(feetValue) {
-            this.measurement.feet = inputHelpers.validateInput(feetValue, 0, 99);
+            this.measurement.feet = inputHelpers.validateInput(feetValue, 0, 99, '');
             this.$emit("footageUpdated", this.currentRoom);
         },
 
         checkInches(inchesValue) {
-            this.measurement.inches = inputHelpers.validateInput(inchesValue, 0, 11);
+            this.measurement.inches = inputHelpers.validateInput(inchesValue, 0, 11, '');
             this.$emit("footageUpdated", this.currentRoom);
         }
     },

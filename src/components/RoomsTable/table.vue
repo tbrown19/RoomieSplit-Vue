@@ -8,7 +8,9 @@
                 <template scope="scope">
                     <h1 style="font-size: 1.4rem">Extra Information:</h1>
                     <div style="font-size: 1.1rem">
-                        <p>Percent footage of the total: {{ scope.row.percentageTotal }}</p>
+                        <p>Percent of the total space: {{ readablePercent(scope.row.percentOfTotalSpace) }}</p>
+                        <p>Percent of the private space: {{ readablePercent(scope.row.percentOfPrivateSpace) }}</p>
+                        <p>Private Payment: {{ roundToTwoDecimalPlaces(scope.row.privatePayment) }}</p>
                     </div>
                     <div class="is-pulled-right">
                         <el-button size="large" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
@@ -39,13 +41,19 @@
     
             <el-table-column label="Occupants" min-width='100px'>
                 <template scope="scope">
-                    <OccupantsInput :scope="scope" @occupantsUpdated="calculatePayment"></OccupantsInput>
+                    <OccupantsInput :scope="scope" @occupantsUpdated="occupantsUpdated"></OccupantsInput>
                 </template>
             </el-table-column>
     
             <!--<el-table-column label="% Total" prop="percentageTotal"></el-table-column>-->
     
-            <el-table-column label="Payment" prop="payment" min-width='100px'></el-table-column>
+            <el-table-column label="Payment" min-width='100px'>
+                <template scope="scope" >
+                        <span v-if="scope.row.payment > 0">
+                            {{ scope.row.payment }}
+                        </span>
+                </template>
+            </el-table-column>
     
         </el-table>
     </div>
@@ -61,13 +69,29 @@ let calculationHelpers = require('../../helpers/calculation-helpers.js')
 import RoomSplitter from '../../helpers/RoomSplitter.js';
 
 export default {
-    props: ['rooms'],
 
     components: {
         MeasurementInput, FootageInput, OccupantsInput
     },
 
+    computed: {
+        paymentValue:function(){
+            
+        }
+    },
+
     methods: {
+        //Break these out to some helper class maybe? would have been nice as filters..
+        readablePercent(percent){
+            const decimalToPercent = percent * 100;
+            return this.roundToTwoDecimalPlaces(decimalToPercent);
+        },
+
+        roundToTwoDecimalPlaces(value){
+            return parseFloat(value).toFixed(2);
+        },
+
+
         handleClear(index, rowScope) {
             // helper for rounding. use later. = parseFloat(footage).toFixed(2);
             this.roomData[index].footage = 0;
@@ -75,27 +99,31 @@ export default {
 
         calculateFootage(room) {
             console.log(room);
-            room.calculateFootage()
+            room.calculateFootage();
             //calculationHelpers.updateFootageValuesInRow(method, row, this.$store);
             //this.roomCalculations = calculationHelpers.calculateRoomsInformation(this.roomData, this.$store);
         },
-
-        calculatePayment(row) {
-            calculationHelpers.updatePaymentValueInRow(row, this.roomData, this.roomCalculations, this.$store);
+        
+        footageUpdated(){
+            room.footageUpdated();
+            roomSplitter.rooms.calculateCommonSpace();
+            console.log("implement this method");
         },
 
-        footageUpdated(){
-            console.log("implement this method");
+        occupantsUpdated(){
+            this.rooms.calculateFootageRelatedValues();
+            this.rooms.calculatePaymentRelatedValues();
         }
+
     },
 
     data() {
-        const roomSplitter = new RoomSplitter();
-
-        //let roomData = roomHelpers.createEmptyRoomInputs(this.rooms);
-        let roomData = roomSplitter.rooms.roomData;
+        const roomSplitter = new RoomSplitter(this.$store);
+        let rooms = roomSplitter.rooms;
+        let roomData = rooms.roomData;
         console.log(roomData);
         return {
+            rooms,
             roomData,
             roomCalculations: {},
             basePayment: 0,
