@@ -1,5 +1,6 @@
 <template>
     <div>
+        <hr>
         <el-row type="flex" justify="center" :gutter="20">
             <el-col :span="8">
                 <MainInput v-on:input="userInput" name="rooms" minVal="1" maxVal="10">
@@ -20,9 +21,10 @@
             </el-col>
     
         </el-row>
-    
+        
+        <hr>
 
-        <MainInputProgressBar :visible="!showRoomsTable" :inputProgress="inputProgress"></MainInputProgressBar>
+        <!--<MainInputProgressBar :visible="!showRoomsTable" :inputProgress="inputProgress"></MainInputProgressBar>-->
     
 
     
