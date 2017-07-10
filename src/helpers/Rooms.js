@@ -9,18 +9,18 @@ export default class Rooms {
      * @param {Integer} savedRoomDataId 
      * @memberof Rooms
      */
-    constructor(creationMethod, numberRooms, savedRoomDataId, store) {
-        this.store = store;
+    constructor(creationMethod, savedRoomDataId, housingInformation) {
+        this.housingInformation = housingInformation;
 
-        this.numberRooms = store.state.housingInformation.rooms.value;
-        this.footage = store.state.housingInformation.footage.value;
-        this.rent = store.state.housingInformation.rent.value;
+        this.numberRooms = this.housingInformation.rooms;
+        this.footage = this.housingInformation.footage;
+        this.rent = this.housingInformation.rent;
 
 
         if (creationMethod === "load") {
             this.roomData = this.createRoomsFromDatabase(savedRoomDataId);
         } else {
-            this.roomData = this.createEmptyRooms(numberRooms);
+            this.roomData = this.createEmptyRooms();
         }
     }
 
@@ -37,10 +37,10 @@ export default class Rooms {
      * @returns {Array} roomData
      * @memberof Rooms
      */
-    createEmptyRooms(numRooms) {
+    createEmptyRooms() {
         let roomData = [];
-        for (let i = 1; i <= numRooms; i++) {
-            roomData.push(new Room(i, "", this.store));
+        for (let i = 1; i <= this.numberRooms; i++) {
+            roomData.push(new Room(i, "", this.housingInformation));
         }
         return roomData;
     }

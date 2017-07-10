@@ -8,6 +8,7 @@ export const store = new Vuex.Store({
     },
     mutations: {
         addHousingInformation (state, housingInformation){
+            console.log(housingInformation);
             state.housingInformation = housingInformation;
         }
     },

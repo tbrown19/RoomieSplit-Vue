@@ -1,7 +1,7 @@
 <template>
     <div>
         {{ housingInformation }}
-        <!--<RoomsTable></RoomsTable>-->
+        <RoomsTable></RoomsTable>
     </div>
 </template>
 
@@ -21,6 +21,7 @@ export default {
                 this.housingInformation.footage = roomConfiguration.val().footage.value;
                 this.housingInformation.rent = roomConfiguration.val().rent.value;
                 this.housingInformation.rooms = roomConfiguration.val().rooms.value;
+                this.$store.commit('addHousingInformation', this.housingInformation);
             });
             //console.log(RoomConfigurations.child(configId).child("footage"));
         },

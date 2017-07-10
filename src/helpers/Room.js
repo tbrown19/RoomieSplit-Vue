@@ -1,7 +1,7 @@
 export default class Room {
-    constructor(roomNumber, roomData, store) {
+    constructor(roomNumber, roomData, housingInformation) {
         console.log("creating new room!");
-        this.store = store;
+        this.housingInformation = housingInformation;
         //If we are passed in room data create the object from that, otherwise create a blank one.
         if (roomData) {
             //Do something about destructing this into varibles on the class and whatever.
@@ -52,7 +52,7 @@ export default class Room {
     }
 
     calculatePercentOfTotalSpace() {
-        const totalFootage = this.store.state.housingInformation.footage.value;
+        const totalFootage = this.housingInformation.footage;
         return this.footage / totalFootage;
     }
 
