@@ -1,9 +1,7 @@
 <template>
-    <div>
-        <div v-if="infoLoaded">
-            <HousingInfoCards :housingInformation='housingInformation'></HousingInfoCards>
-            <RoomsTable :housingInformation='housingInformation'></RoomsTable>
-        </div>
+    <div v-if="infoLoaded">
+        <HousingInfoCards :housingInformation='housingInformation'></HousingInfoCards>
+        <RoomsTable :housingInformation='housingInformation'></RoomsTable>
     </div>
 </template>
 
@@ -38,12 +36,7 @@ export default {
     data: function () {
         return {
             infoLoaded: false,
-            "housingInformation": {
-                rooms: '-',
-                area: '-',
-                rent: '-'
-            }
-
+            housingInformation: {}
         }
     }
 }

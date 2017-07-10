@@ -21,16 +21,42 @@ export default class Room {
             this.occupants = 0
 
             this.percentOfTotalSpace = 0
-            
+
             this.percentOfPrivateSpace = 0
 
             this.eachOccupantsPercentOfPrivateSpace = 0;
-            
+
             this.privatePayment = 0;
 
             this.payment = 0
 
         }
+    }
+
+    clear() {
+        this.length = {
+            feet: '',
+            inches: ''
+        }
+
+        this.width = {
+            feet: '',
+            inches: ''
+        }
+
+        this.area = ''
+
+        this.occupants = 0
+
+        this.percentOfTotalSpace = 0
+
+        this.percentOfPrivateSpace = 0
+
+        this.eachOccupantsPercentOfPrivateSpace = 0;
+
+        this.privatePayment = 0;
+
+        this.payment = 0
     }
 
     calculateFromMeasurements() {
@@ -45,9 +71,9 @@ export default class Room {
         return totalLength * totalWidth;
     }
 
-    calculateFootage() {
+    calculateArea() {
         this.area = this.calculateFromMeasurements();
-        this.footageUpdated();
+        this.areaUpdated();
     }
 
     calculatePercentOfTotalSpace() {
@@ -55,7 +81,7 @@ export default class Room {
         return this.area / totalArea;
     }
 
-    footageUpdated() {
+    areaUpdated() {
         this.percentOfTotalSpace = this.calculatePercentOfTotalSpace();
     }
 }

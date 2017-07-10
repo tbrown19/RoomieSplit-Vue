@@ -1,5 +1,9 @@
 <template>
     <div>
+        <div id="intro-text" class="has-text-centered">
+            <h1>Calculate how much each person should consider to the rent.</h1>
+            <h1>Get started by filling out the information below.</h1>
+        </div>
         <MainInputs @valueInputed="mainInputStepComplete"></MainInputs>
         <NextButton @click="proceedToNextStep" :visible="mainInputsCompleted"></NextButton>
     </div>
@@ -65,5 +69,9 @@ export default {
 
 
 <style>
+    #intro-text {
+        margin-bottom: 2rem;
+        font-size: 2rem;
+    }
 
 </style>

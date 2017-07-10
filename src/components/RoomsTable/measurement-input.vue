@@ -22,12 +22,12 @@ export default {
     methods: {
         checkFeet(feetValue) {
             this.measurement.feet = inputHelpers.validateInput(feetValue, 0, 99, '');
-            this.$emit("footageUpdated", this.currentRoom);
+            this.$emit("areaUpdated", this.currentRoom);
         },
 
         checkInches(inchesValue) {
             this.measurement.inches = inputHelpers.validateInput(inchesValue, 0, 11, '');
-            this.$emit("footageUpdated", this.currentRoom);
+            this.$emit("areaUpdated", this.currentRoom);
         }
     },
 
@@ -35,10 +35,10 @@ export default {
     data: function () {
         //Get the current row, and then get the current measurement type either length or width.
         let currentRoom = this.scope.row;
-        let measurement = currentRoom[this.type];
+        //let measurement = currentRoom[this.type];
         return {
             currentRoom,
-            measurement,
+            measurement: currentRoom[this.type],
         }
     }
 }

@@ -1,14 +1,18 @@
 <template>
-    <div class="field main-input">
-        <label class="label is-large has-text-centered">
-            <slot name="inputDescription"></slot>
-        </label>
-        <p class="control">
-            <input v-model.number="value" v-validate="`required|between:${minVal},${maxVal}`" :class="{'input': true, 'is-danger': errors.has(name), 'is-success': !errors.has(name) && this.value != '' }" type="number" :placeholder="0" :name="name">
-        </p>
-        <transition name="fade">
-            <p v-show="errors.has(name)" class="help is-danger has-text-centered">{{ errors.first(name) }}</p>
-        </transition>
+    <div class="card">
+        <div class="card-content has-text-centered">
+            <div class="content">
+                <slot name="inputDescription"></slot>
+                <hr>
+                <input v-model.number="value"
+                 v-validate="`required|between:${minVal},${maxVal}`" 
+                 :class="{'input': true, 'is-danger': errors.has(name), 'is-success': !errors.has(name) && this.value != '' }" 
+                 type="number" :placeholder="0" :name="name">
+                <transition name="slide-fade">
+                    <p v-show="errors.has(name)" class="help is-danger has-text-centered">{{ errors.first(name) }}</p>
+                </transition>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -25,7 +29,7 @@ export default {
     },
 
     methods: {
-        checkInput(val) {  
+        checkInput(val) {
             if (val < this.minVal) {
                 this.validInput = false;
                 //this.value = this.minVal
@@ -38,14 +42,14 @@ export default {
                 this.validInput = true;
             }
             this.$emit("input", this.name, this.value, this.validInput);
-        }
+        },
     },
 
     data: function () {
         return {
             value: "",
             validInput: "",
-            count: ""
+            count: "",
         }
     }
 
@@ -61,16 +65,15 @@ label {
     font-size: 1rem;
 }
 
-.fade-enter-active,
-.fade-leave-active {
-    transition: opacity .7s
+.slide-fade-enter-active {
+  transition: all .3s ease;
 }
-
-.fade-enter,
-.fade-leave-to
-/* .fade-leave-active in <2.1.8 */
-
-{
-    opacity: 0
+.slide-fade-leave-active {
+  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+.slide-fade-enter, .slide-fade-leave-to
+/* .slide-fade-leave-active for <2.1.8 */ {
+  transform: translateY(10px);
+  opacity: 0;
 }
 </style>

@@ -1,19 +1,19 @@
 <template>
     <div>
-        <el-row type="flex" justify="center">
-            <el-col :span="6">
+        <el-row type="flex" justify="center" :gutter="20">
+            <el-col :span="8">
                 <MainInput v-on:input="userInput" name="rooms" minVal="1" maxVal="10">
-                    <div slot="inputDescription">Number Of Rooms</div>
+                    <div slot="inputDescription">Rooms</div>
                 </MainInput>
             </el-col>
     
-            <el-col :span="6" :offset="2">
+            <el-col :span="8">
                 <MainInput v-on:input="userInput" name="footage" minVal="1" maxVal="20000">
-                    <div slot="inputDescription">Square Footage</div>
+                    <div slot="inputDescription">Area</div>
                 </MainInput>
             </el-col>
     
-            <el-col :span="6" :offset="2">
+            <el-col :span="8">
                 <MainInput v-on:input="userInput" name="rent" minVal="1" maxVal="50000">
                     <div slot="inputDescription">Rent</div>
                 </MainInput>

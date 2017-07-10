@@ -10,6 +10,7 @@ export default class Rooms {
      * @memberof Rooms
      */
     constructor(creationMethod, savedRoomDataId, housingInformation) {
+        this.housingInformation = housingInformation;
         this.numberRooms = housingInformation.rooms;
         this.area = housingInformation.area;
         this.rent = housingInformation.rent;
@@ -46,8 +47,8 @@ export default class Rooms {
 
 
 
-    calculateTotalRoomsFootage() {
-        return this.sumValueOfRoomData(this.roomData, 'footage');
+    calculateTotalRoomsArea() {
+        return this.sumValueOfRoomData(this.roomData, 'area');
     }
 
     calculateTotalOccupants() {
@@ -56,15 +57,15 @@ export default class Rooms {
 
 
     calculateCommonSpace() {
-        const totalRoomsFootage = this.calculateTotalRoomsFootage();
-        const totalFootage = this.footage;
-        return totalFootage - totalRoomsFootage;
+        const totalRoomsArea = this.calculateTotalRoomsArea();
+        const totalArea = this.area;
+        return totalArea - totalRoomsArea;
     }
 
     calculateCommonSpacePercentage() {
-        const totalFootage = this.footage;
-        const commonSpaceFootage = this.calculateCommonSpace();
-        return commonSpaceFootage / totalFootage;
+        const totalArea = this.area;
+        const commonSpaceArea = this.calculateCommonSpace();
+        return commonSpaceArea / totalArea;
     }
 
     calculateValueCommonSpace() {
@@ -73,10 +74,10 @@ export default class Rooms {
         return rent * commonSpacePercentage;
     }
 
-    calculateFootageRelatedValues() {
+    calculateAreaRelatedValues() {
 
         this.commonSpace = this.calculateCommonSpace();
-        this.privateSpace = this.footage - this.calculateCommonSpace();
+        this.privateSpace = this.area - this.calculateCommonSpace();
 
         this.commonSpacePercentage = this.calculateCommonSpacePercentage();
         this.privateSpacePercentage = 1 - this.commonSpacePercentage;
@@ -106,14 +107,14 @@ export default class Rooms {
             else{
                 room.privatePayment = 0;
                 room.payment = 0;
-                this.privateSpace -= room.footage;
-                this.commonSpace += room.footage;
+                this.privateSpace -= room.area;
+                this.commonSpace += room.area;
             }
         });
     }
     
     calculatePaymentForRoom(room) {
-        room.percentOfPrivateSpace = room.footage / this.privateSpace;
+        room.percentOfPrivateSpace = room.area / this.privateSpace;
         room.eachOccupantsPercentOfPrivateSpace = room.percentOfPrivateSpace / room.occupants;
         room.privatePayment = this.privateSpaceValue * room.eachOccupantsPercentOfPrivateSpace;
         let totalPayment =  this.basePayment + room.privatePayment;

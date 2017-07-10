@@ -1,7 +1,7 @@
 <template>
-    <input class="footage-input" @input="checkFootage(currentRow.footage)" v-model.number="currentRow.footage" v-validate="'required'" :class="{'input': true, 
-                            'is-danger': errors.has('footage'), 
-                            'is-success': !errors.has('footage') && this.currentRow.footage != ''}" type="number" placeholder="0" name="footage">
+    <input class="area-input" @input="checkArea(currentRow.area)" v-model.number="roundedArea" v-validate="'required'" :class="{'input': true, 
+                            'is-danger': errors.has('area'), 
+                            'is-success': !errors.has('area') && this.currentRow.area != ''}" type="number" placeholder="0" name="area">
 </template>
 
 <script>
@@ -10,10 +10,17 @@ let inputHelpers = require('../../helpers/input-helpers.js');
 export default {
     props: ['scope'],
 
+
+    computed: {
+        roundedArea: function(){
+            return parseFloat(this.currentRow.area).toFixed(2)
+        }
+    },
+
     methods: {
-        checkFootage(footageValue) {
-            this.currentRow.footage = inputHelpers.validateInput(footageValue, 0, 1000);
-            this.$emit("footageUpdated", "footage", this.currentRow);
+        checkArea(areaValue) {
+            this.currentRow.area = inputHelpers.validateInput(areaValue, 0, 20000);
+            this.$emit("areaUpdated", "area", this.currentRow);
         },
     },
 
@@ -28,7 +35,7 @@ export default {
 </script>
 
 <style>
-    .footage-input{
+    .area-input{
         width: 8rem;
     }
 </style>

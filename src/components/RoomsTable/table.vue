@@ -5,16 +5,7 @@
     
             <el-table-column label="Actions" type="expand">
                 <template scope="scope">
-                    <h1 style="font-size: 1.4rem">Extra Information:</h1>
-                    <div style="font-size: 1.1rem">
-                        <p>Percent of the total space: {{ readablePercent(scope.row.percentOfTotalSpace) }}</p>
-                        <p>Percent of the private space: {{ readablePercent(scope.row.percentOfPrivateSpace) }}</p>
-                        <p>Private Payment: {{ roundToTwoDecimalPlaces(scope.row.privatePayment) }}</p>
-                    </div>
-                    <div class="is-pulled-right">
-                        <el-button size="large" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
-                        <el-button size="large" type="danger" @click="handleClear(scope.$index, scope.row)">Clear</el-button>
-                    </div>
+                   <RoomExtraInfo :room="scope.row"></RoomExtraInfo>
                 </template>
             </el-table-column>
     
@@ -22,25 +13,25 @@
     
             <el-table-column label="Length" min-width='120px'>
                 <template scope="scope">
-                    <MeasurementInput type='length' :scope="scope" @footageUpdated="calculateFootage"></MeasurementInput>
+                    <MeasurementInput type='length' :scope="scope" @areaUpdated="calculateArea"></MeasurementInput>
                 </template>
             </el-table-column>
     
             <el-table-column label="Width" min-width='120px'>
                 <template scope="scope">
-                    <MeasurementInput type='width' :scope="scope" @footageUpdated="calculateFootage"></MeasurementInput>
+                    <MeasurementInput type='width' :scope="scope" @areaUpdated="calculateArea"></MeasurementInput>
                 </template>
             </el-table-column>
     
-            <el-table-column label="Footage" min-width='100px'>
+            <el-table-column label="Area" min-width='100px'>
                 <template scope="scope">
-                    <FootageInput :scope="scope" @footageUpdated="footageUpdated"></FootageInput>
+                    <FootageInput :scope="scope" @areaUpdated="areaUpdated"></FootageInput>
                 </template>
             </el-table-column>
     
             <el-table-column label="Occupants" min-width='100px'>
                 <template scope="scope">
-                    <OccupantsInput v-if="scope.row.footage > 0" :scope="scope" @occupantsUpdated="occupantsUpdated"></OccupantsInput>
+                    <OccupantsInput v-if="scope.row.area > 0" :scope="scope" @occupantsUpdated="occupantsUpdated"></OccupantsInput>
                 </template>
             </el-table-column>
     
@@ -63,12 +54,13 @@ import MeasurementInput from './measurement-input.vue';
 import FootageInput from './footage-input.vue';
 import OccupantsInput from './occupants-input.vue';
 import RoomSplitter from '../../helpers/RoomSplitter.js';
+import RoomExtraInfo from './room-extra-info.vue';
 
 export default {
     props: ['housingInformation'],
 
     components: {
-        MeasurementInput, FootageInput, OccupantsInput
+        MeasurementInput, FootageInput, OccupantsInput, RoomExtraInfo
     },
 
     computed: {
@@ -88,37 +80,20 @@ export default {
 
         },
 
-        //Break these out to some helper class maybe? would have been nice as filters..
-        readablePercent(percent) {
-            const decimalToPercent = percent * 100;
-            return this.roundToTwoDecimalPlaces(decimalToPercent);
-        },
-
-        roundToTwoDecimalPlaces(value) {
-            return parseFloat(value).toFixed(2);
-        },
-
-
-        handleClear(index, rowScope) {
-            // helper for rounding. use later. = parseFloat(footage).toFixed(2);
-            this.roomData[index].footage = 0;
-        },
-
-        calculateFootage(room) {
-            console.log(room);
-            room.calculateFootage();
+        calculateArea(room) {
+            room.calculateArea();
             //calculationHelpers.updateFootageValuesInRow(method, row, this.$store);
             //this.roomCalculations = calculationHelpers.calculateRoomsInformation(this.roomData, this.$store);
         },
 
-        footageUpdated() {
-            room.footageUpdated();
-            roomSplitter.rooms.calculateCommonSpace();
-            console.log("implement this method");
+        areaUpdated() {
+            // room.calculateArea();
+            // roomSplitter.rooms.calculateCommonSpace();
+            // console.log("implement this method");
         },
 
         occupantsUpdated() {
-            this.rooms.calculateFootageRelatedValues();
+            this.rooms.calculateAreaRelatedValues();
             this.rooms.calculatePaymentRelatedValues();
         }
 
@@ -128,7 +103,7 @@ export default {
         let roomSplitter = new RoomSplitter(this.housingInformation);
         let roomData = roomSplitter.roomData;
         let roomsArray = roomData.rooms;
-        
+
         return {
             roomsArray
         }
