@@ -1,13 +1,13 @@
 <template>
     <el-row :gutter="20">
         <el-col :span="8">
-            <InfoCard name="Rooms" :value="housingInformation.rooms"></InfoCard>
+            <InfoCard name="Rooms" :value="housingInformation.rooms" minVal="1" maxVal="10"></InfoCard>
         </el-col>
         <el-col :span="8">
             <InfoCard name="Feet" :value="housingInformation.footage"></InfoCard>
         </el-col>
         <el-col :span="8">
-            <InfoCard name="" :value="rent"></InfoCard>
+            <InfoCard name="$" :value="housingInformation.rent" :reversed="true"></InfoCard>
         </el-col>
     </el-row>
 </template>
@@ -28,6 +28,7 @@ export default {
     components:{
         InfoCard
     }
+    
 }
 </script>
 
