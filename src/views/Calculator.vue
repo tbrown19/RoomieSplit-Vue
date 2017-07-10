@@ -1,7 +1,9 @@
 <template>
     <div>
-        <HousingInfoCards :rooms="this.rooms" :area="this.area" :rent="this.rent"></HousingInfoCards>
-        <RoomsTable :housingInformation="housingInformation"></RoomsTable>
+        <div v-if="infoLoaded">
+            <HousingInfoCards :housingInformation='housingInformation'></HousingInfoCards>
+            <RoomsTable :housingInformation='housingInformation'></RoomsTable>
+        </div>
     </div>
 </template>
 
@@ -17,38 +19,31 @@ export default {
         RoomsTable, HousingInfoCards
     },
 
-    computed: {
-        rooms: function(){
-            return this.housingInformation.rooms;
-        }
-    },
-
-    watch: {
-        housingInformation: function(){
-            console.log("watching it.")
-        }
+    created: function () {
+        this.getHousingInformation(this.$route.params.configId);
     },
 
     methods: {
-        loadConfigFromDatabase(configId) {
-            Database.ref('RoomConfigurations/' + configId).once('value').then((roomConfiguration) => {
+        getHousingInformation(configId) {
+            return Database.ref('RoomConfigurations/' + configId).once('value').then((roomConfiguration) => {
                 const roomsConfiguration = roomConfiguration.val();
-                this.rooms = roomsConfiguration.rooms.value;
-                this.area = roomsConfiguration.footage.value;
-                this.rent = roomsConfiguration.rent.value;
-                this.$store.commit('addHousingInformation', this.housingInformation);
-                console.log(this.housingInformation)
+                this.housingInformation.rooms = roomsConfiguration.rooms.value;
+                this.housingInformation.area = roomsConfiguration.footage.value;
+                this.housingInformation.rent = roomsConfiguration.rent.value;
+                this.infoLoaded = true;
             });
-            //console.log(RoomConfigurations.child(configId).child("footage"));
         },
     },
 
     data: function () {
-        this.loadConfigFromDatabase(this.$route.params.configId);
         return {
-            rooms: '-',
-            area: '-',
-            rent: '-'
+            infoLoaded: false,
+            "housingInformation": {
+                rooms: '-',
+                area: '-',
+                rent: '-'
+            }
+
         }
     }
 }

@@ -1,7 +1,7 @@
 <template>
     <div>
         <hr>
-        <el-table :data="rooms" style="width: 100%" stripe tooltip-effect="dark">
+        <el-table :data="roomsArray" style="width: 100%" stripe tooltip-effect="dark">
     
             <el-table-column label="Actions" type="expand">
                 <template scope="scope">
@@ -78,7 +78,16 @@ export default {
     },
 
     methods: {
-        
+
+        getRoomsData() {
+            return this.generateRoomSplitter(this.store.getters.housingInformation)
+
+        },
+
+        generateRoomSplitter(housingInformation) {
+
+        },
+
         //Break these out to some helper class maybe? would have been nice as filters..
         readablePercent(percent) {
             const decimalToPercent = percent * 100;
@@ -115,18 +124,15 @@ export default {
 
     },
 
-    data() {
-        console.log(this.housingInformation.rooms)
-        const roomSplitter = new RoomSplitter(this.housingInformation);
+    data: function () {
+        let roomSplitter = new RoomSplitter(this.housingInformation);
         let roomData = roomSplitter.roomData;
-        console.log(roomData)
-        let rooms = roomData.rooms;
-        console.log(rooms)
-
+        let roomsArray = roomData.rooms;
+        
         return {
-            rooms,
-            roomData,
+            roomsArray
         }
+
     }
 
 }

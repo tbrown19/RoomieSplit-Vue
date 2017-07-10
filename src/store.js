@@ -7,10 +7,12 @@ export const store = new Vuex.Store({
         housingInformation: {},
     },
     getters: {
-        rooms: state => {
-            return state.housingInformation.rooms;
+        housingInformation: state => {
+            return state.housingInformation;
         }
     },
+
+    
 
     mutations: {
         addHousingInformation(state, housingInformation) {

@@ -1,17 +1,17 @@
 <template>
     <el-row :gutter="20">
         <el-col :span="8">
-            <InfoCard name="rooms" :value="rooms" minVal="1" maxVal="10">
+            <InfoCard name="rooms" :value="housingInformation.rooms" minVal="1" maxVal="10">
                     <div slot="name">Rooms</div>
             </InfoCard>
         </el-col>
         <el-col :span="8">
-            <InfoCard name="area" :value="area" minVal="1" maxVal="20000">
+            <InfoCard name="area" :value="housingInformation.area" minVal="1" maxVal="20000">
                 <div slot="name">Area</div>
             </InfoCard>
         </el-col>
         <el-col :span="8">
-            <InfoCard name="rent" :value="rent" minVal="1" maxVal="50000">
+            <InfoCard name="rent" :value="housingInformation.rent" minVal="1" maxVal="50000">
                 <div slot="name">Rent</div>
             </InfoCard>
         </el-col>
@@ -23,7 +23,7 @@
 import InfoCard from './info-card.vue';
 
 export default {
-    props: ['rooms', 'area', 'rent'],
+    props: ['housingInformation'],
 
     components:{
         InfoCard
@@ -34,7 +34,7 @@ export default {
 
 <style>
     .content{
-            font-family: 'Lato', sans-serif;
+        font-family: 'Lato', sans-serif;
         font-size: 2rem;
     }
 </style>
