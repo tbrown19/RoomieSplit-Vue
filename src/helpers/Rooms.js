@@ -10,17 +10,15 @@ export default class Rooms {
      * @memberof Rooms
      */
     constructor(creationMethod, savedRoomDataId, housingInformation) {
-        this.housingInformation = housingInformation;
-
-        this.numberRooms = this.housingInformation.rooms;
-        this.footage = this.housingInformation.footage;
-        this.rent = this.housingInformation.rent;
-
+        this.numberRooms = housingInformation.rooms;
+        this.footage = housingInformation.footage;
+        this.rent = housingInformation.rent;
+        console.log(this.numberRooms);
 
         if (creationMethod === "load") {
-            this.roomData = this.createRoomsFromDatabase(savedRoomDataId);
+            this.rooms = this.createRoomsFromDatabase(savedRoomDataId);
         } else {
-            this.roomData = this.createEmptyRooms();
+            this.rooms = this.createEmptyRooms();
         }
     }
 

@@ -7,7 +7,7 @@
         </el-row>
     
         <el-row type="flex" justify="center">
-            <el-col :span="24" :lg="{span:17}">
+            <el-col :span="24" :lg="{span:17}" id="main-content">
                 <router-view></router-view>
             </el-col>
         </el-row>
@@ -48,5 +48,9 @@ h6 {
 
 .box-card {
     min-height: 75vh;
+}
+
+#main-content{
+    padding-top: 2%;
 }
 </style>

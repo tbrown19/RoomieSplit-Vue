@@ -1,7 +1,8 @@
 <template>
     <div>
+        {{ rooms }}
         <hr>
-        <el-table :data="roomData" style="width: 100%" stripe tooltip-effect="dark">
+        <el-table :data="rooms" style="width: 100%" stripe tooltip-effect="dark">
     
             <el-table-column label="Actions" type="expand">
                 <template scope="scope">
@@ -65,6 +66,7 @@ import OccupantsInput from './occupants-input.vue';
 import RoomSplitter from '../../helpers/RoomSplitter.js';
 
 export default {
+    props: ['housingInformation'],
 
     components: {
         MeasurementInput, FootageInput, OccupantsInput
@@ -115,15 +117,16 @@ export default {
     },
 
     data() {
-        const roomSplitter = new RoomSplitter(this.$store);
-        let rooms = roomSplitter.rooms;
-        let roomData = rooms.roomData;
+        console.log(this.housingInformation.rooms)
+        const roomSplitter = new RoomSplitter(this.housingInformation);
+        let roomData = roomSplitter.roomData;
+        console.log(roomData)
+        let rooms = roomData.rooms;
+        console.log(rooms)
 
         return {
             rooms,
             roomData,
-            roomCalculations: {},
-            basePayment: 0,
         }
     }
 

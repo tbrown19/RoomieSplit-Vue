@@ -6,8 +6,14 @@ export const store = new Vuex.Store({
     state: {
         housingInformation: {},
     },
+    getters: {
+        rooms: state => {
+            return state.housingInformation.rooms;
+        }
+    },
+
     mutations: {
-        addHousingInformation (state, housingInformation){
+        addHousingInformation(state, housingInformation) {
             console.log(housingInformation);
             state.housingInformation = housingInformation;
         }

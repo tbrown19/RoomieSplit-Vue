@@ -1,18 +1,21 @@
 <template>
     <div>
+        <HousingInfoCards :housingInformation="housingInformation"></HousingInfoCards>
         {{ housingInformation }}
-        <RoomsTable></RoomsTable>
+        <RoomsTable :housingInformation="housingInformation"></RoomsTable>
     </div>
 </template>
 
 
 <script>
 import RoomsTable from '../components/RoomsTable/table.vue';
+import HousingInfoCards from '../components/housing-info-cards.vue';
+
 import { Database } from '../firebase.js';
 
 export default {
     components: {
-        RoomsTable
+        RoomsTable, HousingInfoCards
     },
 
     methods: {
@@ -21,6 +24,7 @@ export default {
                 this.housingInformation.footage = roomConfiguration.val().footage.value;
                 this.housingInformation.rent = roomConfiguration.val().rent.value;
                 this.housingInformation.rooms = roomConfiguration.val().rooms.value;
+                console.log(this.housingInformation);
                 this.$store.commit('addHousingInformation', this.housingInformation);
             });
             //console.log(RoomConfigurations.child(configId).child("footage"));
@@ -31,7 +35,7 @@ export default {
         this.loadConfigFromDatabase(this.$route.params.configId);
         return {
             housingInformation: {
-                'rooms': 0,
+                'rooms': 5,
                 'footage': 0,
                 'rent': 0
             }
