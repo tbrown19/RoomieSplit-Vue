@@ -1,6 +1,5 @@
 export default class Room {
     constructor(roomNumber, roomData, housingInformation) {
-        console.log("creating new room!");
         this.housingInformation = housingInformation;
         //If we are passed in room data create the object from that, otherwise create a blank one.
         if (roomData) {
@@ -17,7 +16,7 @@ export default class Room {
                 inches: ''
             }
 
-            this.footage = ''
+            this.area = ''
 
             this.occupants = 0
 
@@ -47,13 +46,13 @@ export default class Room {
     }
 
     calculateFootage() {
-        this.footage = this.calculateFromMeasurements();
+        this.area = this.calculateFromMeasurements();
         this.footageUpdated();
     }
 
     calculatePercentOfTotalSpace() {
-        const totalFootage = this.housingInformation.footage;
-        return this.footage / totalFootage;
+        const totalArea = this.housingInformation.area;
+        return this.area / totalArea;
     }
 
     footageUpdated() {

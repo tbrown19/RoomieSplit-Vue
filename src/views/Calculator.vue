@@ -1,6 +1,6 @@
 <template>
     <div>
-        <HousingInfoCards :housingInformation="housingInformation"></HousingInfoCards>
+        <HousingInfoCards :rooms="this.rooms" :area="this.area" :rent="this.rent"></HousingInfoCards>
         <RoomsTable :housingInformation="housingInformation"></RoomsTable>
     </div>
 </template>
@@ -17,14 +17,27 @@ export default {
         RoomsTable, HousingInfoCards
     },
 
+    computed: {
+        rooms: function(){
+            return this.housingInformation.rooms;
+        }
+    },
+
+    watch: {
+        housingInformation: function(){
+            console.log("watching it.")
+        }
+    },
+
     methods: {
         loadConfigFromDatabase(configId) {
             Database.ref('RoomConfigurations/' + configId).once('value').then((roomConfiguration) => {
-                this.housingInformation.footage = roomConfiguration.val().footage.value;
-                this.housingInformation.rent = roomConfiguration.val().rent.value;
-                this.housingInformation.rooms = roomConfiguration.val().rooms.value;
-                console.log(this.housingInformation);
+                const roomsConfiguration = roomConfiguration.val();
+                this.rooms = roomsConfiguration.rooms.value;
+                this.area = roomsConfiguration.footage.value;
+                this.rent = roomsConfiguration.rent.value;
                 this.$store.commit('addHousingInformation', this.housingInformation);
+                console.log(this.housingInformation)
             });
             //console.log(RoomConfigurations.child(configId).child("footage"));
         },
@@ -33,11 +46,9 @@ export default {
     data: function () {
         this.loadConfigFromDatabase(this.$route.params.configId);
         return {
-            housingInformation: {
-                'rooms': 5,
-                'footage': 0,
-                'rent': 0
-            }
+            rooms: '-',
+            area: '-',
+            rent: '-'
         }
     }
 }

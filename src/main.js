@@ -55,3 +55,4 @@ const app = new Vue({
     store,
     render: createEle => createEle(App)
 }).$mount('#app');
+

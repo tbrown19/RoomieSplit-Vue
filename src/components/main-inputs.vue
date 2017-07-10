@@ -14,7 +14,7 @@
             </el-col>
     
             <el-col :span="6" :offset="2">
-                <MainInput v-on:input="userInput" name="rent" minVal="1" maxVal="10000">
+                <MainInput v-on:input="userInput" name="rent" minVal="1" maxVal="50000">
                     <div slot="inputDescription">Rent</div>
                 </MainInput>
             </el-col>

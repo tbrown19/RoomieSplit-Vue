@@ -1,13 +1,19 @@
 <template>
     <el-row :gutter="20">
         <el-col :span="8">
-            <InfoCard name="Rooms" :value="housingInformation.rooms" minVal="1" maxVal="10"></InfoCard>
+            <InfoCard name="rooms" :value="rooms" minVal="1" maxVal="10">
+                    <div slot="name">Rooms</div>
+            </InfoCard>
         </el-col>
         <el-col :span="8">
-            <InfoCard name="Feet" :value="housingInformation.footage"></InfoCard>
+            <InfoCard name="area" :value="area" minVal="1" maxVal="20000">
+                <div slot="name">Area</div>
+            </InfoCard>
         </el-col>
         <el-col :span="8">
-            <InfoCard name="$" :value="housingInformation.rent" :reversed="true"></InfoCard>
+            <InfoCard name="rent" :value="rent" minVal="1" maxVal="50000">
+                <div slot="name">Rent</div>
+            </InfoCard>
         </el-col>
     </el-row>
 </template>
@@ -17,18 +23,11 @@
 import InfoCard from './info-card.vue';
 
 export default {
-    props: ['housingInformation'],
-
-    computed: {
-        rent:function(){
-            return "$" + this.housingInformation.rent.toString();
-        }
-    },
+    props: ['rooms', 'area', 'rent'],
 
     components:{
         InfoCard
-    }
-    
+    },
 }
 </script>
 
