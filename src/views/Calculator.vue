@@ -1,7 +1,6 @@
 <template>
     <div>
         <HousingInfoCards :housingInformation="housingInformation"></HousingInfoCards>
-        {{ housingInformation }}
         <RoomsTable :housingInformation="housingInformation"></RoomsTable>
     </div>
 </template>

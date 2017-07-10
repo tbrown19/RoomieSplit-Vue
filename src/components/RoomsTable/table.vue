@@ -1,6 +1,5 @@
 <template>
     <div>
-        {{ rooms }}
         <hr>
         <el-table :data="rooms" style="width: 100%" stripe tooltip-effect="dark">
     
