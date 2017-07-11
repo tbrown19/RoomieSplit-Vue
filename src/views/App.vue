@@ -35,6 +35,7 @@ export default {
 
 body {
     margin: 0 !important;
+    padding-bottom: 5rem;
 }
 
 h1,

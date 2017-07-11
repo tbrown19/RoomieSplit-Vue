@@ -9,7 +9,7 @@
                  :class="{'input': true, 'is-danger': errors.has(name), 'is-success': !errors.has(name) && this.value != '' }" 
                  type="number" :placeholder="0" :name="name">
                 <transition name="slide-fade">
-                    <p v-show="errors.has(name)" class="help is-danger has-text-centered">{{ errors.first(name) }}</p>
+                    <p v-if="errors.has(name)" class="help is-danger has-text-centered">{{ errors.first(name) }}</p>
                 </transition>
             </div>
         </div>
@@ -32,11 +32,9 @@ export default {
         checkInput(val) {
             if (val < this.minVal) {
                 this.validInput = false;
-                //this.value = this.minVal
             }
             else if (val > this.maxVal) {
                 this.validInput = false;
-                //this.value = this.maxVal
             }
             else {
                 this.validInput = true;
@@ -61,6 +59,14 @@ label {
     font-family: 'Lato', sans-serif;
 }
 
+.card-content {
+    padding: 1.25rem;
+}
+
+.input {
+    max-width: 85%;
+}
+
 .help {
     font-size: 1rem;
 }
@@ -69,7 +75,7 @@ label {
   transition: all .3s ease;
 }
 .slide-fade-leave-active {
-  transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+  transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
 .slide-fade-enter, .slide-fade-leave-to
 /* .slide-fade-leave-active for <2.1.8 */ {
