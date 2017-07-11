@@ -1,5 +1,5 @@
 <template>
-    <el-menu theme="dark" :default-active="activeIndex" mode="horizontal" @select="handleSelect" router>
+    <el-menu theme="dark" :default-active="activeIndex" mode="horizontal" router>
     
         <el-row type="flex">
             <el-col :span="24" :md="{span:22, offset:1}" :lg="{span:16, offset:4}">
@@ -26,17 +26,10 @@
 <script>
 export default {
     data() {
-        console.log(this.$router)
         return {
             activeIndex: this.$router.currentRoute.path
         };
     },
-    methods: {
-        handleSelect(key, keyPath) {
-            console.log(key, keyPath);
-            //this.$router.push(key);
-        }
-    }
 }
 </script>
 
@@ -45,7 +38,6 @@ export default {
 .el-menu{
     border-radius: 0 !important;
 }
-
 
 #site-header {
     color: #dfe5ec;

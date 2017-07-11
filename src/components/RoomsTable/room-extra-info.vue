@@ -8,8 +8,8 @@
             <p>Private Payment: {{ roundToTwoDecimalPlaces(room.privatePayment) }}</p>
         </div>
         <div class="is-pulled-right">
-            <el-button size="large" @click="handleEdit(room)">Edit</el-button>
-            <el-button size="large" type="danger" @click="handleClear(room)">Clear</el-button>
+            <!-- <el-button size="large" @click="handleEdit(room)">Edit</el-button>
+            <el-button size="large" type="danger" @click="handleClear(room)">Clear</el-button> -->
         </div>
     </div>
 </template>

@@ -1,18 +1,30 @@
 import Vue from 'vue'
-import ElementUI from 'element-ui'
 import VueRouter from 'vue-router';
 import VeeValidate from 'vee-validate';
 import Vuex from 'vuex';
 import VueFire from 'vuefire';
 
-import 'element-ui/lib/theme-default/index.css';
 
 
 //Vue uses
-Vue.use(ElementUI);
 Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(VueFire);
+
+
+//Element UI Related imports and uses
+import {table, TableColumn, Form, FormItem, menu, MenuItem, Tooltip, row, col} from 'element-ui'
+Vue.use(table);
+Vue.use(TableColumn);
+Vue.use(Form);
+Vue.use(FormItem);
+Vue.use(menu);
+Vue.use(MenuItem);
+Vue.use(Tooltip);
+Vue.use(row);
+Vue.use(col);
+import 'element-ui/lib/theme-default/index.css';
+
 
 //Router
 import router from './routes';
