@@ -38,21 +38,26 @@ export default class Rooms {
      * @memberof Rooms
      */
     createEmptyRooms() {
-        let roomData = [];
+        let rooms = [];
         for (let i = 1; i <= this.numberRooms; i++) {
-            roomData.push(new Room(i, "", this.housingInformation));
+            rooms.push(new Room(i, "", this.housingInformation));
         }
-        return roomData;
+        return rooms;
     }
 
+    numberOfRoomsUpdated(newNumberRooms){
+        this.numberRooms = newNumberRooms;
+        this.rooms = this.createEmptyRooms();
+    }
 
+    
 
     calculateTotalRoomsArea() {
-        return this.sumValueOfRoomData(this.roomData, 'area');
+        return this.sumValueOfRoomData(this.rooms, 'area');
     }
 
     calculateTotalOccupants() {
-        return this.sumValueOfRoomData(this.roomData, 'occupants');
+        return this.sumValueOfRoomData(this.rooms, 'occupants');
     }
 
 
@@ -90,7 +95,7 @@ export default class Rooms {
 
 
     calculateBasePayment() {
-        const numberOccupants = this.sumValueOfRoomData(this.roomData, "occupants");
+        const numberOccupants = this.sumValueOfRoomData(this.rooms, "occupants");
         return this.commonSpaceValue / numberOccupants;
     }
 
@@ -98,7 +103,7 @@ export default class Rooms {
     calculatePaymentRelatedValues() {
         this.basePayment = this.calculateBasePayment();
         console.log( this.basePayment);
-        this.roomData.forEach(room => {
+        this.rooms.forEach(room => {
             //If the room has occupants then we can calculate a payment for it. 
             if (room.occupants > 0) {
                 console.log('calculating payment for room ' + room.roomNumber)
@@ -122,8 +127,8 @@ export default class Rooms {
     }
 
 
-    sumValueOfRoomData(roomData, valueToSum) {
-        let valuesToSum = roomData.map(function (room) {
+    sumValueOfRoomData(rooms, valueToSum) {
+        let valuesToSum = rooms.map(function (room) {
             return parseFloat(room[valueToSum]) || 0;
         });
         console.log(valuesToSum);

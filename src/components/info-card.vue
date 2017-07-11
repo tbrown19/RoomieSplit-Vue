@@ -5,13 +5,13 @@
                 <transition name="slide-fade" mode="out-in">
                     <div v-if="!editing">
                         <slot name="name"></slot>
-                        <hr> {{ value }}
+                        <hr> {{ currentValue }}
                     </div>
     
                     <div v-else key="editing">
                         <slot name="name"></slot>
                         <hr class="hidden">
-                        <input v-model.number="editedValue" v-validate="`required|between:${minVal},${maxVal}`" :class="{'input': true, 'is-danger': errors.has(name), 'is-primary': !errors.has(name) && this.value != '' }" type="number" :placeholder="0" :name="name">
+                        <input v-model.number="currentValue" v-validate="`required|between:${minVal},${maxVal}`" :class="{'input': true, 'is-danger': errors.has(name), 'is-primary': !errors.has(name) && this.value != '' }" type="number" :placeholder="0" :name="name">
                     </div>
                 </transition>
     
@@ -28,22 +28,20 @@
 <script>
 export default {
     props: ['value', 'name', 'minVal', 'maxVal'],
-
     methods: {
         edit() {
-            this.editedValue = this.value;
             this.editing = true;
         },
 
         save() {
             this.editing = false;
-            this.currentValue = this.editedValue;
-            this.$emit("valueEdited", this.value)
+            this.$emit("validInput", this.name, this.currentValue)
         }
     },
 
     data: function () {
         return {
+            currentValue: this.value,
             editing: false
         }
     }

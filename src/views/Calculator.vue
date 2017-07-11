@@ -4,10 +4,19 @@
             Loading...
         </div>
         <div class="error" v-if="error">
-            {{ error }}
+            <article class="message is-danger">
+                <div class="message-header">
+                    <p>
+                        <strong>Error</strong>!
+                    </p>
+                </div>
+                <div class="message-body">
+                    {{ error }}
+                </div>
+            </article>
         </div>
         <div v-if="housingInformation">
-            <HousingInfoCards :housingInformation='housingInformation'></HousingInfoCards>
+            <HousingInfoCards :housingInformation='housingInformation' @infoUpdated="updateHousingInformation"></HousingInfoCards>
             <RoomsTable :housingInformation='housingInformation'></RoomsTable>
         </div>
     </div>
@@ -38,7 +47,7 @@ export default {
                 this.loading = false;
 
                 if (housingInformation.val() == null) {
-                    console.log("no dater.")
+                    this.error = "No roomie split configuration found for this link."
                 }
                 else {
                     this.housingInformation = housingInformation.val();
@@ -49,10 +58,19 @@ export default {
             });
         },
 
+        updateHousingInformation() {
+            const configId = this.$route.params.configId;
+            //Get the current room and then update its fields based on the new values
+            const currentRoom = Database.ref('RoomConfigurations').child(configId);
+            currentRoom.child('numRooms').set(this.housingInformation.numRooms);
+            currentRoom.child('area').set(this.housingInformation.area);
+            currentRoom.child('rent').set(this.housingInformation.rent);
+        }
+
     },
 
     data: function () {
-        1
+        
         return {
             loading: false,
             housingInformation: null,
@@ -61,3 +79,9 @@ export default {
     }
 }
 </script>
+
+<style>
+.message {
+    font-size: 1.2rem;
+}
+</style>

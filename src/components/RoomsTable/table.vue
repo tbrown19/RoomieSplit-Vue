@@ -1,7 +1,7 @@
 <template>
     <div>
         <hr>
-        <el-table :data="roomsArray" style="width: 100%" stripe tooltip-effect="dark">
+        <el-table :data="roomsArrayComputed" style="width: 100%" stripe tooltip-effect="dark">
     
             <el-table-column label="Actions" type="expand">
                 <template scope="scope">
@@ -63,9 +63,14 @@ export default {
         MeasurementInput, FootageInput, OccupantsInput, RoomExtraInfo
     },
 
+    watch: {
+        'housingInformation.numRooms' :function(newNumberRooms){
+            this.roomData.numberOfRoomsUpdated(newNumberRooms);
+        }
+    },
     computed: {
-        paymentValue: function () {
-
+        roomsArrayComputed(){
+            return this.roomData.rooms;
         }
     },
 
@@ -73,10 +78,6 @@ export default {
 
         getRoomsData() {
             return this.generateRoomSplitter(this.store.getters.housingInformation)
-
-        },
-
-        generateRoomSplitter(housingInformation) {
 
         },
 
@@ -105,6 +106,7 @@ export default {
         let roomsArray = roomData.rooms;
 
         return {
+            roomData,
             roomsArray
         }
 
