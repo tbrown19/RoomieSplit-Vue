@@ -50,6 +50,12 @@ const config = {
 };
 Vue.use(VeeValidate, config);
 
+
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title
+  next()
+})
+
 const app = new Vue({
     router,
     store,
