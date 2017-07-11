@@ -127,6 +127,7 @@ th {
 
 th .cell {
     font-family: 'Lato', sans-serif;
+    font-weight: 400;
     font-size: 1.4rem;
     color: #dfe5ec !important;
     background-color: rgb(50, 65, 87) !important;

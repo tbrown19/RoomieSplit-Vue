@@ -1,8 +1,8 @@
 <template>
     <div>
         <div id="intro-text" class="has-text-centered">
-            <h1>Calculate how much each person should contribute to the rent.</h1>
-            <h1>Get started by filling out the information below.</h1>
+            <h1 class="title">Calculate how much each person should contribute to the rent.</h1>
+            <h1 class="title">Get started by filling out the information below.</h1>
         </div>
         <MainInputs @valueInputed="mainInputStepComplete"></MainInputs>
         <NextButton @click="proceedToNextStep" :visible="mainInputsCompleted"></NextButton>

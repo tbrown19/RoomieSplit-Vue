@@ -11,11 +11,11 @@
                     Home
                 </el-menu-item>
     
-                <el-menu-item index="explanation">
+                <el-menu-item index="/explanation">
                     Explanation
                 </el-menu-item>
     
-                <el-menu-item index="about">
+                <el-menu-item index="/about">
                     About
                 </el-menu-item>
             </el-col>
@@ -26,8 +26,9 @@
 <script>
 export default {
     data() {
+        console.log(this.$router)
         return {
-            activeIndex: '1',
+            activeIndex: this.$router.currentRoute.path
         };
     },
     methods: {

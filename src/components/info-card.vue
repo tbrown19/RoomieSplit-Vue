@@ -5,7 +5,12 @@
                 <transition name="slide-fade" mode="out-in">
                     <div v-if="!editing">
                         <slot name="name"></slot>
-                        <hr> {{ currentValue }}
+                        
+                        <hr>
+
+                        <span class="value"> 
+                            {{ currentValue }}
+                        </span>
                     </div>
     
                     <div v-else key="editing">
@@ -78,9 +83,12 @@ hr {
 .slide-fade-enter,
 .slide-fade-leave-to
 /* .slide-fade-leave-active for <2.1.8 */
-
 {
     transform: translateY(10px);
     opacity: 0;
+}
+
+.value {
+    font-weight: 300;
 }
 </style>

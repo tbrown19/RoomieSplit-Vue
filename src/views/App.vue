@@ -29,13 +29,14 @@ export default {
 
 
 <style>
-@import url('https://fonts.googleapis.com/css?family=Lato:300');
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
 @import url('https://fonts.googleapis.com/css?family=Righteous');
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 body {
     margin: 0 !important;
     padding-bottom: 5rem;
+    font-family: 'Lato', sans-serif;
 }
 
 h1,
@@ -44,7 +45,7 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: 'Lato', sans-serif;
+    font-weight: 400;
 }
 
 .is-active{
