@@ -1,7 +1,7 @@
 <template>
     <el-row :gutter="20">
         <el-col :span="8">
-            <InfoCard name="rooms" :value="housingInformation.rooms" minVal="1" maxVal="10">
+            <InfoCard name="rooms" :value="housingInformation.numRooms" minVal="1" maxVal="10">
                     <div slot="name">Rooms</div>
             </InfoCard>
         </el-col>

@@ -1,7 +1,15 @@
 <template>
-    <div v-if="infoLoaded">
-        <HousingInfoCards :housingInformation='housingInformation'></HousingInfoCards>
-        <RoomsTable :housingInformation='housingInformation'></RoomsTable>
+    <div>
+        <div class="loading" v-if="loading">
+            Loading...
+        </div>
+        <div class="error" v-if="error">
+            {{ error }}
+        </div>
+        <div v-if="housingInformation">
+            <HousingInfoCards :housingInformation='housingInformation'></HousingInfoCards>
+            <RoomsTable :housingInformation='housingInformation'></RoomsTable>
+        </div>
     </div>
 </template>
 
@@ -17,26 +25,38 @@ export default {
         RoomsTable, HousingInfoCards
     },
 
-    created: function () {
+    created() {
         this.getHousingInformation(this.$route.params.configId);
     },
 
     methods: {
         getHousingInformation(configId) {
-            return Database.ref('RoomConfigurations/' + configId).once('value').then((roomConfiguration) => {
-                const roomsConfiguration = roomConfiguration.val();
-                this.housingInformation.rooms = roomsConfiguration.rooms.value;
-                this.housingInformation.area = roomsConfiguration.footage.value;
-                this.housingInformation.rent = roomsConfiguration.rent.value;
-                this.infoLoaded = true;
+            this.error = this.housingInformation = null;
+            this.loading = true;
+
+            Database.ref('RoomConfigurations/' + configId).once('value').then((housingInformation) => {
+                this.loading = false;
+
+                if (housingInformation.val() == null) {
+                    console.log("no dater.")
+                }
+                else {
+                    this.housingInformation = housingInformation.val();
+                }
+            }, (error) => {
+                console.log(error);
+                this.error = error;
             });
         },
+
     },
 
     data: function () {
+        1
         return {
-            infoLoaded: false,
-            housingInformation: {}
+            loading: false,
+            housingInformation: null,
+            error: null
         }
     }
 }

@@ -3,13 +3,13 @@
         <hr>
         <el-row type="flex" justify="center" :gutter="20">
             <el-col :span="8">
-                <MainInput v-on:input="userInput" name="rooms" minVal="1" maxVal="10">
+                <MainInput v-on:input="userInput" name="numRooms" minVal="1" maxVal="10">
                     <div slot="inputDescription">Rooms</div>
                 </MainInput>
             </el-col>
     
             <el-col :span="8">
-                <MainInput v-on:input="userInput" name="footage" minVal="1" maxVal="20000">
+                <MainInput v-on:input="userInput" name="area" minVal="1" maxVal="20000">
                     <div slot="inputDescription">Area</div>
                 </MainInput>
             </el-col>
@@ -81,18 +81,18 @@ export default {
     data: function () {
         return {
             inputs: {
-                'rooms': {
-                    'value': 5,
+                'numRooms': {
+                    'value': 0,
                     'valid': false
                 },
 
-                'footage': {
-                    'value': 5000,
+                'area': {
+                    'value': 0,
                     'valid': false
                 },
 
                 'rent': {
-                    'value': 500,
+                    'value': 0,
                     'valid': false
                 }
 

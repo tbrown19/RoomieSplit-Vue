@@ -46,6 +46,10 @@ h6 {
     font-family: 'Lato', sans-serif;
 }
 
+.is-active{
+    color: #00d1b2 !important;
+}
+
 .box-card {
     min-height: 75vh;
 }

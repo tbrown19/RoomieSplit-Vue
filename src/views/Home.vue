@@ -23,34 +23,43 @@ export default {
     },
 
     methods: {
-        mainInputStepComplete(inputsCompleted, roomConfiguration) {
+        mainInputStepComplete(inputsCompleted, inputs) {
             //this.roomData = inputs;
             this.mainInputsCompleted = inputsCompleted;
-            this.roomConfiguration = roomConfiguration;
+            this.inputs = inputs;
         },
 
+
+
         proceedToNextStep() {
-            console.log(this.$store);
-            this.$store.commit('addHousingInformation', this.roomConfiguration);
+            this.inputsToHousingInformation();
             this.addConfigurationToDB().then((configId) => {
                 this.$router.push({ name: 'calculator', params: { configId: configId } })
             });
         },
 
+        inputsToHousingInformation() {
+            let housingInformation = {}
+            housingInformation.numRooms = this.inputs.numRooms.value;
+            housingInformation.area = this.inputs.area.value;
+            housingInformation.rent = this.inputs.rent.value;
+            this.housingInformation = housingInformation;
+        },
+
         addConfigurationToDB() {
             //Add the newly created room configuration to the database and then return its unique key
             return new Promise((resolve, reject) => {
-                Database.ref('RoomConfigurations').push(this.roomConfiguration).then((snap) => {
-                    if  (snap.key.length > 0){
+                Database.ref('RoomConfigurations').push(this.housingInformation).then((snap) => {
+                    if (snap.key.length > 0) {
                         console.log("we stored that config manye." + snap.key)
                         resolve(snap.key);
                     }
-                    else{
+                    else {
                         reject("Failed to store room configuration in database.");
                     }
                 });
             });
-            
+
         },
 
     },
@@ -61,7 +70,7 @@ export default {
             showTitleText: true,
             showRoomsTable: false,
             mainInputsCompleted: false,
-            roomConfiguration: {}
+            inputs: {}
         }
     }
 }
@@ -69,9 +78,8 @@ export default {
 
 
 <style>
-    #intro-text {
-        margin-bottom: 2rem;
-        font-size: 2rem;
-    }
-
+#intro-text {
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
 </style>

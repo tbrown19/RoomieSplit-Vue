@@ -11,7 +11,7 @@ export default class Rooms {
      */
     constructor(creationMethod, savedRoomDataId, housingInformation) {
         this.housingInformation = housingInformation;
-        this.numberRooms = housingInformation.rooms;
+        this.numberRooms = housingInformation.numRooms;
         this.area = housingInformation.area;
         this.rent = housingInformation.rent;
         
