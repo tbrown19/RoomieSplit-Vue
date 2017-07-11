@@ -1,5 +1,5 @@
 <template>
-                <transition name="slide-fade" mode="out-in">
+    <transition name="slide-fade" mode="out-in">
         <div v-show='visible'>
             <el-row type="flex" justify="center">
                 <button v-on:click='click' class="button is-primary is-large">Next Step</button>
@@ -11,13 +11,13 @@
 
 <script>
 export default {
-  props: ['visible'],
+    props: ['visible'],
 
-  methods: {
-      click() {
-        this.$emit('click');
-      }
-  }
+    methods: {
+        click() {
+            this.$emit('click');
+        }
+    }
 }
 </script>
 

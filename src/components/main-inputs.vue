@@ -5,18 +5,21 @@
             <el-col :span="8">
                 <MainInput v-on:input="userInput" name="numRooms" minVal="1" maxVal="10">
                     <div slot="inputDescription">Rooms</div>
+                    <div slot="toolTip">The total number of rooms.</div>
                 </MainInput>
             </el-col>
     
             <el-col :span="8">
                 <MainInput v-on:input="userInput" name="area" minVal="1" maxVal="20000">
                     <div slot="inputDescription">Area</div>
+                    <div slot="toolTip">The total area of the entire living space.</div>
                 </MainInput>
             </el-col>
     
             <el-col :span="8">
                 <MainInput v-on:input="userInput" name="rent" minVal="1" maxVal="50000">
                     <div slot="inputDescription">Rent</div>
+                    <div slot="toolTip">The cost of rent.</div>
                 </MainInput>
             </el-col>
     
