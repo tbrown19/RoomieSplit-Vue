@@ -1,24 +1,30 @@
 <template>
     <div>
-        <div class="loading" v-if="loading">
-            Loading...
-        </div>
-        <div class="error" v-if="error">
-            <article class="message is-danger">
-                <div class="message-header">
-                    <p>
-                        <strong>Error</strong>!
-                    </p>
-                </div>
-                <div class="message-body">
-                    {{ error }}
-                </div>
-            </article>
-        </div>
-        <div v-if="housingInformation">
-            <HousingInfoCards :housingInformation='housingInformation' @infoUpdated="updateHousingInformation"></HousingInfoCards>
-            <RoomsTable :housingInformation='housingInformation'></RoomsTable>
-        </div>
+        <transition name="slide-fade" mode="out-in">
+    
+            <div class="loading has-text-centered" v-if="loading" key="loading">
+                <h1>Loading...</h1>
+            </div>
+    
+            <div class="error" v-if="error" key="error">
+                <article class="message is-danger">
+                    <div class="message-header">
+                        <p>
+                            <strong>Error</strong>!
+                        </p>
+                    </div>
+                    <div class="message-body">
+                        {{ error }}
+                    </div>
+                </article>
+            </div>
+            <div v-if="housingInformation" key="loaded">
+                <HousingInfoCards :housingInformation='housingInformation' @infoUpdated="updateHousingInformation"></HousingInfoCards>
+                <RoomsTable :housingInformation='housingInformation'></RoomsTable>
+            </div>
+    
+        </transition>
+    
     </div>
 </template>
 
@@ -70,7 +76,7 @@ export default {
     },
 
     data: function () {
-        
+
         return {
             loading: false,
             housingInformation: null,
@@ -83,5 +89,27 @@ export default {
 <style>
 .message {
     font-size: 1.2rem;
+}
+
+.loading {
+    font-size: 2rem;
+    padding-bottom: 1rem;
+}
+
+.slide-fade-enter-active {
+    transition: all .2s ease;
+}
+
+.slide-fade-leave-active {
+    transition: all .4s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+}
+
+.slide-fade-enter,
+.slide-fade-leave-to
+/* .slide-fade-leave-active for <2.1.8 */
+
+{
+    transform: translateY(-10px);
+    opacity: 0;
 }
 </style>

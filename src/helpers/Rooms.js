@@ -5,8 +5,8 @@ export default class Rooms {
     /**
      * Creates an instance of Rooms - which contains a collection of Room instances and helper methods to generate them.
      * @param {('new' | 'load')} creationMethod 
-     * @param {Integer} numberRooms 
-     * @param {Integer} savedRoomDataId 
+     * @param {number} numberRooms 
+     * @param {number} savedRoomDataId 
      * @memberof Rooms
      */
     constructor(creationMethod, savedRoomDataId, housingInformation) {
@@ -26,14 +26,13 @@ export default class Rooms {
 
     /**
      * Creates the room data object by retreving an already saved instance of roomdata from the database. 
-     * @param {Integer} roomsDataId 
+     * @param {number} roomsDataId 
      * @memberof Rooms
      */
     createRoomsFromDatabase(roomsDataId) {}
 
     /**
-     *  Creates an array of length numRooms and intilizing all the values inside of it to be empty.
-     * @param {Integer} numRooms 
+     *  Creates an array of length numRooms and intilizing all the values inside of it to be empty. 
      * @returns {Array} roomData
      * @memberof Rooms
      */
@@ -45,6 +44,13 @@ export default class Rooms {
         return rooms;
     }
 
+    
+    /**
+     * Updates the number of rooms, and then generates that many new empty rooms.
+     * 
+     * @param {number} newNumberRooms 
+     * @memberof Rooms
+     */
     numberOfRoomsUpdated(newNumberRooms){
         this.numberRooms = newNumberRooms;
         this.rooms = this.createEmptyRooms();

@@ -70,6 +70,7 @@ export default {
     },
     computed: {
         roomsArrayComputed(){
+            console.log(this)
             return this.roomData.rooms;
         }
     },
