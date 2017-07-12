@@ -7,7 +7,7 @@
         </el-row>
     
         <el-row type="flex" justify="center">
-            <el-col :span="24" :lg="{span:17}" id="main-content">
+            <el-col :span="24" :lg="{span:18}" id="main-content">
                 <router-view></router-view>
             </el-col>
         </el-row>

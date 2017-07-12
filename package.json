@@ -6,7 +6,13 @@
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --hot --env.dev",
-    "build": "rimraf dist && webpack -p --progress --hide-modules"
+    "checkout-staging": "git checkout staging",
+    "build-for-deployment": "rimraf dist && webpack -p --progress --hide-modules",
+    "copy-dist-to-deploy-branch":"git subtree split --branch deploy --prefix dist/",
+    "checkout-deploy":"git checkout deploy",
+    "push-deploy": "git push",
+    "build": "rimraf dist && webpack -p --progress --hide-modules",
+    "deploy": "npm run checkout-staging && npm run build-for-deployment && npm run copy-dist-to-deploy-branch && npm run checkout-deploy && npm run push-deploy"
   },
   "dependencies": {
     "bulma": "^0.4.2",

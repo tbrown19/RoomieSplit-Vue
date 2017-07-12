@@ -5,7 +5,7 @@
                 <transition name="slide-fade" mode="out-in">
                     <div v-if="!editing">
                         <slot name="name"></slot>
-                        
+
                         <hr>
 
                         <span class="value"> 
@@ -15,7 +15,7 @@
     
                     <div v-else key="editing">
                         <slot name="name"></slot>
-                        <hr class="hidden">
+                        <hr class="hidden-hr">
                         <input v-model.number="currentValue" v-validate="`required|between:${minVal},${maxVal}`" :class="{'input': true, 'is-danger': errors.has(name), 'is-primary': !errors.has(name) && this.value != '' }" type="number" :placeholder="0" :name="name">
                     </div>
                 </transition>
@@ -56,13 +56,15 @@ export default {
 
 
 <style scoped>
-.hidden {
-    visibility: hidden;
-}
-
 hr {
     margin: .5rem 0;
 }
+
+.hidden-hr {
+    visibility: hidden;
+    margin: .4rem 0;
+}
+
 
 .card-content {
     padding: .75rem;

@@ -41,6 +41,6 @@ export default {
 <style>
     .content{
         font-family: 'Lato', sans-serif;
-        font-size: 2rem;
+        font-size: 1.4rem;
     }
 </style>

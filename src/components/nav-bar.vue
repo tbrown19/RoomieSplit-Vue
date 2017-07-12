@@ -50,11 +50,11 @@ export default {
     box-sizing: border-box;
     border-bottom: 5px solid transparent;
     font-family: 'Righteous', cursive;
-    font-size: 1.75rem;
+    font-size: 1.5rem;
 }
 
 .el-menu-item {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     font-family: 'Roboto', sans-serif;
 }
 </style>

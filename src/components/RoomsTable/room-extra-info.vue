@@ -1,8 +1,8 @@
 <template>
     <div>
-        <h1 style="font-size: 1.2rem">
+        <h1 style="font-size: 1rem">
             Extra Information:</h1>
-        <div style="font-size: 1.1rem">
+        <div style="font-size: 1rem">
             <p>Percent of the total space: {{ readablePercent(room.percentOfTotalSpace) }}</p>
             <p>Percent of the private space: {{ readablePercent(room.percentOfPrivateSpace) }}</p>
             <p>Private Payment: {{ roundToTwoDecimalPlaces(room.privatePayment) }}</p>

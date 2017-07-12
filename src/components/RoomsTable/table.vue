@@ -71,6 +71,7 @@ export default {
     computed: {
         roomsArrayComputed(){
             console.log(this)
+            console.log(this.roomData.rooms)
             return this.roomData.rooms;
         }
     },
@@ -95,8 +96,8 @@ export default {
         },
 
         occupantsUpdated() {
-            this.rooms.calculateAreaRelatedValues();
-            this.rooms.calculatePaymentRelatedValues();
+            this.roomData.calculateAreaRelatedValues();
+            this.roomData.calculatePaymentRelatedValues();
         }
 
     },
@@ -118,7 +119,7 @@ export default {
 
 <style>
 td .cell {
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 th {
@@ -128,7 +129,7 @@ th {
 th .cell {
     font-family: 'Lato', sans-serif;
     font-weight: 400;
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     color: #dfe5ec !important;
     background-color: rgb(50, 65, 87) !important;
 }
