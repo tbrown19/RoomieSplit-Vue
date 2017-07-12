@@ -34,10 +34,6 @@ export default {
 </script>
 
 <style>
-.el-menu {
-    border-radius: 0 !important;
-}
-
 #site-header {
     color: #dfe5ec;
     float: left;
@@ -55,5 +51,9 @@ export default {
 .el-menu-item {
     font-size: 1.1rem;
     font-family: 'Roboto', sans-serif;
+}
+
+.is-active{
+    color: #00d1b2 !important;
 }
 </style>

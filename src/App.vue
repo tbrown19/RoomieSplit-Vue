@@ -1,7 +1,12 @@
 <template>
     <div id="app">
         <navbar></navbar>
-        <router-view></router-view>
+
+        <el-row type="flex" justify="center">
+            <el-col :span="24" :lg="{span:18}" id="main-content">
+                <router-view></router-view>
+            </el-col>
+        </el-row>
     </div>
 </template>
 
@@ -28,9 +33,16 @@ body {
     padding-bottom: 5rem;
 }
 
+
 #app {
     font-family: 'Lato', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
+
+#main-content {
+    padding-top: 2%;
+}
+
+
 </style>
