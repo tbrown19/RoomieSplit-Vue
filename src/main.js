@@ -6,6 +6,18 @@ import router from './router'
 
 Vue.config.productionTip = false
 
+import {table, TableColumn, Form, FormItem, menu, MenuItem, Tooltip, row, col} from 'element-ui'
+Vue.use(table)
+Vue.use(TableColumn)
+Vue.use(Form)
+Vue.use(FormItem)
+Vue.use(menu)
+Vue.use(MenuItem)
+Vue.use(Tooltip)
+Vue.use(row)
+Vue.use(col)
+import 'element-ui/lib/theme-default/index.css'
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
