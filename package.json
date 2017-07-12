@@ -11,7 +11,7 @@
     "copy-dist-to-deploy-branch":"git subtree split --branch deploy --prefix dist/",
     "checkout-deploy":"git checkout deploy",
     "push-deploy": "git push",
-    "build": "rimraf dist && webpack -p --progress --hide-modules",
+    "build": "webpack -p --progress --hide-modules",
     "deploy": "npm run checkout-staging && npm run build-for-deployment && npm run copy-dist-to-deploy-branch && npm run checkout-deploy && npm run push-deploy"
   },
   "dependencies": {
