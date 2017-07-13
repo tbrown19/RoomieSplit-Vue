@@ -5,7 +5,7 @@
                 <div slot="content" class="has-text-centered input-tool-tip">
                     {{ tooltip}}
                     <br>
-                    Value can be between {{ minVal }} and {{ maxVal }}
+                    Value can be between {{ min }} and {{ max }}
                 </div>
                 <h2 class="is-title">
                     {{ name }}
@@ -14,7 +14,7 @@
     
             <hr>
     
-            <input :id="name" v-model.number="value" v-validate="`required|between:${minVal},${maxVal}`" :class="{'input': true, 'is-danger': errors.has(name), 'is-success': validInput }" type="number" :placeholder="0" :name="name">
+            <input :id="name" v-model.number="value" v-validate="`required|between:${min},${max}`" :class="{'input': true, 'is-danger': errors.has(name), 'is-success': validInput }" type="number" :placeholder="0" :name="name">
             <slide-fade>
                 <p v-if="errors.has(name)" class="input-error help is-danger has-text-centered">{{ errors.first(name) }}</p>
             </slide-fade>
@@ -27,16 +27,17 @@ import Card from '../generic/Card.vue';
 import SlideFade from '../transitions/SlideFade.vue';
 
 export default {
-    props: ['name', 'inputAttrs'],
+    props: ['name', 'min', 'max', 'tooltip'],
 
     components: {
         Card, SlideFade
     },
 
     created() {
-        this.minVal = this.inputAttrs.min;
-        this.maxVal = this.inputAttrs.max;
-        this.tooltip = this.inputAttrs.tooltip;
+        console.log(this.props);
+        // this.min = this.inputAttrs.min;
+        // this.max = this.inputAttrs.max;
+        // this.tooltip = this.inputAttrs.tooltip;
     },
 
     computed: {
