@@ -7,7 +7,7 @@
         <primary-inputs @inputEntered="inputsUpdated"></primary-inputs>
         <slide-fade>
             <el-row type="flex" justify="center" v-if="mainInputsCompleted">
-                <button @click='nextStepClicked' class="button is-primary is-large">Next Step</button>
+                <button id="nextStepButton" @click='nextStepClicked' class="button is-primary is-large">Next Step</button>
             </el-row>
         </slide-fade>
     
@@ -29,6 +29,7 @@ export default {
             console.log(status);
             this.inputs = inputs;
             this.mainInputsCompleted = status;
+            console.log('main completed' + this.mainInputsCompleted);
         },
 
         nextStepClicked() {

@@ -15,7 +15,7 @@
     
             <input :id="name" v-model.number="value" v-validate="`required|between:${minVal},${maxVal}`" :class="{'input': true, 'is-danger': errors.has(name), 'is-success': hasNoErrors }" type="number" :placeholder="0" :name="name">
             <slide-fade>
-                <p v-if="errors.has(name)" class="help is-danger has-text-centered">{{ errors.first(name) }}</p>
+                <p v-if="errors.has(name)" class="input-error help is-danger has-text-centered">{{ errors.first(name) }}</p>
             </slide-fade>
         </div>
     </card>
