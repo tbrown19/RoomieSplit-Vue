@@ -32,8 +32,6 @@ describe('Home.vue', () => {
         it('should render correct contents', () => {
             expect(vm.$el.querySelector('.card div').textContent)
                 .to.include('Rooms', 'Area', 'Rent');
-            expect(vm.$el.querySelector('.card div').textContent)
-                .to.include('Rooms', 'Area', 'Rent');
         });
 
         it('should allow input', (done) => {
@@ -48,7 +46,7 @@ describe('Home.vue', () => {
             });
         });
 
-        it('should update the mainInputsCompleted boolean after 3 valid inputs', (done) => {
+        it('should show the next step button after 3 valid inputs', (done) => {
             updateInputValues('1');
             // After events settle.
             Vue.nextTick(() => {
