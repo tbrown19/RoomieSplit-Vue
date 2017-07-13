@@ -32,18 +32,18 @@ export default {
         },
 
         proceedToNextStep() {
-            this.inputsToHousingInformation();
+            this.inputsToHousingInformation(this.inputs);
             addRoomConfiguration(this.roomConfigruation).then((configId) => {
                 this.$router.push({ name: 'calculator', params: { configId: configId } });
             });
         },
 
-        inputsToHousingInformation() {
-            let roomConfigruation = {};
-            roomConfigruation.numRooms = this.inputs.rooms.value;
-            roomConfigruation.area = this.inputs.area.value;
-            roomConfigruation.rent = this.inputs.rent.value;
-            this.roomConfigruation = roomConfigruation;
+        inputsToHousingInformation(inputs) {
+            this.roomConfigruation = {
+                'numRooms': inputs.rooms.value,
+                'area': inputs.area.value,
+                'rent': inputs.rent.value
+            };
         }
     },
 

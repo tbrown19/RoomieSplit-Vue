@@ -41,7 +41,6 @@ export default {
 
     watch: {
         valid: function () {
-            console.log('the input is now valid.');
             this.$emit('input', this.name, this.value, this.valid);
         }
     },
