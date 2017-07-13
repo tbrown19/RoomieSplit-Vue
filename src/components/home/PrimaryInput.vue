@@ -6,87 +6,70 @@
                     <slot name="toolTip"></slot>
                     Value can be between {{ minVal }} and {{ maxVal }}
                 </div>
-                <slot name="inputDescription"></slot>
+                <h2 class="is-title">
+                    <slot name="inputDescription"></slot>
+                </h2>
             </el-tooltip>
+    
             <hr>
-            <input v-model.number="value" v-validate="`required|between:${minVal},${maxVal}`" :class="{'input': true, 'is-danger': errors.has(name), 'is-success': !errors.has(name) && this.value != '' }" type="number" :placeholder="0" :name="name">
-            <transition name="slide-fade">
+    
+            <input v-model.number="value" v-validate="`required|between:${minVal},${maxVal}`" :class="{'input': true, 'is-danger': errors.has(name), 'is-success': hasNoErrors }" type="number" :placeholder="0" :name="name">
+            <slide-fade>
                 <p v-if="errors.has(name)" class="help is-danger has-text-centered">{{ errors.first(name) }}</p>
-            </transition>
+            </slide-fade>
         </div>
     </card>
 </template>
 
 <script>
 import Card from '../generic/Card.vue';
+import SlideFade from '../transitions/SlideFade.vue';
 
 export default {
     props: ['name', 'minVal', 'maxVal', 'toolTip'],
 
     components: {
-        Card
+        Card, SlideFade
+    },
+
+    computed: {
+        hasNoErrors() {
+            this.valid = !this.errors.has(this.name) && this.value !== '';
+            return this.valid;
+        }
     },
 
     watch: {
-        value: function (val) {
-            this.checkInput(val);
+        valid: function () {
+            this.$emit('input', this.name, this.value, this.valid);
         }
     },
-
-    methods: {
-        checkInput(val) {
-            if (val < this.minVal) {
-                this.validInput = false;
-            } else if (val > this.maxVal) {
-                this.validInput = false;
-            } else {
-                this.validInput = true;
-            }
-            this.$emit('input', this.name, this.value, this.validInput);
-        }
-    },
-
     data: function () {
         return {
             value: '',
-            validInput: '',
-            count: ''
+            valid: false
         };
     }
 };
 
 </script>
 
-<style>
-label {
-    font-family: 'Lato', sans-serif;
+<style lang="scss" scoped>
+.input {
+    max-width: 75%;
 }
 
-.input {
-    max-width: 85%;
+.is-title {
+    font-weight: 300;
+}
+
+.is-success {
+    border-width: 2px;
 }
 
 .help {
     font-size: 1rem;
 }
-
-.slide-fade-enter-active {
-    transition: all .3s ease;
-}
-
-.slide-fade-leave-active {
-    transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-}
-
-.slide-fade-enter,
-.slide-fade-leave-to
-/* .slide-fade-leave-active for <2.1.8 */
-
-{
-    transform: translateY(10px);
-    opacity: 0;
-}
-
 
 .input-tool-tip {
     padding: .5rem;

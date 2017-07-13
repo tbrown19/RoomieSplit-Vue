@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <navbar></navbar>
-
+    
         <el-row type="flex" justify="center">
             <el-col :span="24" :lg="{span:18}" id="main-content">
                 <router-view></router-view>
@@ -24,6 +24,9 @@ export default {
 </script>
 
 <style lang="scss">
+@import "~bulma/sass/utilities/_all";
+$primary: #00d1b2;
+
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
 @import url('https://fonts.googleapis.com/css?family=Righteous');
 @import url('https://fonts.googleapis.com/css?family=Roboto');
@@ -45,4 +48,7 @@ body {
 }
 
 
+// Import Bulma and Buefy styles
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
 </style>

@@ -36,7 +36,7 @@ import 'element-ui/lib/theme-default/index.css';
 // Vee validate configuration must be changed so it can properly interact with element ui
 const config = {
     errorBagName: 'errors', // change if property conflicts.
-    fieldsBagName: 'inputs ', // Default is fields
+    fieldsBagName: 'inputsBag', // Default is fields
     delay: 0,
     locale: 'en',
     dictionary: null,

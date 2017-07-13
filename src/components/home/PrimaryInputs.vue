@@ -22,11 +22,8 @@
                     <div slot="toolTip">The cost of rent.</div>
                 </primary-input>
             </el-col>
-    
         </el-row>
-    
         <hr>
-    
     </div>
 </template>
 
@@ -41,6 +38,7 @@ export default {
     methods: {
         // Update the input objet, and then update the status bar
         userInput(inputName, inputValue, valid) {
+            console.log('hi there');
             this.$set(this.inputs[inputName], 'value', inputValue);
             this.$set(this.inputs[inputName], 'valid', valid);
             this.checkForCompletedInputs();
@@ -48,13 +46,11 @@ export default {
 
         checkForCompletedInputs() {
             let completedInputs = 0;
-
             for (const input of Object.keys(this.inputs)) {
                 if (this.inputs[input].valid) {
                     completedInputs += 1;
                 }
             }
-
             if (completedInputs === 3) {
                 this.$emit('inputEntered', this.inputs, true);
             } else {
