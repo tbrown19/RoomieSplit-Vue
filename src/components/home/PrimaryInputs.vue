@@ -38,7 +38,6 @@ export default {
     methods: {
         // Update the input objet, and then update the status bar
         userInput(inputName, inputValue, valid) {
-            console.log('hi there');
             this.$set(this.inputs[inputName], 'value', inputValue);
             this.$set(this.inputs[inputName], 'valid', valid);
             this.checkForCompletedInputs();

@@ -7,7 +7,7 @@
         <primary-inputs @inputEntered="inputsUpdated"></primary-inputs>
         <slide-fade>
             <el-row type="flex" justify="center" v-if="mainInputsCompleted">
-                <button id="nextStepButton" @click='nextStepClicked' class="button is-primary is-large">Next Step</button>
+                <button id="nextStepButton" @click='proceedToNextStep' class="button is-primary is-large">Next Step</button>
             </el-row>
         </slide-fade>
     
@@ -17,6 +17,7 @@
 <script>
 import PrimaryInputs from '../components/home/PrimaryInputs.vue';
 import SlideFade from '../components/transitions/SlideFade.vue';
+import { addRoomConfiguration } from '../services/firebase-actions.js';
 
 export default {
     components: {
@@ -26,19 +27,30 @@ export default {
     methods: {
         inputsUpdated(inputs, status) {
             // this.roomData = inputs;
-            console.log(status);
             this.inputs = inputs;
             this.mainInputsCompleted = status;
-            console.log('main completed' + this.mainInputsCompleted);
         },
 
-        nextStepClicked() {
+        proceedToNextStep() {
+            this.inputsToHousingInformation();
+            addRoomConfiguration(this.roomConfigruation).then((configId) => {
+                this.$router.push({ name: 'calculator', params: { configId: configId } });
+            });
+        },
 
+        inputsToHousingInformation() {
+            let roomConfigruation = {};
+            roomConfigruation.numRooms = this.inputs.rooms.value;
+            roomConfigruation.area = this.inputs.area.value;
+            roomConfigruation.rent = this.inputs.rent.value;
+            this.roomConfigruation = roomConfigruation;
         }
     },
 
     data: function () {
         return {
+            inputs: {},
+            roomConfigruation: {},
             mainInputsCompleted: false
         };
     }
