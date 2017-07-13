@@ -31,5 +31,19 @@ describe('Home.vue', () => {
             //         'Get started by filling out the information below.'
             //     );
         });
+        it('should allow input', (done) => {
+            const inputs = vm.$el.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.value = 1;
+                input.dispatchEvent(new Event('input'));
+            });
+            // After events settle.
+            Vue.nextTick(() => {
+                inputs.forEach(input => {
+                    expect(input.value).to.equal('1');
+                });
+                done();
+            });
+        });
     });
 });

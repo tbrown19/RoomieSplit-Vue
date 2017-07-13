@@ -13,7 +13,7 @@
     
             <hr>
     
-            <input v-model.number="value" v-validate="`required|between:${minVal},${maxVal}`" :class="{'input': true, 'is-danger': errors.has(name), 'is-success': hasNoErrors }" type="number" :placeholder="0" :name="name">
+            <input :id="name" v-model.number="value" v-validate="`required|between:${minVal},${maxVal}`" :class="{'input': true, 'is-danger': errors.has(name), 'is-success': hasNoErrors }" type="number" :placeholder="0" :name="name">
             <slide-fade>
                 <p v-if="errors.has(name)" class="help is-danger has-text-centered">{{ errors.first(name) }}</p>
             </slide-fade>
@@ -41,6 +41,7 @@ export default {
 
     watch: {
         valid: function () {
+            console.log('the input is now valid.');
             this.$emit('input', this.name, this.value, this.valid);
         }
     },
