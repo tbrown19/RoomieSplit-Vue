@@ -6,11 +6,11 @@
 
 <style>
 .slide-fade-enter-active {
-    transition: all .4s ease;
+    transition: all .3s ease;
 }
 
 .slide-fade-leave-active {
-    transition: all .5s ease;
+    transition: all .5s cubic-bezier(1.0, 0.5, 0.8, 1.0);
 }
 
 .slide-fade-enter,
