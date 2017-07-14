@@ -40,7 +40,7 @@ export default {
         },
 
         validInput: function () {
-            return !this.errors.has(this.name) && this.value !== '';
+            return this.value >= this.min && this.value <= this.max;
         }
     },
 
