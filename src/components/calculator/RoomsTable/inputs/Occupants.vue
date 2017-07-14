@@ -5,13 +5,13 @@
 </template>
 
 <script>
-// let inputHelpers = require('../../helpers/input-helpers.js')
+import { validateInput } from '../../../../utils/helpers/input-helpers.js';
 export default {
     props: ['scope'],
 
     methods: {
         checkOccupants(occupants) {
-            // this.currentRow.occupants = inputHelpers.validateInput(occupants, 1, 5, 1);
+            this.currentRow.occupants = validateInput(occupants, 1, 5, 1);
             this.$emit('occupantsUpdated', this.currentRow);
         }
     },

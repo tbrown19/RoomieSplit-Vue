@@ -3,7 +3,8 @@
     
         <el-form :inline="true" :model="measurement">
             <el-form-item class="measurement-input">
-                <input @input="checkFeet(measurement.feet)" v-model.number="measurement.feet" v-validate="'required|between:1,99'" :class="{'input': true, 'is-danger': errors.has('feet'), 'is-success': !errors.has('feet') && this.measurement.feet != ''}" type="number" placeholder="ft" name="feet">
+                <input @input="checkFeet(measurement.feet)" v-model.number="measurement.feet" v-validate="'required|between:1,99'" 
+                :class="{'input': true, 'is-danger': errors.has('feet'), 'is-success': !errors.has('feet') && this.measurement.feet != ''}" type="number" placeholder="ft" name="feet">
             </el-form-item>
     
             <el-form-item class="measurement-input">
@@ -14,18 +15,18 @@
 </template>
 
 <script>
-// let inputHelpers = require('../../helpers/input-helpers.js');
+import { validateInput } from '../../../../utils/helpers/input-helpers.js';
 export default {
     props: ['scope', 'type'],
 
     methods: {
         checkFeet(feetValue) {
-            // this.measurement.feet = inputHelpers.validateInput(feetValue, 0, 99, '');
+            this.measurement.feet = validateInput(feetValue, 0, 99, '');
             this.$emit('areaUpdated', this.currentRoom);
         },
 
         checkInches(inchesValue) {
-            // this.measurement.inches = inputHelpers.validateInput(inchesValue, 0, 11, '');
+            this.measurement.inches = validateInput(inchesValue, 0, 11, '');
             this.$emit('areaUpdated', this.currentRoom);
         }
     },

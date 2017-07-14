@@ -1,33 +1,42 @@
 <template>
-    <input class="area-input" @input="checkArea(currentRow.area)" v-model.number="roundedArea" v-validate="'required'" :class="{'input': true, 
-                                    'is-danger': errors.has('area'), 
-                                    'is-success': !errors.has('area') && this.currentRow.area != ''}" type="number" placeholder="0" name="area">
+    <div>
+        <div v-if="editing">
+            <input class="area-input" @blur="editing =! editing" @input="checkArea(currentArea)" v-model.number="currentArea" v-validate="'required'" :class="{'input': true, 
+                                            'is-danger': errors.has('area'), 
+                                            'is-success': !errors.has('area') && this.area != ''}" type="number" placeholder="0" name="area" value=4>
+        </div>
+        <div v-else @click="editing = !editing">
+            <span class="tag is-success is-large">{{roundedArea}}</span>
+        </div>
+    </div>
 </template>
 
 <script>
 // let inputHelpers = require('../../helpers/input-helpers.js');
-
+import { validateInput } from '../../../../utils/helpers/input-helpers.js';
 export default {
-    props: ['scope'],
+    props: ['area'],
 
     computed: {
         roundedArea: function () {
-            return parseFloat(this.currentRow.area).toFixed(2);
+            if (this.currentArea === '') return 0;
+            return parseFloat(this.currentArea).toFixed(2);
         }
     },
 
     methods: {
-        checkArea(areaValue) {
-            // this.currentRow.area = inputHelpers.validateInput(areaValue, 0, 20000);
-            this.$emit('areaUpdated', 'area', this.currentRow);
+        checkArea(area) {
+            console.log(this.roundedArea);
+            this.currentArea = validateInput(area, 0, 999, 0);
+            this.$emit('areaUpdated', this.currentArea);
         }
     },
 
     data: function () {
-        let currentRow = this.scope.row;
+        console.log(this.area);
         return {
-            currentRow,
-            disabled: false
+            editing: false,
+            currentArea: this.area
         };
     }
 };
