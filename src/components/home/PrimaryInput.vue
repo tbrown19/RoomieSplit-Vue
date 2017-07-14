@@ -4,8 +4,7 @@
             <el-tooltip class="item" effect="dark" placement="top">
                 <div slot="content" class="has-text-centered input-tool-tip">
                     {{ tooltip}}
-                    <br>
-                    Value can be between {{ min }} and {{ max }}
+                    <br> Value can be between {{ min }} and {{ max }}
                 </div>
                 <h2 class="is-title">
                     {{ name }}
@@ -33,29 +32,22 @@ export default {
         Card, SlideFade
     },
 
-    created() {
-        console.log(this.props);
-        // this.min = this.inputAttrs.min;
-        // this.max = this.inputAttrs.max;
-        // this.tooltip = this.inputAttrs.tooltip;
-    },
-
     computed: {
         validInput() {
-            this.valid = !this.errors.has(this.name) && this.value !== '';
-            return this.valid;
+            return !this.errors.has(this.name) && this.value !== '';
         }
     },
 
     watch: {
-        valid: function () {
-            this.$emit('input', this.name, this.value, this.valid);
+        validInput: function () {
+            console.log('validness has changed in the prim input');
+            this.$emit('inputValidityChanged', this.name, this.value, this.validInput);
         }
     },
+
     data: function () {
         return {
-            value: '',
-            valid: false
+            value: ''
         };
     }
 };

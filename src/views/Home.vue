@@ -4,7 +4,7 @@
             <h1 class="title">Calculate how much each person should contribute to the rent.</h1>
             <h1 class="title">Get started by filling out the information below.</h1>
         </div>
-        <primary-inputs :inputs="inputs" @inputEntered="inputsUpdated"></primary-inputs>
+        <primary-inputs :inputs="inputs" @inputsValidnessChanged="inputsValidnessChanged"></primary-inputs>
         <slide-fade>
             <el-row type="flex" justify="center" v-if="mainInputsCompleted">
                 <button id="nextStepButton" @click='proceedToNextStep' class="button is-primary is-large">Next Step</button>
@@ -25,11 +25,11 @@ export default {
     },
 
     methods: {
-        inputsUpdated(inputs, status) {
-            console.log(inputs);
+        inputsValidnessChanged(currentValidness) {
+            console.log(currentValidness);
+            console.log(this.inputs);
             // this.roomData = inputs;
-            this.inputs = inputs;
-            this.mainInputsCompleted = status;
+            this.mainInputsCompleted = currentValidness;
         },
 
         proceedToNextStep() {
@@ -55,19 +55,19 @@ export default {
         return {
             inputs: {
                 'rooms': {
-                    'value': 0,
+                    'value': '',
                     'min': 1,
                     'max': 5,
                     'tooltip': 'The total number of rooms.'
                 },
                 'area': {
-                    'value': 0,
+                    'value': '',
                     'min': 1,
                     'max': 10000,
                     'tooltip': 'The total area of the entire living space.'
                 },
                 'rent': {
-                    'value': 0,
+                    'value': '',
                     'min': 1,
                     'max': 100000,
                     'tooltip': 'The cost of rent.'

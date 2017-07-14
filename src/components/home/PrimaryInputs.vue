@@ -4,31 +4,31 @@
     
         <el-row type="flex" justify="center" :gutter="20">
             <el-col :span="8" v-for="(input, index) in inputs" v-bind:input="input" v-bind:index="index" v-bind:key="input.id">
-                <primary-input v-on:input="userInput" :name="index" v-bind="input"></primary-input>
+                <primary-input v-on:inputValidityChanged="inputsChanged" :name="index" v-bind="input"></primary-input>
             </el-col>
         </el-row>
         <!-- <el-row type="flex" justify="center" :gutter="20">
-                                <el-col :span="8">
-                                    <primary-input v-on:input="userInput" name="rooms" minVal="1" maxVal="10">
-                                        <div slot="inputDescription">Rooms</div>
-                                        <div slot="toolTip">The total number of rooms.</div>
-                                    </primary-input>
-                                </el-col>
-                        
-                                <el-col :span="8">
-                                    <primary-input v-on:input="userInput" name="area" minVal="1" maxVal="20000">
-                                        <div slot="inputDescription">Area</div>
-                                        <div slot="toolTip">The total area of the entire living space.</div>
-                                    </primary-input>
-                                </el-col>
-                        
-                                <el-col :span="8">
-                                    <primary-input v-on:input="userInput" name="rent" minVal="1" maxVal="50000">
-                                        <div slot="inputDescription">Rent</div>
-                                        <div slot="toolTip">The cost of rent.</div>
-                                    </primary-input>
-                                </el-col>
-                            </el-row> -->
+                                                    <el-col :span="8">
+                                                        <primary-input v-on:input="userInput" name="rooms" minVal="1" maxVal="10">
+                                                            <div slot="inputDescription">Rooms</div>
+                                                            <div slot="toolTip">The total number of rooms.</div>
+                                                        </primary-input>
+                                                    </el-col>
+                                            
+                                                    <el-col :span="8">
+                                                        <primary-input v-on:input="userInput" name="area" minVal="1" maxVal="20000">
+                                                            <div slot="inputDescription">Area</div>
+                                                            <div slot="toolTip">The total area of the entire living space.</div>
+                                                        </primary-input>
+                                                    </el-col>
+                                            
+                                                    <el-col :span="8">
+                                                        <primary-input v-on:input="userInput" name="rent" minVal="1" maxVal="50000">
+                                                            <div slot="inputDescription">Rent</div>
+                                                            <div slot="toolTip">The cost of rent.</div>
+                                                        </primary-input>
+                                                    </el-col>
+                                                </el-row> -->
         <hr>
     </div>
 </template>
@@ -42,54 +42,31 @@ export default {
     components: {
         PrimaryInput
     },
-
-    mounted() {
-        console.log(this.inputs);
-        this.inputsToInputObjects();
+    watch: {
+        completedInputs: function () {
+            const allInputsValid = this.completedInputs.length === this.numberInputs;
+            this.$emit('inputsValidnessChanged', allInputsValid);
+        }
     },
-
     methods: {
-
-        inputsToInputObjects() {
-            this.inputObjects = [];
-            for (const input of Object.keys(this.inputs)) {
-                console.log(input);
-            }
-        },
-
-        // Update the input objet, and then update the status bar
-        userInput(inputName, inputValue, valid) {
-            this.$set(this.inputs[inputName], 'value', inputValue);
-            this.$set(this.inputs[inputName], 'valid', valid);
-            this.checkForCompletedInputs();
-        },
-
-        checkForCompletedInputs() {
-            let completedInputs = 0;
-            for (const input of Object.keys(this.inputs)) {
-                if (this.inputs[input].valid) {
-                    completedInputs += 1;
-                }
-            }
-            if (completedInputs === 3) {
-                this.$emit('inputEntered', this.inputs, true);
-            } else {
-                this.$emit('inputEntered', this.inputs, false);
+        inputsChanged(inputName, inputValue, valid) {
+            // First update the input object to have the new value from the input component.
+            this.inputs[inputName].value = inputValue;
+            // Then check to see if the input is valid, and if so add it to our list of valid inputs.
+            const inputInCompletedInputs = this.completedInputs.includes(inputName);
+            if (valid && !inputInCompletedInputs) {
+                this.completedInputs.push(inputName);
+            } else if (!valid && inputInCompletedInputs) {
+                this.completedInputs.pop(inputName);
             }
         }
     },
 
     data: function () {
         return {
+            numberInputs: Object.keys(this.inputs).length,
             completedInputs: []
         };
     }
 };
 </script>
-
-
-<style>
-label {
-    font-family: 'Lato', sans-serif;
-}
-</style>
