@@ -23,7 +23,7 @@
     
         <el-table-column label="Area" min-width='100px'>
             <template scope="scope">
-                <Footage :area="scope.row.area" @areaUpdated="areaUpdated"></Footage>
+                <Footage :row="scope.row" :area="scope.row.area" @areaUpdated="areaUpdated"></Footage>
             </template>
         </el-table-column>
     
@@ -64,7 +64,8 @@ export default {
         calculateArea() {
             console.log('derp');
         },
-        areaUpdated(roomNumber, area) {
+        areaUpdated(row, area) {
+            console.log(row);
             console.log('new area is : ' + area);
         },
         occupantsUpdated() {

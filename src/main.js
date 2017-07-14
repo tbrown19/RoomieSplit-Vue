@@ -5,7 +5,6 @@ import App from './App';
 import router from './router';
 import VeeValidate from 'vee-validate';
 import Buefy from 'buefy';
-import 'buefy/lib/buefy.css';
 
 Vue.use(Buefy);
 

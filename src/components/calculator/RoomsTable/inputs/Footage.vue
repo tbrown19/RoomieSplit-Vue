@@ -1,12 +1,12 @@
 <template>
     <div>
         <div v-if="editing">
-            <input class="area-input" @blur="editing =! editing" @input="checkArea(currentArea)" v-model.number="currentArea" v-validate="'required'" :class="{'input': true, 
-                                            'is-danger': errors.has('area'), 
-                                            'is-success': !errors.has('area') && this.area != ''}" type="number" placeholder="0" name="area" value=4>
+            <input class="area-input" @blur="editing = false" @input="checkArea(currentArea)" v-model.number="currentArea" v-validate="'required'" :class="{'input': true, 
+                                                                'is-danger': errors.has('area'), 
+                                                                'is-success': !errors.has('area') && this.currentArea != '' && this.currentArea != 0}" type="number" placeholder="0" name="area" value=4>
         </div>
-        <div v-else @click="editing = !editing">
-            <span class="tag is-success is-large">{{roundedArea}}</span>
+        <div v-else>
+            <input @click="editing = true" class="area-input is-invalid"  v-model.number="roundedArea" :class="{'input': true, 'is-valid': !errors.has('area') && this.currentArea != ''}" type="number" placeholder="0" name="area">
         </div>
     </div>
 </template>
@@ -15,11 +15,11 @@
 // let inputHelpers = require('../../helpers/input-helpers.js');
 import { validateInput } from '../../../../utils/helpers/input-helpers.js';
 export default {
-    props: ['area'],
+    props: ['row', 'area'],
 
     computed: {
         roundedArea: function () {
-            if (this.currentArea === '') return 0;
+            if (this.currentArea === '' || this.currentArea === 0.00) return 0;
             return parseFloat(this.currentArea).toFixed(2);
         }
     },
@@ -28,7 +28,7 @@ export default {
         checkArea(area) {
             console.log(this.roundedArea);
             this.currentArea = validateInput(area, 0, 999, 0);
-            this.$emit('areaUpdated', this.currentArea);
+            this.$emit('areaUpdated', this.row, this.currentArea);
         }
     },
 
@@ -43,6 +43,12 @@ export default {
 </script>
 
 <style>
+.is-valid {
+    border-radius: 3px;
+    background-color: white;
+    border: 1px solid #00d1b2;
+}
+
 .area-input {
     width: 8rem;
 }
