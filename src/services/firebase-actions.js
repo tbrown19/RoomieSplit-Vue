@@ -2,8 +2,10 @@ import {
     Database
 } from './firebase.js';
 
+import { createEmptyRooms } from '../utils/helpers/generate-empty-rooms.js';
+
 export function addRoomConfiguration(roomConfiguration) {
-    console.log(roomConfiguration);
+    roomConfiguration.rooms = createEmptyRooms(roomConfiguration.numRooms);
     // Add the newly created room configuration to the database and then return its unique key
     return new Promise((resolve, reject) => {
         Database.ref('RoomConfigurations').push(roomConfiguration).then((snap) => {

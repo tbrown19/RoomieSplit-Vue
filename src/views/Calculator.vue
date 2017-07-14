@@ -1,7 +1,6 @@
 <template>
     <div>
         <slide-fade-out-in>
-    
             <div class="loading has-text-centered" v-if="loading" key="loading">
                 <h1>Loading...</h1>
             </div>
@@ -21,20 +20,19 @@
     
             <div v-if="roomConfiguration" key="loaded">
                 <updatable-inputs :inputs="inputs" :roomConfiguration="roomConfiguration" @saveInput="triggerRoomConfigruationUpdate"></updatable-inputs>
-                <rooms-table :roomConfiguration="roomConfiguration"></rooms-table>
+                <!-- <rooms-table :roomConfiguration="roomConfiguration"></rooms-table> -->
             </div>
         </slide-fade-out-in>
     
     </div>
 </template>
 
-
 <script>
 import UpdatableInputs from '../components/calculator/RoomConfiguration/UpdatableInputs.vue';
 import RoomsTable from '../components/calculator/RoomsTable/Table.vue';
 import SlideFadeOutIn from '../components/transitions/SlideFadeOutIn.vue';
 import { getRoomConfiguration, updateRoomConfiguration } from '../services/firebase-actions.js';
-
+import { namedInputsWithoutValue } from '../config/room-configuration.js';
 export default {
 
     created() {
@@ -70,27 +68,10 @@ export default {
     },
 
     data: function () {
+        // Get the inputs object from the configuration
+        const inputs = namedInputsWithoutValue();
         return {
-            inputs: {
-                'numRooms': {
-                    'name': 'rooms',
-                    'min': 1,
-                    'max': 10,
-                    'tooltip': 'The total number of rooms.'
-                },
-                'area': {
-                    'name': 'area',
-                    'min': 1,
-                    'max': 10000,
-                    'tooltip': 'The total area of the entire living space.'
-                },
-                'rent': {
-                    'name': 'rent',
-                    'min': 1,
-                    'max': 100000,
-                    'tooltip': 'The cost of rent.'
-                }
-            },
+            inputs,
             roomConfiguration: null,
             loading: false,
             error: null
