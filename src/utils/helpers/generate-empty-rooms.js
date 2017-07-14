@@ -2,7 +2,7 @@ export function createEmptyRooms(numRooms) {
     let roomData = [];
     for (let i = 1; i <= numRooms; i++) {
         roomData.push({
-            room: i,
+            roomNumber: i,
             length: {
                 feet: '',
                 inches: ''

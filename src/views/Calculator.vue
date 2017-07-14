@@ -20,7 +20,7 @@
     
             <div v-if="roomConfiguration" key="loaded">
                 <updatable-inputs :inputs="inputs" :roomConfiguration="roomConfiguration" @saveInput="triggerRoomConfigruationUpdate"></updatable-inputs>
-                <!-- <rooms-table :roomConfiguration="roomConfiguration"></rooms-table> -->
+                <rooms-table :rooms="rooms"></rooms-table>
             </div>
         </slide-fade-out-in>
     
@@ -52,6 +52,7 @@ export default {
                 this.loading = false;
                 console.log(roomConfiguration);
                 this.roomConfiguration = roomConfiguration;
+                this.rooms = roomConfiguration.rooms;
             }, (error) => {
                 this.loading = false;
                 this.error = error;
