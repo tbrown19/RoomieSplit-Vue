@@ -6,13 +6,13 @@
                    <viewing :name="name" :value="currentValue"></viewing>
                 </div>
                 <div v-else key="editing">
-                   <editing :name="name" :value="value" :min="min" :max="max" :tooltip="tooltip"></editing>
+                   <editing @valueChanged="inputUpdated" :name="name" :value="value" :min="min" :max="max" :tooltip="tooltip"></editing>
                 </div>
             </transition>    
         </div>
         <footer class="card-footer" slot="footer">
             <a class="card-footer-item" @click="edit" v-if="!editing">Edit</a>
-            <a class="card-footer-item" @click="save" v-else :class="{'hidden': errors.has(name)}">Save</a>
+            <a class="card-footer-item" @click="save" v-else :class="{'hidden': !validInput}">Save</a>
         </footer>
     </card-with-footer>
 </template>
@@ -32,6 +32,11 @@ export default {
     },
 
     methods: {
+        inputUpdated(value, valid) {
+            console.log('this input has errors: ' + this.errors.has(this.name));
+            console.log(this.name + ' has been updated and now contains : ' + value + ' valid: ' + valid);
+        },
+
         edit() {
             this.editing = true;
         },
@@ -44,7 +49,8 @@ export default {
     data: function () {
         return {
             currentValue: this.value,
-            editing: false
+            editing: false,
+            validInput: true
         };
     }
 };

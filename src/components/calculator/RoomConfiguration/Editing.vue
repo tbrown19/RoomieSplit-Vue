@@ -27,13 +27,13 @@ export default {
         },
 
         validInput: function () {
-            return !this.errors.has(this.name) && this.value !== '';
+            return this.currentValue >= this.min && this.currentValue <= this.max;
         }
     },
 
     watch: {
-        value: function () {
-            this.$emit('inputValueChanged', this.name, this.value, this.validInput);
+        currentValue: function () {
+            this.$emit('valueChanged', this.currentValue, this.validInput);
         }
     },
 
@@ -60,7 +60,8 @@ h2 {
     max-width: 75%;
     margin-bottom: .675em;
 }
-.help{
+
+.help {
     font-size: 1rem;
 }
 </style>
