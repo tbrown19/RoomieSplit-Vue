@@ -53,22 +53,16 @@ export default {
                 this.loading = false;
                 console.log(roomConfiguration);
                 this.roomConfiguration = roomConfiguration;
-                this.updateInputsWithLoadedValues();
             }, (error) => {
                 this.loading = false;
                 this.error = error;
             });
         },
 
-        updateInputsWithLoadedValues(roomConfiguration) {
-            this.inputs.rooms.value = this.roomConfiguration.numRooms;
-            this.inputs.area.value = this.roomConfiguration.area;
-            this.inputs.rent.value = this.roomConfiguration.rent;
-        },
-
-        triggerRoomConfigruationUpdate(inputName, inputValue) {
-            console.log('so u want to update ' + inputName + ' to be ' + inputValue);
+        triggerRoomConfigruationUpdate(inputKey, inputValue) {
+            this.roomConfiguration[inputKey] = inputValue;
             const id = this.$route.params.configId;
+            console.log(this.roomConfiguration);
             updateRoomConfiguration(id, this.roomConfiguration);
         }
 

@@ -27,7 +27,7 @@ import Editing from './Editing.vue';
 export default {
     name: 'Primary-Input',
 
-    props: ['name', 'value', 'min', 'max', 'tooltip'],
+    props: ['configKey', 'name', 'value', 'min', 'max', 'tooltip'],
 
     components: {
         CardWithFooter, Editing, Viewing
@@ -45,7 +45,7 @@ export default {
 
         save() {
             this.editing = false;
-            this.$emit('saveInput', this.name, this.currentValue);
+            this.$emit('saveInput', this.configKey, this.currentValue);
         }
     },
 

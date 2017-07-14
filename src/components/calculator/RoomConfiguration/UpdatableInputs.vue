@@ -2,7 +2,7 @@
     <div>
         <el-row type="flex" justify="center" :gutter="20">
             <el-col :span="8" v-for="(input, index) in inputs" v-bind:input="input" v-bind:index="index" v-bind:key="input.id">
-                <updatable-input v-on:saveInput="saveInput" :value="roomConfiguration[index]" v-bind="input"></updatable-input>
+                <updatable-input v-on:saveInput="saveInput" :value="roomConfiguration[index]" :configKey="index" v-bind="input"></updatable-input>
             </el-col>
         </el-row>
         <hr>
@@ -22,8 +22,8 @@ export default {
     },
 
     methods: {
-        saveInput(inputName, inputValue) {
-            this.$emit('saveInput', inputName, inputValue);
+        saveInput(inputKey, inputValue) {
+            this.$emit('saveInput', inputKey, inputValue);
         }
     },
 
