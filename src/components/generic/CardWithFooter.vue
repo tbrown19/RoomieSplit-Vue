@@ -7,17 +7,19 @@
                 </slot>
             </div>
         </div>
+        <slot name="footer"></slot>
+    
     </div>
 </template>
 
 
 <script>
-
+export default {
+};
 </script>
 
-
-<style lang="scss" scoped>
+<style scoped>
 .card-content {
-    padding: 1.25rem;
+    padding: .75rem;
 }
 </style>

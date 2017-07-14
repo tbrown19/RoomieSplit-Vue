@@ -33,7 +33,7 @@ $primary: #00d1b2;
 
 body {
     margin: 0 !important;
-    padding-bottom: 5rem;
+    padding-bottom: 20rem;
 }
 
 

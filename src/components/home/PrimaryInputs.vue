@@ -14,7 +14,7 @@
 import PrimaryInput from './PrimaryInput.vue';
 
 export default {
-    name: 'Primary Inputs',
+    name: 'Primary-Inputs',
 
     props: ['inputs'],
 

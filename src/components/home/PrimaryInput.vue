@@ -26,7 +26,7 @@ import Card from '../generic/Card.vue';
 import SlideFade from '../transitions/SlideFade.vue';
 
 export default {
-    name: 'PrimaryInput',
+    name: 'Primary-Input',
 
     props: ['name', 'min', 'max', 'tooltip'],
 
