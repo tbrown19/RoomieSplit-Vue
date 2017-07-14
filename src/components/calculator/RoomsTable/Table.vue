@@ -75,7 +75,6 @@ export default {
     data: function () {
         console.log(this.rooms);
         return {
-            rooms: this.rooms
         };
     }
 };
