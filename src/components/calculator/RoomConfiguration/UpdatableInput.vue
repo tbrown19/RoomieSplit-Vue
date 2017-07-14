@@ -45,6 +45,7 @@ export default {
 
         save() {
             this.editing = false;
+            this.$emit('saveInput', this.name, this.currentValue);
         }
     },
 

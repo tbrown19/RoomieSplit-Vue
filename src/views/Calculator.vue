@@ -1,6 +1,6 @@
 <template>
     <div>
-        <transition name="slide-fade" mode="out-in">
+        <slide-fade-out-in>
     
             <div class="loading has-text-centered" v-if="loading" key="loading">
                 <h1>Loading...</h1>
@@ -18,11 +18,11 @@
                     </div>
                 </article>
             </div>
-            <div v-if="housingInformation" key="loaded">
-                <updatable-inputs :inputs="inputs" @inputChangeSaved="triggerRoomConfigruationUpdate"></updatable-inputs>
-            </div>
     
-        </transition>
+            <div v-if="roomConfiguration" key="loaded">
+                <updatable-inputs :inputs="inputs" :roomConfiguration="roomConfiguration" @saveInput="triggerRoomConfigruationUpdate"></updatable-inputs>
+            </div>
+        </slide-fade-out-in>
     
     </div>
 </template>
@@ -31,6 +31,7 @@
 <script>
 import UpdatableInputs from '../components/calculator/RoomConfiguration/UpdatableInputs.vue';
 import RoomsTable from '../components/calculator/RoomsTable/Table.vue';
+import SlideFadeOutIn from '../components/transitions/SlideFadeOutIn.vue';
 import { getRoomConfiguration, updateRoomConfiguration } from '../services/firebase-actions.js';
 
 export default {
@@ -40,7 +41,7 @@ export default {
     },
 
     components: {
-        UpdatableInputs, RoomsTable
+        UpdatableInputs, RoomsTable, SlideFadeOutIn
     },
 
     methods: {
@@ -51,41 +52,51 @@ export default {
             getRoomConfiguration(id).then((roomConfiguration) => {
                 this.loading = false;
                 console.log(roomConfiguration);
+                this.roomConfiguration = roomConfiguration;
+                this.updateInputsWithLoadedValues();
             }, (error) => {
                 this.loading = false;
                 this.error = error;
             });
         },
 
-        triggerRoomConfigruationUpdate() {
+        updateInputsWithLoadedValues(roomConfiguration) {
+            this.inputs.rooms.value = this.roomConfiguration.numRooms;
+            this.inputs.area.value = this.roomConfiguration.area;
+            this.inputs.rent.value = this.roomConfiguration.rent;
+        },
+
+        triggerRoomConfigruationUpdate(inputName, inputValue) {
+            console.log('so u want to update ' + inputName + ' to be ' + inputValue);
             const id = this.$route.params.configId;
             updateRoomConfiguration(id, this.roomConfiguration);
         }
+
     },
 
     data: function () {
         return {
             inputs: {
-                'rooms': {
-                    'value': 0,
+                'numRooms': {
+                    'name': 'rooms',
                     'min': 1,
                     'max': 10,
                     'tooltip': 'The total number of rooms.'
                 },
                 'area': {
-                    'value': 0,
+                    'name': 'area',
                     'min': 1,
                     'max': 10000,
                     'tooltip': 'The total area of the entire living space.'
                 },
                 'rent': {
-                    'value': 0,
+                    'name': 'rent',
                     'min': 1,
                     'max': 100000,
                     'tooltip': 'The cost of rent.'
                 }
             },
-            roomConfiguration: {},
+            roomConfiguration: null,
             loading: false,
             error: null
         };
