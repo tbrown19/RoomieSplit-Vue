@@ -1,21 +1,65 @@
 <template>
-    <updatable-inputs :inputs="inputs" @inputsValidnessChanged="inputsValidnessChanged"></updatable-inputs>
+    <div>
+        <transition name="slide-fade" mode="out-in">
+    
+            <div class="loading has-text-centered" v-if="loading" key="loading">
+                <h1>Loading...</h1>
+            </div>
+    
+            <div class="error" v-if="error" key="error">
+                <article class="message is-danger">
+                    <div class="message-header">
+                        <p>
+                            <strong>Error</strong>!
+                        </p>
+                    </div>
+                    <div class="message-body">
+                        {{ error }}
+                    </div>
+                </article>
+            </div>
+            <div v-if="housingInformation" key="loaded">
+                <updatable-inputs :inputs="inputs" @inputChangeSaved="triggerRoomConfigruationUpdate"></updatable-inputs>
+            </div>
+    
+        </transition>
+    
+    </div>
 </template>
 
 
 <script>
 import UpdatableInputs from '../components/calculator/RoomConfiguration/UpdatableInputs.vue';
 import RoomsTable from '../components/calculator/RoomsTable/Table.vue';
+import { getRoomConfiguration, updateRoomConfiguration } from '../services/firebase-actions.js';
 
 export default {
+
+    created() {
+        this.handleGetRoomConfiguration();
+    },
 
     components: {
         UpdatableInputs, RoomsTable
     },
 
     methods: {
-        inputsValidnessChanged(currentValidness) {
-            this.mainInputsCompleted = currentValidness;
+        handleGetRoomConfiguration() {
+            const id = this.$route.params.configId;
+            this.loading = true;
+
+            getRoomConfiguration(id).then((roomConfiguration) => {
+                this.loading = false;
+                console.log(roomConfiguration);
+            }, (error) => {
+                this.loading = false;
+                this.error = error;
+            });
+        },
+
+        triggerRoomConfigruationUpdate() {
+            const id = this.$route.params.configId;
+            updateRoomConfiguration(id, this.roomConfiguration);
         }
     },
 
@@ -40,7 +84,10 @@ export default {
                     'max': 100000,
                     'tooltip': 'The cost of rent.'
                 }
-            }
+            },
+            roomConfiguration: {},
+            loading: false,
+            error: null
         };
     }
 };

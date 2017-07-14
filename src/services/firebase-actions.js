@@ -15,3 +15,24 @@ export function addRoomConfiguration(roomConfiguration) {
         });
     });
 }
+
+export function getRoomConfiguration(id) {
+    return new Promise((resolve, reject) => {
+        Database.ref('RoomConfigurations/' + id).once('value').then((roomConfiguration) => {
+            if (roomConfiguration.val() == null) {
+                reject('No roomie split configuration found for this link.');
+            } else {
+                resolve(roomConfiguration.val());
+            }
+        }, (error) => {
+            reject(error);
+        });
+    });
+}
+
+export function updateRoomConfiguration(id, roomConfiguration) {
+    const currentRoom = Database.ref('RoomConfigurations').child(id);
+    currentRoom.child('numRooms').set(this.roomConfiguration.numRooms);
+    currentRoom.child('area').set(this.roomConfiguration.area);
+    currentRoom.child('rent').set(this.roomConfiguration.rent);
+}

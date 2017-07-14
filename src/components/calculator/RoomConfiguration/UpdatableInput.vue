@@ -35,7 +35,7 @@ export default {
 
     methods: {
         inputUpdated(value, valid) {
-            console.log(valid);
+            this.currentValue = value;
             this.validInput = valid;
         },
 
