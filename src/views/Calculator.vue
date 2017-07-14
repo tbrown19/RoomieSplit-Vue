@@ -21,6 +21,7 @@
     
             <div v-if="roomConfiguration" key="loaded">
                 <updatable-inputs :inputs="inputs" :roomConfiguration="roomConfiguration" @saveInput="triggerRoomConfigruationUpdate"></updatable-inputs>
+                <rooms-table :roomConfiguration="roomConfiguration"></rooms-table>
             </div>
         </slide-fade-out-in>
     

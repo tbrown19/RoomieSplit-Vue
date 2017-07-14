@@ -31,7 +31,6 @@ export function getRoomConfiguration(id) {
 }
 
 export function updateRoomConfiguration(id, roomConfiguration) {
-    console.log(roomConfiguration);
     const currentRoom = Database.ref('RoomConfigurations').child(id);
     currentRoom.child('numRooms').set(roomConfiguration.numRooms);
     currentRoom.child('area').set(roomConfiguration.area);
