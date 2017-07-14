@@ -1,34 +1,11 @@
 <template>
     <div>
         <hr>
-    
         <el-row type="flex" justify="center" :gutter="20">
             <el-col :span="8" v-for="(input, index) in inputs" v-bind:input="input" v-bind:index="index" v-bind:key="input.id">
-                <primary-input v-on:inputValidityChanged="inputsChanged" :name="index" v-bind="input"></primary-input>
+                <primary-input v-on:inputValueChanged="inputsChanged" :name="index" v-bind="input"></primary-input>
             </el-col>
         </el-row>
-        <!-- <el-row type="flex" justify="center" :gutter="20">
-                                                    <el-col :span="8">
-                                                        <primary-input v-on:input="userInput" name="rooms" minVal="1" maxVal="10">
-                                                            <div slot="inputDescription">Rooms</div>
-                                                            <div slot="toolTip">The total number of rooms.</div>
-                                                        </primary-input>
-                                                    </el-col>
-                                            
-                                                    <el-col :span="8">
-                                                        <primary-input v-on:input="userInput" name="area" minVal="1" maxVal="20000">
-                                                            <div slot="inputDescription">Area</div>
-                                                            <div slot="toolTip">The total area of the entire living space.</div>
-                                                        </primary-input>
-                                                    </el-col>
-                                            
-                                                    <el-col :span="8">
-                                                        <primary-input v-on:input="userInput" name="rent" minVal="1" maxVal="50000">
-                                                            <div slot="inputDescription">Rent</div>
-                                                            <div slot="toolTip">The cost of rent.</div>
-                                                        </primary-input>
-                                                    </el-col>
-                                                </el-row> -->
         <hr>
     </div>
 </template>
@@ -48,6 +25,7 @@ export default {
             this.$emit('inputsValidnessChanged', allInputsValid);
         }
     },
+
     methods: {
         inputsChanged(inputName, inputValue, valid) {
             // First update the input object to have the new value from the input component.

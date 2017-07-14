@@ -7,7 +7,7 @@
                     <br> Value can be between {{ min }} and {{ max }}
                 </div>
                 <h2 class="is-title">
-                    {{ name }}
+                    {{ capitalizedName }}
                 </h2>
             </el-tooltip>
     
@@ -33,15 +33,18 @@ export default {
     },
 
     computed: {
-        validInput() {
+        capitalizedName: function () {
+            return this.name.charAt(0).toUpperCase() + this.name.slice(1);
+        },
+
+        validInput: function () {
             return !this.errors.has(this.name) && this.value !== '';
         }
     },
 
     watch: {
-        validInput: function () {
-            console.log('validness has changed in the prim input');
-            this.$emit('inputValidityChanged', this.name, this.value, this.validInput);
+        value: function () {
+            this.$emit('inputValueChanged', this.name, this.value, this.validInput);
         }
     },
 

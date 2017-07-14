@@ -29,6 +29,7 @@ export default {
             console.log(currentValidness);
             console.log(this.inputs);
             // this.roomData = inputs;
+            console.log('main inputs completed : ' + currentValidness);
             this.mainInputsCompleted = currentValidness;
         },
 
