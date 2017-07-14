@@ -14,11 +14,14 @@
 import PrimaryInput from './PrimaryInput.vue';
 
 export default {
+    name: 'Primary Inputs',
+
     props: ['inputs'],
 
     components: {
         PrimaryInput
     },
+
     watch: {
         completedInputs: function () {
             const allInputsValid = this.completedInputs.length === this.numberInputs;

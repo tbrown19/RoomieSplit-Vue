@@ -17,7 +17,7 @@
 <script>
 import PrimaryInputs from '../components/home/PrimaryInputs.vue';
 import SlideFade from '../components/transitions/SlideFade.vue';
-// import { addRoomConfiguration } from '../services/firebase-actions.js';
+import { addRoomConfiguration } from '../services/firebase-actions.js';
 
 export default {
     components: {
@@ -26,19 +26,15 @@ export default {
 
     methods: {
         inputsValidnessChanged(currentValidness) {
-            console.log(currentValidness);
-            console.log(this.inputs);
-            // this.roomData = inputs;
-            console.log('main inputs completed : ' + currentValidness);
             this.mainInputsCompleted = currentValidness;
         },
 
         proceedToNextStep() {
             let roomConfigruation = this.inputsToroomConfigruation(this.inputs);
             console.log(roomConfigruation);
-            // addRoomConfiguration(roomConfigruation).then((configId) => {
-            //     this.$router.push({ name: 'calculator', params: { configId: configId } });
-            // });
+            addRoomConfiguration(roomConfigruation).then((configId) => {
+                this.$router.push({ name: 'calculator', params: { configId: configId } });
+            });
         },
 
         inputsToroomConfigruation(inputs) {
@@ -58,7 +54,7 @@ export default {
                 'rooms': {
                     'value': '',
                     'min': 1,
-                    'max': 5,
+                    'max': 10,
                     'tooltip': 'The total number of rooms.'
                 },
                 'area': {

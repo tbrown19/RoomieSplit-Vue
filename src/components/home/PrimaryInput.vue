@@ -26,6 +26,8 @@ import Card from '../generic/Card.vue';
 import SlideFade from '../transitions/SlideFade.vue';
 
 export default {
+    name: 'Primary Input',
+
     props: ['name', 'min', 'max', 'tooltip'],
 
     components: {
@@ -67,7 +69,7 @@ export default {
 }
 
 .is-success {
-    border-width: 2px;
+    border-width: 1px;
 }
 
 .help {
