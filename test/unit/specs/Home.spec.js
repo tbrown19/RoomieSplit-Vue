@@ -23,10 +23,11 @@ describe('Home.vue', () => {
     describe('Primary Inputs', () => {
         function updateInputValues(value) {
             const inputs = vm.$el.querySelectorAll('input');
-            inputs.forEach(input => {
-                input.value = value;
-                input.dispatchEvent(new Event('input'));
-            });
+            for (let i = 0; i < inputs.length; i++) {
+                inputs[i].value = value;
+                inputs[i].dispatchEvent(new Event('input'));
+            }
+            return inputs;
         }
 
         it('should render correct contents', () => {
@@ -35,13 +36,12 @@ describe('Home.vue', () => {
         });
 
         it('should allow input', (done) => {
-            updateInputValues('1');
+            const inputs = updateInputValues('1');
             // After events settle.
             Vue.nextTick(() => {
-                const inputs = vm.$el.querySelectorAll('input');
-                inputs.forEach(input => {
-                    expect(input.value).to.equal('1');
-                });
+                for (let i = 0; i < inputs.length; i++) {
+                    expect(inputs[i].value).to.equal('1');
+                }
                 done();
             });
         });
