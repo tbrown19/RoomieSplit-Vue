@@ -24,8 +24,7 @@ export default {
 
     watch: {
         completedInputs: function () {
-            const allInputsValid = this.completedInputs.length === this.numberInputs;
-            this.$emit('inputsValidnessChanged', allInputsValid);
+            console.log(this.completedInputs.size);
         }
     },
 
@@ -34,19 +33,25 @@ export default {
             // First update the input object to have the new value from the input component.
             this.inputs[inputName].value = inputValue;
             // Then check to see if the input is valid, and if so add it to our list of valid inputs.
-            const inputInCompletedInputs = this.completedInputs.includes(inputName);
+            const inputInCompletedInputs = this.completedInputs.has(inputName);
             if (valid && !inputInCompletedInputs) {
-                this.completedInputs.push(inputName);
+                this.completedInputs.add(inputName);
             } else if (!valid && inputInCompletedInputs) {
-                this.completedInputs.pop(inputName);
+                this.completedInputs.delete(inputName);
             }
+            this.checkAllInputsCompletion();
+        },
+
+        checkAllInputsCompletion() {
+            const allInputsValid = this.completedInputs.size === this.numberInputs;
+            this.$emit('inputsValidnessChanged', allInputsValid);
         }
     },
 
     data: function () {
         return {
             numberInputs: Object.keys(this.inputs).length,
-            completedInputs: []
+            completedInputs: new Set()
         };
     }
 };
