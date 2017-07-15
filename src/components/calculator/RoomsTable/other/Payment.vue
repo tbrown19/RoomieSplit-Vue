@@ -10,12 +10,17 @@
 
 <script>
 export default {
-    props: ['payment', 'occupants']
+    props: ['payment', 'occupants'],
+    computed: {
+        roundedPayment: function () {
+            return parseFloat(this.payment).toFixed(2);
+        }
+    }
 };
 </script>
 
 <style>
-.payment-value{
+.payment-value {
     font-size: 1.1rem;
 }
 </style>

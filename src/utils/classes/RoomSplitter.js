@@ -42,12 +42,17 @@ export default class RoomSplitter {
 
     updateInitalValues() {
         this.updateAreaRelatedValues();
+        this.updatePaymentRelatedValues();
+        this.updateEachRoomsValues();
+    }
+
+    updateEachRoomsValues() {
         for (let i = 0; i < this.numberRooms; i++) {
-            this.updateARoomsInitialValues(this.rooms[i]);
+            this.updateARoomsValues(this.rooms[i]);
         }
     }
 
-    updateARoomsInitialValues(room) {
+    updateARoomsValues(room) {
         this.updateARoomsPercentOfTotalSpace(room);
         this.updateARoomsPercentOfPrivateSpace(room);
     }
@@ -60,32 +65,6 @@ export default class RoomSplitter {
         room.percentOfPrivateSpace = this.Calculator.calculateARoomsPercentOfPrivateSpace(room, this.privateSpace);
     }
 
-    // calculateTotalRoomsArea() {
-    //     return this.sumValueOfRoomData(this.rooms, 'area');
-    // }
-
-    // calculateTotalOccupants() {
-    //     return this.sumValueOfRoomData(this.rooms, 'occupants');
-    // }
-
-    // calculateCommonSpace() {
-    //     const totalRoomsArea = this.calculateTotalRoomsArea();
-    //     const totalArea = this.area;
-    //     return totalArea - totalRoomsArea;
-    // }
-
-    // calculateCommonSpacePercentage() {
-    //     const totalArea = this.area;
-    //     const commonSpaceArea = this.calculateCommonSpace();
-    //     return commonSpaceArea / totalArea;
-    // }
-
-    // calculateValueCommonSpace() {
-    //     const commonSpacePercentage = this.calculateCommonSpacePercentage();
-    //     const rent = this.rent;
-    //     return rent * commonSpacePercentage;
-    // }
-
     updateAreaRelatedValues() {
         this.commonSpace = this.Calculator.calculateCommonSpace(this.rooms, this.area);
         this.privateSpace = this.area - this.commonSpace;
@@ -95,44 +74,42 @@ export default class RoomSplitter {
 
         this.commonSpaceValue = this.Calculator.calculateValueCommonSpace(this.rent, this.commonSpacePercentage);
         this.privateSpaceValue = this.rent - this.commonSpaceValue;
+
+        // Update the values related to all the rooms, and then go an update each rooms values relative to the new totals.
+        this.updateEachRoomsValues();
     }
 
-    calculateBasePayment() {
-        const numberOccupants = this.sumValueOfRoomData(this.rooms, 'occupants');
-        return this.commonSpaceValue / numberOccupants;
-    }
-
-    calculatePaymentRelatedValues() {
-        this.basePayment = this.calculateBasePayment();
-        console.log(this.basePayment);
+    updatePaymentRelatedValues() {
+        this.basePayment = this.Calculator.calculateBasePayment(this.rooms, this.commonSpaceValue);
         this.rooms.forEach(room => {
             // If the room has occupants then we can calculate a payment for it.
             if (room.occupants > 0) {
-                console.log('calculating payment for room ' + room.roomNumber);
-                this.calculatePaymentForRoom(room);
+                this.updateARoomsPaymentRelatedValues(room);
             } else {
-                room.privatePayment = 0;
-                room.payment = 0;
-                this.privateSpace -= room.area;
-                this.commonSpace += room.area;
+                this.removeARoomFromPaymentCalculations(room);
             }
         });
     }
 
-    calculatePaymentForRoom(room) {
-        room.percentOfPrivateSpace = room.area / this.privateSpace;
+    updateARoomsPaymentRelatedValues(room) {
         room.eachOccupantsPercentOfPrivateSpace = room.percentOfPrivateSpace / room.occupants;
+
         room.privatePayment = this.privateSpaceValue * room.eachOccupantsPercentOfPrivateSpace;
-        let totalPayment = this.basePayment + room.privatePayment;
-        room.payment = parseFloat(totalPayment).toFixed(2);
+
+        room.payment = this.basePayment + room.privatePayment;
+
+        console.log(room.payment);
     }
 
-    sumValueOfRoomData(rooms, valueToSum) {
-        let valuesToSum = rooms.map(function (room) {
-            return parseFloat(room[valueToSum]) || 0;
-        });
-        console.log(valuesToSum);
-        return valuesToSum.reduce((total, currentValue) => total + currentValue);
-    }
+    removeRoomsWithNoOccupantsFrom
 
+    removeARoomFromPaymentCalculations(room) {
+        console.log(room.privatePayment);
+        // Reset the rooms payment back to 0, since it no longer has any occupants.
+        room.privatePayment = 0;
+        room.payment = 0;
+        // Remove the room from the private space area, and re add it to the common space area since we are no longer including it in our calculation.
+        this.privateSpace -= room.area;
+        this.commonSpace += room.area;
+    }
 }

@@ -30,6 +30,11 @@ export default class RoomSplitterCalculator {
         return rent * commonSpacePercentage;
     }
 
+    calculateBasePayment(rooms, commonSpaceValue) {
+        const numberOccupants = this.sumValueOfRoomData(rooms, 'occupants');
+        return commonSpaceValue / numberOccupants;
+    }
+
     sumValueOfRoomData(rooms, valueToSum) {
         let valuesToSum = rooms.map(function (room) {
             return parseFloat(room[valueToSum]) || 0;

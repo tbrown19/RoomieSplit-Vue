@@ -60,8 +60,12 @@ export default {
 
     methods: {
         measurementUpdated(room) {
+            // Update the rooms footage by calculating it with the measurement values.
             room.updateAreaFromMeasurements();
-            this.RoomSplitter.updateARoomsPercentOfTotalSpace(room);
+             // Update the total area and other related values on the room splitter.
+            this.RoomSplitter.updateAreaRelatedValues();
+            // Update values on the room object that are related to the other rooms, such as percent of common space.
+            this.RoomSplitter.updateARoomsValues(room);
         },
 
         areaUpdated(room, area) {
@@ -69,15 +73,14 @@ export default {
             EventBus.$emit('areaUpdatedManually');
             // Then call the function on the room which will clear the measurement inputs and update the room's area.
             room.updateAreaFromInputs(area);
-            console.log(room);
-            this.RoomSplitter.updateARoomsPercentOfTotalSpace(room);
-            this.RoomSplitter.calculateAreaRelatedValues();
-            this.RoomSplitter.updateARoomsPercentOfPrivateSpace(room);
+            // Update the total area and other related values on the room splitter.
+            this.RoomSplitter.updateAreaRelatedValues();
+            // Update values on the room object that are related to the other rooms, such as percent of common space.
+            this.RoomSplitter.updateARoomsValues(room);
         },
 
         occupantsUpdated() {
-            this.RoomSplitter.calculateAreaRelatedValues();
-            this.RoomSplitter.calculatePaymentRelatedValues();
+            this.RoomSplitter.updatePaymentRelatedValues();
         }
     },
 
