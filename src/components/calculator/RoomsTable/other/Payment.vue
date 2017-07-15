@@ -1,6 +1,6 @@
 <template>
     <div class="payment-value" v-if="payment > 0">
-        <h2>{{ payment }}</h2>
+        <h2>{{ roundedPayment }}</h2>
         <div v-if="occupants > 1">
             each
         </div>

@@ -1,6 +1,5 @@
 <template>
     <div>
-    
         <el-form :inline="true" :model="measurement">
             <el-form-item class="measurement-input">
                 <input @input="checkFeet(measurement.feet)" v-model.number="measurement.feet" v-validate="'required|between:1,99'" :class="{'input': true, 'is-danger': errors.has('feet'), 'is-success': !errors.has('feet') && this.measurement.feet != ''}" type="number" placeholder="ft" name="feet">
@@ -56,5 +55,6 @@ export default {
 .measurement-input {
     padding-top: 1rem;
     max-width: 3.5rem;
+    margin-bottom: 0;
 }
 </style>
