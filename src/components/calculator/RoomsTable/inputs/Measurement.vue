@@ -31,12 +31,12 @@ export default {
     methods: {
         checkFeet(feetValue) {
             this.measurement.feet = validateInput(feetValue, 0, 99, '');
-            this.$emit('areaUpdated', this.currentRoom);
+            this.$emit('measurementUpdated', this.currentRoom);
         },
 
         checkInches(inchesValue) {
             this.measurement.inches = validateInput(inchesValue, 0, 11, '');
-            this.$emit('areaUpdated', this.currentRoom);
+            this.$emit('measurementUpdated', this.currentRoom);
         }
     },
 

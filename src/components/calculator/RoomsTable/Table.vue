@@ -11,19 +11,19 @@
     
         <el-table-column label="Length" min-width='120px'>
             <template scope="scope">
-                <Measurement type='length' :scope="scope" @areaUpdated="calculateArea"></Measurement>
+                <Measurement type='length' :scope="scope" @measurementUpdated="measurementUpdated"></Measurement>
             </template>
         </el-table-column>
     
         <el-table-column label="Width" min-width='120px'>
             <template scope="scope">
-                <Measurement type='width' :scope="scope" @areaUpdated="calculateArea"></Measurement>
+                <Measurement type='width' :scope="scope" @measurementUpdated="measurementUpdated"></Measurement>
             </template>
         </el-table-column>
     
         <el-table-column label="Area" min-width='100px'>
             <template scope="scope">
-                <Footage :row="scope.row" :area="scope.row.area" @areaUpdated="areaUpdated"></Footage>
+                <Footage :room="scope.row" :area="scope.row.area" @areaUpdated="areaUpdated"></Footage>
             </template>
         </el-table-column>
     
@@ -61,17 +61,26 @@ export default {
         Measurement, Footage, Occupants, ExtraInfoRow
     },
 
+    watch: {
+        rooms: {
+            handler: function (rooms) {
+                console.log('something in rooms changed');
+            },
+            deep: true
+        }
+    },
     methods: {
-        calculateArea() {
-            console.log('derp');
+        measurementUpdated(room) {
+            room.updateAreaFromMeasurements();
         },
+
         areaUpdated(room, area) {
+            // Emit an event on the bus so that the measurement inputs can be aware that this input was updated manually.
             EventBus.$emit('areaUpdatedManually');
-            console.log(room);
+            // Then call the function on the room which will clear the measurement inputs and update the room's area.
             room.updateAreaFromInputs(area);
-            console.log(room);
-            console.log('new area is : ' + area);
         },
+
         occupantsUpdated() {
             console.log('derp');
         }

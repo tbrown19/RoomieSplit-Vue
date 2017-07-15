@@ -1,14 +1,14 @@
 <template>
     <div>
+    
         <div v-if="editing">
-            <input class="area-input" @blur="editing = false" @input="checkArea(currentArea)" v-model.number="currentArea" v-validate="'required'" :class="{'input': true, 
-                                                                'is-danger': errors.has('area'), 
-                                                                'is-success': !errors.has('area') && this.currentArea != '' && this.currentArea != 0}" type="number" placeholder="0" name="area" value=4>
+            <input class="area-input" @blur="editing = false" @input="checkArea(currentArea)" v-model.number="currentArea" v-validate="'required'" :class="{'input': true, 'is-danger': errors.has('area'), 'is-success': !errors.has('area') && this.currentArea != '' && this.currentArea != 0}" type="number" placeholder="0" name="area" value=4>
         </div>
+    
         <div v-else>
-            <input @click="editing = true" class="area-input displayOnlyInput"  
-            v-model.number="roundedArea" :class="{'input': true, 'is-valid': !errors.has('area') && this.currentArea != ''}" type="number" placeholder="0" name="area">
+            <input @click="editing = true" class="area-input displayOnlyInput" v-model.number="roundedArea" :class="{'input': true, 'is-valid': !errors.has('area') && this.currentArea != ''}" type="number" placeholder="0" name="area">
         </div>
+    
     </div>
 </template>
 
@@ -17,7 +17,13 @@
 import { validateInput } from '../../../../utils/helpers/input-helpers.js';
 
 export default {
-    props: ['row', 'area'],
+    props: ['room', 'area'],
+    watch: {
+        // If the area changes from the parent, then update the current area to be the new one.
+        area() {
+            this.currentArea = this.area;
+        }
+    },
 
     computed: {
         roundedArea: function () {
@@ -29,12 +35,11 @@ export default {
     methods: {
         checkArea(area) {
             this.currentArea = validateInput(area, 0, 999, 0);
-            this.$emit('areaUpdated', this.row, this.currentArea);
+            this.$emit('areaUpdated', this.room, this.currentArea);
         }
     },
 
     data: function () {
-        console.log(this.area);
         return {
             editing: false,
             currentArea: this.area
@@ -58,6 +63,7 @@ export default {
 .displayOnlyInput::-webkit-outer-spin-button,
 .displayOnlyInput::-webkit-inner-spin-button {
     -webkit-appearance: none;
-    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+    margin: 0;
+    /* <-- Apparently some margin are still there even though it's hidden */
 }
 </style>
