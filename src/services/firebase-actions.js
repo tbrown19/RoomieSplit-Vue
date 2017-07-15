@@ -22,7 +22,7 @@ export function getRoomConfiguration(id) {
     return new Promise((resolve, reject) => {
         Database.ref('RoomConfigurations/' + id).once('value').then((roomConfiguration) => {
             if (roomConfiguration.val() == null) {
-                reject('No roomie split configuration found for this link.');
+                reject('No roomie split configuration found for this link. Please check the link you entered and try again.');
             } else {
                 resolve(roomConfiguration.val());
             }

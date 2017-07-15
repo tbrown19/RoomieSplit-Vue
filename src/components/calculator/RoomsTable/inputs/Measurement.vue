@@ -3,8 +3,7 @@
     
         <el-form :inline="true" :model="measurement">
             <el-form-item class="measurement-input">
-                <input @input="checkFeet(measurement.feet)" v-model.number="measurement.feet" v-validate="'required|between:1,99'" 
-                :class="{'input': true, 'is-danger': errors.has('feet'), 'is-success': !errors.has('feet') && this.measurement.feet != ''}" type="number" placeholder="ft" name="feet">
+                <input @input="checkFeet(measurement.feet)" v-model.number="measurement.feet" v-validate="'required|between:1,99'" :class="{'input': true, 'is-danger': errors.has('feet'), 'is-success': !errors.has('feet') && this.measurement.feet != ''}" type="number" placeholder="ft" name="feet">
             </el-form-item>
     
             <el-form-item class="measurement-input">
@@ -16,8 +15,18 @@
 
 <script>
 import { validateInput } from '../../../../utils/helpers/input-helpers.js';
+import { EventBus } from '../../../../utils/event-bus.js';
+
 export default {
     props: ['scope', 'type'],
+
+    created() {
+        // If the user updated the area manually then it will clear all these inputs.
+        // This bus watches for that so that it can remove the errors that result from the inputs being cleared.
+        EventBus.$on('areaUpdatedManually', () => {
+            this.errors.feet = null;
+        });
+    },
 
     methods: {
         checkFeet(feetValue) {

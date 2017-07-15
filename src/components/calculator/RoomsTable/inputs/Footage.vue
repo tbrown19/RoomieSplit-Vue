@@ -6,7 +6,8 @@
                                                                 'is-success': !errors.has('area') && this.currentArea != '' && this.currentArea != 0}" type="number" placeholder="0" name="area" value=4>
         </div>
         <div v-else>
-            <input @click="editing = true" class="area-input is-invalid"  v-model.number="roundedArea" :class="{'input': true, 'is-valid': !errors.has('area') && this.currentArea != ''}" type="number" placeholder="0" name="area">
+            <input @click="editing = true" class="area-input displayOnlyInput"  
+            v-model.number="roundedArea" :class="{'input': true, 'is-valid': !errors.has('area') && this.currentArea != ''}" type="number" placeholder="0" name="area">
         </div>
     </div>
 </template>
@@ -14,6 +15,7 @@
 <script>
 // let inputHelpers = require('../../helpers/input-helpers.js');
 import { validateInput } from '../../../../utils/helpers/input-helpers.js';
+
 export default {
     props: ['row', 'area'],
 
@@ -26,7 +28,6 @@ export default {
 
     methods: {
         checkArea(area) {
-            console.log(this.roundedArea);
             this.currentArea = validateInput(area, 0, 999, 0);
             this.$emit('areaUpdated', this.row, this.currentArea);
         }
@@ -51,5 +52,12 @@ export default {
 
 .area-input {
     width: 8rem;
+}
+
+
+.displayOnlyInput::-webkit-outer-spin-button,
+.displayOnlyInput::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
 }
 </style>

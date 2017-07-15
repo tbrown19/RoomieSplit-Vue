@@ -50,6 +50,7 @@ import Measurement from './inputs/Measurement.vue';
 import Footage from './inputs/Footage.vue';
 import Occupants from './inputs/Occupants.vue';
 import ExtraInfoRow from './ExtraInfoRow.vue';
+import { EventBus } from '../../../utils/event-bus.js';
 
 export default {
     name: 'Rooms-Table',
@@ -64,8 +65,11 @@ export default {
         calculateArea() {
             console.log('derp');
         },
-        areaUpdated(row, area) {
-            console.log(row);
+        areaUpdated(room, area) {
+            EventBus.$emit('areaUpdatedManually');
+            console.log(room);
+            room.updateAreaFromInputs(area);
+            console.log(room);
             console.log('new area is : ' + area);
         },
         occupantsUpdated() {

@@ -5,22 +5,17 @@
                 <h1>Loading...</h1>
             </div>
     
-            <div class="error" v-if="error" key="error">
-                <article class="message is-danger">
-                    <div class="message-header">
-                        <p>
-                            <strong>Error</strong>!
-                        </p>
-                    </div>
-                    <div class="message-body">
+            <el-row type="flex" justify="center" v-if="error" key="error">
+                <el-col :span="14" :lg="{span:12}">
+                    <b-notification type="is-danger" has-icon>
                         {{ error }}
-                    </div>
-                </article>
-            </div>
+                    </b-notification>
+                </el-col>
+            </el-row>
     
             <div v-if="roomConfiguration" key="loaded">
                 <updatable-inputs :inputs="inputs" :roomConfiguration="roomConfiguration" @saveInput="triggerRoomConfigruationUpdate"></updatable-inputs>
-                <rooms-table :rooms="rooms"></rooms-table>
+                <rooms-table :rooms="roomsData"></rooms-table>
             </div>
         </slide-fade-out-in>
     
@@ -33,6 +28,8 @@ import RoomsTable from '../components/calculator/RoomsTable/Table.vue';
 import SlideFadeOutIn from '../components/transitions/SlideFadeOutIn.vue';
 import { getRoomConfiguration, updateRoomConfiguration } from '../services/firebase-actions.js';
 import { namedInputsWithoutValue } from '../config/room-configuration.js';
+import Rooms from '../utils/classes/Rooms.js';
+
 export default {
 
     created() {
@@ -52,6 +49,8 @@ export default {
                 this.loading = false;
                 console.log(roomConfiguration);
                 this.roomConfiguration = roomConfiguration;
+                this.testRooms = new Rooms(roomConfiguration);
+                this.roomsData = this.testRooms.rooms;
                 this.rooms = roomConfiguration.rooms;
             }, (error) => {
                 this.loading = false;
@@ -82,5 +81,7 @@ export default {
 </script>
 
 <style lang="scss">
-
+.error {
+    max-width: 50%;
+}
 </style>
