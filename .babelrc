@@ -1,11 +1,34 @@
 {
   "presets": [
+<<<<<<< HEAD
     ["env", { "modules": false }]
   ],
   "plugins": [["component", [
+=======
+    ["env", {
+      "modules": false,
+      "targets": {
+        "browsers": ["> 1%", "last 2 versions", "not ie <= 8"]
+      }
+    }],
+    "stage-2"
+  ],
+  "plugins": ["transform-runtime", 
+    ["component", [
+>>>>>>> move-to-webpack
     {
       "libraryName": "element-ui",
       "styleLibraryName": "theme-default"
     }
+<<<<<<< HEAD
   ]]]
+=======
+  ]]],
+  "env": {
+    "test": {
+      "presets": ["env", "stage-2"],
+      "plugins": ["istanbul"]
+    }
+  }
+>>>>>>> move-to-webpack
 }
