@@ -18,6 +18,7 @@ import { validateInput } from '../../../../utils/helpers/input-helpers.js';
 
 export default {
     props: ['room', 'area'],
+
     watch: {
         // If the area changes from the parent, then update the current area to be the new one.
         area() {
@@ -62,6 +63,7 @@ export default {
 
 .displayOnlyInput::-webkit-outer-spin-button,
 .displayOnlyInput::-webkit-inner-spin-button {
+    /* This gets rid of the little arrows on the number input when its the display only one since they don't work anyways*/
     -webkit-appearance: none;
     margin: 0;
     /* <-- Apparently some margin are still there even though it's hidden */

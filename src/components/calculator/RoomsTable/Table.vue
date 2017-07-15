@@ -1,9 +1,9 @@
 <template>
-    <el-table :data="rooms" style="width: 100%" stripe tooltip-effect="dark">
+    <el-table :data="roomsData" style="width: 100%" stripe tooltip-effect="dark">
     
         <el-table-column label="Actions" type="expand">
             <template scope="scope">
-                <RoomExtraInfo :room="scope.row"></RoomExtraInfo>
+                <ExtraInfoRow :RoomSplitter="RoomSplitter" :room="scope.row"></ExtraInfoRow>
             </template>
         </el-table-column>
     
@@ -35,43 +35,33 @@
     
         <el-table-column label="Payment" min-width='100px'>
             <template scope="scope">
-                <span v-if="scope.row.payment > 0">
-                    {{ scope.row.payment }}
-                </span>
+                <Payment :occupants="scope.row.occupants" :payment="scope.row.payment"></Payment>
             </template>
         </el-table-column>
     </el-table>
-    <!--<el-table-column label="% Total" prop="percentageTotal"></el-table-column>-->
 </template>
-
 
 <script>
 import Measurement from './inputs/Measurement.vue';
 import Footage from './inputs/Footage.vue';
 import Occupants from './inputs/Occupants.vue';
+import Payment from './other/Payment.vue';
 import ExtraInfoRow from './ExtraInfoRow.vue';
 import { EventBus } from '../../../utils/event-bus.js';
 
 export default {
     name: 'Rooms-Table',
 
-    props: ['rooms'],
+    props: ['RoomSplitter'],
 
     components: {
-        Measurement, Footage, Occupants, ExtraInfoRow
+        Measurement, Footage, Occupants, Payment, ExtraInfoRow
     },
 
-    watch: {
-        rooms: {
-            handler: function (rooms) {
-                console.log('something in rooms changed');
-            },
-            deep: true
-        }
-    },
     methods: {
         measurementUpdated(room) {
             room.updateAreaFromMeasurements();
+            this.RoomSplitter.updateARoomsPercentOfTotalSpace(room);
         },
 
         areaUpdated(room, area) {
@@ -79,17 +69,43 @@ export default {
             EventBus.$emit('areaUpdatedManually');
             // Then call the function on the room which will clear the measurement inputs and update the room's area.
             room.updateAreaFromInputs(area);
+            console.log(room);
+            this.RoomSplitter.updateARoomsPercentOfTotalSpace(room);
+            this.RoomSplitter.calculateAreaRelatedValues();
+            this.RoomSplitter.updateARoomsPercentOfPrivateSpace(room);
         },
 
         occupantsUpdated() {
-            console.log('derp');
+            this.RoomSplitter.calculateAreaRelatedValues();
+            this.RoomSplitter.calculatePaymentRelatedValues();
         }
     },
 
     data: function () {
-        console.log(this.rooms);
+        console.log(this.RoomSplitter);
         return {
+            roomsData: this.RoomSplitter.rooms
         };
     }
 };
 </script>
+
+<style lang="scss">
+.cell {
+    td & {
+        font-size: 1rem;
+    }
+    text-align: center;
+}
+
+th {
+    background-color: rgb(50, 65, 87) !important;
+    .cell {
+        font-family: 'Lato', sans-serif;
+        font-weight: 400;
+        font-size: 1.2rem;
+        color: #dfe5ec !important;
+        background-color: inherit !important;
+    }
+}
+</style>

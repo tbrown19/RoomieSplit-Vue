@@ -15,7 +15,7 @@
     
             <div v-if="roomConfiguration" key="loaded">
                 <updatable-inputs :inputs="inputs" :roomConfiguration="roomConfiguration" @saveInput="triggerRoomConfigruationUpdate"></updatable-inputs>
-                <rooms-table :rooms="roomsData"></rooms-table>
+                <rooms-table :RoomSplitter="RoomSplitter"></rooms-table>
             </div>
         </slide-fade-out-in>
     
@@ -28,7 +28,7 @@ import RoomsTable from '../components/calculator/RoomsTable/Table.vue';
 import SlideFadeOutIn from '../components/transitions/SlideFadeOutIn.vue';
 import { getRoomConfiguration, updateRoomConfiguration } from '../services/firebase-actions.js';
 import { namedInputsWithoutValue } from '../config/room-configuration.js';
-import Rooms from '../utils/classes/Rooms.js';
+import RoomSplitter from '../utils/classes/RoomSplitter.js';
 
 export default {
 
@@ -49,9 +49,7 @@ export default {
                 this.loading = false;
                 console.log(roomConfiguration);
                 this.roomConfiguration = roomConfiguration;
-                this.testRooms = new Rooms(roomConfiguration);
-                this.roomsData = this.testRooms.rooms;
-                this.rooms = roomConfiguration.rooms;
+                this.RoomSplitter = new RoomSplitter(roomConfiguration);
             }, (error) => {
                 this.loading = false;
                 this.error = error;
