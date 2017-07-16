@@ -9,11 +9,13 @@
                 <el-col :span="14" :lg="{span:12}">
                     <b-notification type="is-danger" has-icon>
                         {{ error }}
+                        <br>
+                        Please try again.
                     </b-notification>
                 </el-col>
             </el-row>
     
-            <div v-if="roomConfiguration  && !loading" key="loaded">
+            <div v-if="roomConfiguration && !loading && !error" key="loaded">
                 <updatable-inputs :inputs="inputs" :roomConfiguration="roomConfiguration" @saveInput="triggerRoomConfigruationUpdate"></updatable-inputs>
                 <rooms-table :RoomSplitter="RoomSplitter"></rooms-table>
                 <action-buttons :isSaving="savingTable" @save="save" @clearAll="clearAll"></action-buttons>
@@ -79,7 +81,7 @@ export default {
                     this.savingTable = false;
                 }, 250);
             }, (error) => {
-                this.error = error;
+                this.error = error.code;
             });
         },
 
