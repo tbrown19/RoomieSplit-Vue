@@ -22,12 +22,6 @@ export default {
         PrimaryInput
     },
 
-    watch: {
-        completedInputs: function () {
-            console.log(this.completedInputs.size);
-        }
-    },
-
     methods: {
         inputsChanged(inputName, inputValue, valid) {
             // First update the input object to have the new value from the input component.

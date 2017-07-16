@@ -46,7 +46,7 @@ import Measurement from './inputs/Measurement.vue';
 import Footage from './inputs/Footage.vue';
 import Occupants from './inputs/Occupants.vue';
 import Payment from './other/Payment.vue';
-import ExtraInfoRow from './ExtraInfoRow.vue';
+import ExtraInfoRow from './other/ExtraInfoRow.vue';
 import { EventBus } from '../../../utils/event-bus.js';
 
 export default {
@@ -70,7 +70,7 @@ export default {
 
         areaUpdated(room, area) {
             // Emit an event on the bus so that the measurement inputs can be aware that this input was updated manually.
-            EventBus.$emit('areaUpdatedManually');
+            EventBus.$emit('areaUpdatedManually', room.roomNumber);
             // Then call the function on the room which will clear the measurement inputs and update the room's area.
             room.updateAreaFromInputs(area);
             // Update the total area and other related values on the room splitter.

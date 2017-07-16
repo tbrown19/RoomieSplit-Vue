@@ -4,12 +4,11 @@
             Extra Information:</h1>
         <div style="font-size: 1rem">
             <p>Percent of the total space: {{ percentOfTotalSpace }}</p>
-            <p>Percent of the private space: {{ readablePercent(room.percentOfPrivateSpace) }}</p>
-            <p>Private Payment: {{ roundToTwoDecimalPlaces(room.privatePayment) }}</p>
+            <p>Percent of the private space: {{ percentOfTotalSpace }}</p>
+            <!-- <p>Private Payment: {{ roundToTwoDecimalPlaces(room.privatePayment) }}</p> -->
         </div>
         <div class="is-pulled-right">
-            <!-- <el-button size="large" @click="handleEdit(room)">Edit</el-button>
-                    <el-button size="large" type="danger" @click="handleClear(room)">Clear</el-button> -->
+            <button class="button is-danger is-medium" @click="handleClear(room)">Clear</button>
         </div>
     </div>
 </template>
@@ -24,8 +23,12 @@ export default {
 
     computed: {
         percentOfTotalSpace() {
+            let percentOfTotalSpace = this.room.percentOfTotalSpace || 0;
+            return this.readablePercent(percentOfTotalSpace);
+        },
+        percentOfPrivateSpace() {
             // Either get it off the object or calculate it. We usually will only calculate it on the inital load of the file.
-            let percentOfTotalSpace = this.room.percentOfTotalSpace;
+            let percentOfTotalSpace = this.room.percentOfPrivateSpace || 0;
             return this.readablePercent(percentOfTotalSpace);
         }
     },
