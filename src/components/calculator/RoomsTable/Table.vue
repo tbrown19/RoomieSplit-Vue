@@ -11,13 +11,13 @@
     
         <el-table-column label="Length" min-width='120px'>
             <template scope="scope">
-                <Measurement type='length' :scope="scope" @measurementUpdated="measurementUpdated"></Measurement>
+                <Measurement type='length' :row="scope.row" @measurementUpdated="measurementUpdated"></Measurement>
             </template>
         </el-table-column>
     
         <el-table-column label="Width" min-width='120px'>
             <template scope="scope">
-                <Measurement type='width' :scope="scope" @measurementUpdated="measurementUpdated"></Measurement>
+                <Measurement type='width' :row="scope.row" @measurementUpdated="measurementUpdated"></Measurement>
             </template>
         </el-table-column>
     
@@ -62,7 +62,7 @@ export default {
         measurementUpdated(room) {
             // Update the rooms footage by calculating it with the measurement values.
             room.updateAreaFromMeasurements();
-             // Update the total area and other related values on the room splitter.
+            // Update the total area and other related values on the room splitter.
             this.RoomSplitter.updateAreaRelatedValues();
             // Update values on the room object that are related to the other rooms, such as percent of common space.
             this.RoomSplitter.updateARoomsValues(room);
