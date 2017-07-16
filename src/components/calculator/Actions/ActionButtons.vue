@@ -2,8 +2,8 @@
     <div>
         <hr>
         <el-row type="flex" justify="center">
-            <button @click="save" class="button is-primary is-large is-outlined">Save</button>
-            <button @click="clearAll" class="button is-danger is-large is-outlined">Clear</button>
+            <a @click="save" :class="{'button is-primary is-large is-outlined': true, 'is-loading': isSaving}">Save</a>
+            <a @click="clearAll" class="button is-danger is-large is-outlined">Clear</a>
         </el-row>
     </div>
 </template>
@@ -11,6 +11,8 @@
 
 <script>
 export default {
+    props: ['isSaving'],
+
     methods: {
         save() {
             this.$emit('save');
@@ -18,6 +20,12 @@ export default {
         clearAll() {
             this.$emit('clearAll');
         }
+    },
+
+    data: function () {
+        return {
+            saving: this.isSaving
+        };
     }
 };
 </script>
@@ -27,5 +35,4 @@ export default {
     margin: .0rem 1rem 0rem 1rem;
     padding: 0rem 1.5rem 0rem 1.5rem;
 }
-
 </style>

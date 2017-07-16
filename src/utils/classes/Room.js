@@ -1,15 +1,25 @@
 export default class Room {
     constructor(roomData, roomNumber) {
-        this.roomNumber = roomData.roomNumber;
-        this.length = roomData.length;
-        this.width = roomData.width;
-        this.area = roomData.area;
-        this.occupants = roomData.occupants;
-        this.percentOfTotalSpace = roomData.percentOfTotalSpace;
-        this.percentOfPrivateSpace = roomData.percentOfPrivateSpace;
-        this.eachOccupantsPercentOfPrivateSpace = roomData.eachOccupantsPercentOfPrivateSpace;
-        this.privatePayment = roomData.privatePayment;
-        this.payment = roomData.payment;
+        if (roomData === undefined) {
+            this.createEmptyRoom(roomNumber);
+        } else {
+            this.roomNumber = roomData.roomNumber;
+            this.length = roomData.length;
+            this.width = roomData.width;
+            this.area = roomData.area;
+            this.occupants = roomData.occupants;
+            this.percentOfTotalSpace = roomData.percentOfTotalSpace;
+            this.percentOfPrivateSpace = roomData.percentOfPrivateSpace;
+            this.eachOccupantsPercentOfPrivateSpace = roomData.eachOccupantsPercentOfPrivateSpace;
+            this.privatePayment = roomData.privatePayment;
+            this.payment = roomData.payment;
+        }
+    }
+
+    createEmptyRoom(roomNumber) {
+        this.roomNumber = roomNumber;
+        // Call clear since that function already initializes all the values to 0 except for room number anyways.
+        this.clear();
     }
 
     clear() {

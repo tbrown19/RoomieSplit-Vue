@@ -13,10 +13,10 @@
                 </el-col>
             </el-row>
     
-            <div v-if="roomConfiguration" key="loaded">
+            <div v-if="roomConfiguration  && !loading" key="loaded">
                 <updatable-inputs :inputs="inputs" :roomConfiguration="roomConfiguration" @saveInput="triggerRoomConfigruationUpdate"></updatable-inputs>
                 <rooms-table :RoomSplitter="RoomSplitter"></rooms-table>
-                <action-buttons @save="save" @clearAll="clearAll"></action-buttons>
+                <action-buttons :isSaving="savingTable" @save="save" @clearAll="clearAll"></action-buttons>
             </div>
         </slide-fade-out-in>
     
@@ -45,10 +45,9 @@ export default {
 
     methods: {
         handleGetRoomConfiguration() {
-            const id = this.$route.params.configId;
             this.loading = true;
 
-            getRoomConfiguration(id).then((roomConfiguration) => {
+            getRoomConfiguration(this.id).then((roomConfiguration) => {
                 this.loading = false;
                 this.roomConfiguration = roomConfiguration;
                 this.RoomSplitter = new RoomSplitter(roomConfiguration);
@@ -60,31 +59,50 @@ export default {
 
         triggerRoomConfigruationUpdate(inputKey, inputValue) {
             this.roomConfiguration[inputKey] = inputValue;
-            const id = this.$route.params.configId;
-            console.log(this.roomConfiguration);
-            updateRoomConfiguration(id, this.roomConfiguration);
+            // If the number of rooms was updated then we call the method which either creates new empty rooms, or deletes the extra rooms, before we update the database.
+            if (inputKey === 'numRooms') {
+                this.RoomSplitter.numberOfRoomsUpdated(inputValue);
+            }
+            // Update the room configruation
+            updateRoomConfiguration(this.id, this.roomConfiguration);
+            // Then update the rooms, in case the user hadn't clicked save, or if the nubmer of rooms changed and now is different.
+            updateRoomConfigruationRooms(this.id, this.RoomSplitter.rooms);
+            // Then reload the information from the database as that will also cause the page to rerender giving the table a chance to smoothly transition into the new values.
+            this.handleGetRoomConfiguration();
         },
 
         save() {
-            const id = this.$route.params.configId;
-            console.log(this.RoomSplitter.rooms[0]);
-            updateRoomConfigruationRooms(id, this.RoomSplitter.rooms);
+            this.savingTable = true;
+            updateRoomConfigruationRooms(this.id, this.RoomSplitter.rooms).then(() => {
+                // Add a 250 ms delay to the change in save, just in case it saves so fast that they don't notice it.
+                setTimeout(() => {
+                    this.savingTable = false;
+                }, 250);
+            }, (error) => {
+                this.error = error;
+            });
         },
 
         clearAll() {
             this.RoomSplitter.clearRoomObjects();
             EventBus.$emit('measurementsCleared');
+        },
+
+        numberOfRoomsUpdated() {
+            this.RoomSplitter.numberOfRoomsUpdated(this.roomConfiguration.numberRooms);
         }
     },
 
     data: function () {
-        // Get the inputs object from the configuration
+        const id = this.$route.params.configId;
         const inputs = namedInputsWithoutValue();
         return {
+            id,
             inputs,
             roomConfiguration: null,
             loading: false,
-            error: null
+            error: null,
+            savingTable: false
         };
     }
 };

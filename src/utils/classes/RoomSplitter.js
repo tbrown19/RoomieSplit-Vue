@@ -22,7 +22,7 @@ export default class RoomSplitter {
     createRoomObjects() {
         let rooms = [];
         for (let i = 0; i < this.numberRooms; i++) {
-            rooms.push(new Room(this.roomConfiguration.rooms[i]));
+            rooms.push(new Room(this.roomConfiguration.rooms[i], i + 1));
         }
         return rooms;
     }
@@ -39,8 +39,9 @@ export default class RoomSplitter {
      * @memberof Rooms
      */
     numberOfRoomsUpdated(newNumberRooms) {
+        console.log('new number of rooms is ' + newNumberRooms);
         this.numberRooms = newNumberRooms;
-        this.rooms = this.createEmptyRooms();
+        this.rooms = this.createRoomObjects();
     }
 
     updateInitalValues() {
@@ -85,17 +86,8 @@ export default class RoomSplitter {
     updatePaymentRelatedValues() {
         if (this.allRoomsAreValid()) {
             this.basePayment = this.Calculator.calculateBasePayment(this.rooms, this.commonSpaceValue);
-            console.log('base payment: ' + this.basePayment);
             this.rooms.forEach(room => {
-                // If the room has occupants then we can calculate a payment for it.
-                if (room.occupants > 0 && room.area > 0) {
-                    console.log('room ' + room.roomNumber + ' has occupants. calculating payment.');
-                    this.updateARoomsPaymentRelatedValues(room);
-                }
-            });
-        } else {
-            this.rooms.forEach(room => {
-                room.payment = 0;
+                this.updateARoomsPaymentRelatedValues(room);
             });
         }
     }
@@ -106,38 +98,18 @@ export default class RoomSplitter {
         room.privatePayment = this.privateSpaceValue * room.eachOccupantsPercentOfPrivateSpace;
 
         room.payment = this.basePayment + room.privatePayment;
-
-        console.log(room.payment);
     }
 
     allRoomsAreValid() {
         let allRoomsAreValid = true;
         this.rooms.forEach(room => {
+            // We set the rooms payment here to 0 because that way if all the rooms are not valid, the payment is already set to 0
+            // and if they rooms are valid, the payment will be recalculated for each room anyways.
+            room.payment = 0;
             if (room.occupants <= 0 || room.area <= 0 || room.area === '') {
                 allRoomsAreValid = false;
             }
         });
         return allRoomsAreValid;
     }
-
-    // removeRoomsWithNoOccupantsFromCalculations() {
-    //     this.rooms.forEach(room => {
-    //         // If the room has occupants then we can calculate a payment for it.
-    //         if (room.occupants <= 0 || room.area <= 0) {
-    //             console.log('room ' + room.roomNumber + ' has invalid configuration. removing from payment.');
-    //             this.removeARoomFromPaymentCalculations(room);
-    //         }
-    //     });
-    // }
-
-    // removeARoomFromPaymentCalculations(room) {
-    //     console.log(room.privatePayment);
-    //     // Reset the rooms payment back to 0, since it no longer has any occupants.
-    //     room.privatePayment = 0;
-    //     room.payment = 0;
-    //     // Remove the room from the private space area, and re add it to the common space area since we are no longer including it in our calculation.
-    //     this.privateSpace -= room.area;
-    //     this.commonSpace += room.area;
-    //     this.occupants -= room.occupants;
-    // }
 }
