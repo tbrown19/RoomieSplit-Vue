@@ -87,6 +87,7 @@ export default {
         },
 
         updateARoomRelatedValues(room) {
+            console.log(this.RoomSplitter.commonSpace);
             // Update the total area and other related values on the room splitter.
             this.RoomSplitter.updateAreaRelatedValues();
             // Update values on the room object that are related to the other rooms, such as percent of common space.

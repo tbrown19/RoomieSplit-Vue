@@ -47,13 +47,11 @@ export function updateRoomConfiguration(id, roomConfiguration) {
 }
 
 export function updateRoomConfigruationRooms(id, rooms) {
-    const currentRoom = Database.ref('RoomConfigurationsz').child(id);
-
     return new Promise((resolve, reject) => {
-        currentRoom.child('roomz').set(rooms).then((roomConfiguration) => {
+        Database.ref('RoomConfigurations').child(id).child('rooms').set(rooms).then((roomConfiguration) => {
+            console.log(roomConfiguration);
             resolve();
         }, (error) => {
-            console.log('error');
             reject(error);
         });
     });

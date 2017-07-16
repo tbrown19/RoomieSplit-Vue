@@ -9,13 +9,14 @@
                 <el-col :span="14" :lg="{span:12}">
                     <b-notification type="is-danger" has-icon>
                         {{ error }}
-                        <br>
-                        Please try again.
+                        <br> Please try again.
                     </b-notification>
                 </el-col>
             </el-row>
     
             <div v-if="roomConfiguration && !loading && !error" key="loaded">
+                {{ currentErrors }}
+    
                 <updatable-inputs :inputs="inputs" :roomConfiguration="roomConfiguration" @saveInput="triggerRoomConfigruationUpdate"></updatable-inputs>
                 <rooms-table :RoomSplitter="RoomSplitter"></rooms-table>
                 <action-buttons :isSaving="savingTable" @save="save" @clearAll="clearAll"></action-buttons>
@@ -43,6 +44,12 @@ export default {
 
     components: {
         UpdatableInputs, RoomsTable, ActionButtons, SlideFadeOutIn
+    },
+
+    computed: {
+        currentErrors() {
+            return this.RoomSplitter.currentErrors;
+        }
     },
 
     methods: {
