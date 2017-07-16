@@ -1,6 +1,5 @@
 <template>
     <el-table :data="roomsData" style="width: 100%" stripe tooltip-effect="dark">
-    
         <el-table-column label="Actions" type="expand">
             <template scope="scope">
                 <ExtraInfoRow :RoomSplitter="RoomSplitter" :room="scope.row"></ExtraInfoRow>
@@ -57,6 +56,20 @@ export default {
     components: {
         Measurement, Footage, Occupants, Payment, ExtraInfoRow
     },
+    watch: {
+        'RoomSplitter.rooms': {
+            handler: function (newValue) {
+                console.log(this.roomsData);
+                console.log('the rooms data has changed.');
+            },
+            deep: true
+        }
+    },
+    computed: {
+        roomsData() {
+            return this.RoomSplitter.rooms;
+        }
+    },
 
     methods: {
         measurementUpdated(room) {
@@ -66,6 +79,7 @@ export default {
             this.RoomSplitter.updateAreaRelatedValues();
             // Update values on the room object that are related to the other rooms, such as percent of common space.
             this.RoomSplitter.updateARoomsValues(room);
+            this.RoomSplitter.updatePaymentRelatedValues();
         },
 
         areaUpdated(room, area) {
@@ -77,6 +91,7 @@ export default {
             this.RoomSplitter.updateAreaRelatedValues();
             // Update values on the room object that are related to the other rooms, such as percent of common space.
             this.RoomSplitter.updateARoomsValues(room);
+            this.RoomSplitter.updatePaymentRelatedValues();
         },
 
         occupantsUpdated() {
@@ -87,7 +102,6 @@ export default {
     data: function () {
         console.log(this.RoomSplitter);
         return {
-            roomsData: this.RoomSplitter.rooms
         };
     }
 };

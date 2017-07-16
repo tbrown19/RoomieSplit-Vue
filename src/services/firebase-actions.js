@@ -38,3 +38,8 @@ export function updateRoomConfiguration(id, roomConfiguration) {
     currentRoom.child('area').set(roomConfiguration.area);
     currentRoom.child('rent').set(roomConfiguration.rent);
 }
+
+export function updateRoomConfigruationRooms(id, rooms) {
+    const currentRoom = Database.ref('RoomConfigurations').child(id);
+    currentRoom.child('rooms').set(rooms);
+}

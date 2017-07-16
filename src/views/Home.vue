@@ -7,7 +7,7 @@
         <primary-inputs :inputs="inputs" @inputsValidnessChanged="inputsValidnessChanged"></primary-inputs>
         <slide-fade>
             <el-row type="flex" justify="center" v-if="mainInputsCompleted">
-                <button id="nextStepButton" @click='proceedToNextStep' class="button is-primary is-large">Next Step</button>
+                <button id="nextStepButton" @click='proceedToNextStep' class="button is-primary is-large is-outlined">Next Step</button>
             </el-row>
         </slide-fade>
     

@@ -16,6 +16,7 @@
             <div v-if="roomConfiguration" key="loaded">
                 <updatable-inputs :inputs="inputs" :roomConfiguration="roomConfiguration" @saveInput="triggerRoomConfigruationUpdate"></updatable-inputs>
                 <rooms-table :RoomSplitter="RoomSplitter"></rooms-table>
+                <action-buttons @save="save" @clearAll="clearAll"></action-buttons>
             </div>
         </slide-fade-out-in>
     
@@ -25,10 +26,12 @@
 <script>
 import UpdatableInputs from '../components/calculator/RoomConfiguration/UpdatableInputs.vue';
 import RoomsTable from '../components/calculator/RoomsTable/Table.vue';
+import ActionButtons from '../components/calculator/Actions/ActionButtons.vue';
 import SlideFadeOutIn from '../components/transitions/SlideFadeOutIn.vue';
-import { getRoomConfiguration, updateRoomConfiguration } from '../services/firebase-actions.js';
+import { getRoomConfiguration, updateRoomConfiguration, updateRoomConfigruationRooms } from '../services/firebase-actions.js';
 import { namedInputsWithoutValue } from '../config/room-configuration.js';
 import RoomSplitter from '../utils/classes/RoomSplitter.js';
+import { EventBus } from '../utils/event-bus.js';
 
 export default {
 
@@ -37,7 +40,7 @@ export default {
     },
 
     components: {
-        UpdatableInputs, RoomsTable, SlideFadeOutIn
+        UpdatableInputs, RoomsTable, ActionButtons, SlideFadeOutIn
     },
 
     methods: {
@@ -47,7 +50,6 @@ export default {
 
             getRoomConfiguration(id).then((roomConfiguration) => {
                 this.loading = false;
-                console.log(roomConfiguration);
                 this.roomConfiguration = roomConfiguration;
                 this.RoomSplitter = new RoomSplitter(roomConfiguration);
             }, (error) => {
@@ -61,8 +63,18 @@ export default {
             const id = this.$route.params.configId;
             console.log(this.roomConfiguration);
             updateRoomConfiguration(id, this.roomConfiguration);
-        }
+        },
 
+        save() {
+            const id = this.$route.params.configId;
+            console.log(this.RoomSplitter.rooms[0]);
+            updateRoomConfigruationRooms(id, this.RoomSplitter.rooms);
+        },
+
+        clearAll() {
+            this.RoomSplitter.clearRoomObjects();
+            EventBus.$emit('measurementsCleared');
+        }
     },
 
     data: function () {

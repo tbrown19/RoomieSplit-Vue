@@ -2,11 +2,11 @@
     <div>
         <el-form :inline="true" :model="measurement">
             <el-form-item class="measurement-input">
-                <input @input="checkFeet(measurement.feet)" v-model.number="measurement.feet" v-validate="'required|between:1,99'" :class="{'input': true, 'is-danger': feetHasErrors, 'is-success': !errors.has('feet') && this.measurement.feet != ''}" type="number" placeholder="ft" :name="'feet' + scope.row.roomNumber.toString()">
+                <input @input="checkFeet(measurement.feet)" v-model.number="measurement.feet" v-validate="'required|between:1,99'" :class="{'input': true, 'is-danger': feetHasErrors, 'is-success': !feetHasErrors && this.measurement.feet != ''}" type="number" placeholder="ft" :name="'feet' + currentRoom.roomNumber.toString()">
             </el-form-item>
     
             <el-form-item class="measurement-input">
-                <input @input="checkInches(measurement.inches)" v-model.number="measurement.inches" v-validate="'between:0,12'" :class="{'input': true, 'is-danger': errors.has('inches'), 'is-success': !errors.has('inches') && this.measurement.inches != ''}" type="number" placeholder="in" name="inches2">
+                <input @input="checkInches(measurement.inches)" v-model.number="measurement.inches" v-validate="'between:0,12'" :class="{'input': true, 'is-danger': errors.has('inches'), 'is-success': !errors.has('inches') && this.measurement.inches != ''}" type="number" placeholder="in" :name="'inches' + currentRoom.roomNumber.toString()">
             </el-form-item>
         </el-form>
     </div>
@@ -28,6 +28,13 @@ export default {
                 this.errorsCleared = true;
             }
         });
+
+        EventBus.$on('measurementsCleared', () => {
+            console.log('do we get hur?');
+            // Update the measurement so it is matching the new currently cleared measurement and then get rid of the errors.
+            this.measurement = this.currentRoom[this.type];
+            this.errorsCleared = true;
+        });
     },
     computed: {
         feetHasErrors() {
@@ -35,7 +42,7 @@ export default {
                 this.errorsCleared = false;
                 return false;
             }
-            return this.errors.has(`feet${this.scope.row.roomNumber}`);
+            return this.errors.has(`feet${this.currentRoom.roomNumber}`);
         }
     },
     methods: {
@@ -52,7 +59,7 @@ export default {
 
     data: function () {
         // Get the current row, and then get the current measurement type either length or width.
-        let currentRoom = this.scope.row;
+        let currentRoom = this.row;
         return {
             currentRoom,
             measurement: currentRoom[this.type],
