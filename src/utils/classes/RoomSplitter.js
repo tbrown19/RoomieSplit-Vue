@@ -94,7 +94,9 @@ export default class RoomSplitter {
                 }
             });
         } else {
-            console.log('all the rooms are not valid');
+            this.rooms.forEach(room => {
+                room.payment = 0;
+            });
         }
     }
 

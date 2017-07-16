@@ -1,14 +1,19 @@
 <template>
-    <div>
-        <h1 style="font-size: 1rem">
-            Extra Information:</h1>
-        <div style="font-size: 1rem">
-            <p>Percent of the total space: {{ percentOfTotalSpace }}</p>
-            <p>Percent of the private space: {{ percentOfTotalSpace }}</p>
-            <!-- <p>Private Payment: {{ roundToTwoDecimalPlaces(room.privatePayment) }}</p> -->
+    <div class="level">
+        <div class="level-left">
+            <div class="level-item">
+                <div style="font-size: 1rem">
+                    <h1 class="info-header">Extra Information:</h1>
+                    <p>Percent of the total space: {{ percentOfTotalSpace }}</p>
+                    <p>Percent of the private space: {{ percentOfPrivateSpace }}</p>
+                    <!-- <p>Private Payment: {{ roundToTwoDecimalPlaces(room.privatePayment) }}</p> -->
+                </div>
+            </div>
+    
         </div>
-        <div class="is-pulled-right">
-            <button class="button is-danger is-medium" @click="handleClear(room)">Clear</button>
+    
+        <div class="level-right">
+            <button class="button is-danger is-medium" @click="handleClear">Clear</button>
         </div>
     </div>
 </template>
@@ -43,12 +48,16 @@ export default {
             return parseFloat(value).toFixed(2);
         },
 
-        handleClear(room) {
-            // helper for rounding. use later. = parseFloat(footage).toFixed(2);
-            console.log(room);
-            room.clear();
-            // this.$emit('clearRoom', room);
+        handleClear() {
+            this.$emit('clearRoom', this.room);
         }
     }
 };
 </script>
+
+<style>
+    .info-header {
+        font-size: 1.1rem;
+        font-weight: 700;
+    }
+</style>

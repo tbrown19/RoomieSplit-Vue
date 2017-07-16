@@ -1,11 +1,11 @@
 export default class RoomSplitterCalculator {
 
     calculateARoomsPercentOfTotalSpace(room, totalSpace) {
-        return room.area / totalSpace;
+        return room.area / totalSpace || 0;
     }
 
     calculateARoomsPercentOfPrivateSpace(room, privateSpace) {
-        return room.area / privateSpace;
+        return room.area / privateSpace || 0;
     }
 
     calculateTotalRoomsArea(rooms) {

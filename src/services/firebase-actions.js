@@ -2,7 +2,9 @@ import {
     Database
 } from './firebase.js';
 
-import { createEmptyRooms } from '../utils/helpers/generate-empty-rooms.js';
+import {
+    createEmptyRooms
+} from '../utils/helpers/generate-empty-rooms.js';
 
 export function addRoomConfiguration(roomConfiguration) {
     roomConfiguration.rooms = createEmptyRooms(roomConfiguration.numRooms);
@@ -34,6 +36,11 @@ export function getRoomConfiguration(id) {
 
 export function updateRoomConfiguration(id, roomConfiguration) {
     const currentRoom = Database.ref('RoomConfigurations').child(id);
+    // currentRoom.set({
+    //     numRooms: roomConfiguration.numRooms,
+    //     area: roomConfiguration.area,
+    //     rent: roomConfiguration.rent
+    // });
     currentRoom.child('numRooms').set(roomConfiguration.numRooms);
     currentRoom.child('area').set(roomConfiguration.area);
     currentRoom.child('rent').set(roomConfiguration.rent);

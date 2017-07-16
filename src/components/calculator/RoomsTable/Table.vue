@@ -2,7 +2,7 @@
     <el-table :data="roomsData" style="width: 100%" stripe tooltip-effect="dark">
         <el-table-column label="Actions" type="expand">
             <template scope="scope">
-                <ExtraInfoRow :RoomSplitter="RoomSplitter" :room="scope.row"></ExtraInfoRow>
+                <ExtraInfoRow @clearRoom="clearRoom" :RoomSplitter="RoomSplitter" :room="scope.row"></ExtraInfoRow>
             </template>
         </el-table-column>
     
@@ -28,7 +28,7 @@
     
         <el-table-column label="Occupants" min-width='100px'>
             <template scope="scope">
-                <Occupants v-if="scope.row.area > 0" :scope="scope" @occupantsUpdated="occupantsUpdated"></Occupants>
+                <Occupants v-if="scope.row.area > 0" :row="scope.row" @occupantsUpdated="occupantsUpdated"></Occupants>
             </template>
         </el-table-column>
     
@@ -56,15 +56,6 @@ export default {
     components: {
         Measurement, Footage, Occupants, Payment, ExtraInfoRow
     },
-    watch: {
-        'RoomSplitter.rooms': {
-            handler: function (newValue) {
-                console.log(this.roomsData);
-                console.log('the rooms data has changed.');
-            },
-            deep: true
-        }
-    },
     computed: {
         roomsData() {
             return this.RoomSplitter.rooms;
@@ -72,37 +63,37 @@ export default {
     },
 
     methods: {
+        clearRoom(room) {
+            room.clear();
+            this.updateARoomRelatedValues(room);
+        },
+
         measurementUpdated(room) {
             // Update the rooms footage by calculating it with the measurement values.
             room.updateAreaFromMeasurements();
-            // Update the total area and other related values on the room splitter.
-            this.RoomSplitter.updateAreaRelatedValues();
-            // Update values on the room object that are related to the other rooms, such as percent of common space.
-            this.RoomSplitter.updateARoomsValues(room);
-            this.RoomSplitter.updatePaymentRelatedValues();
+            this.updateARoomRelatedValues(room);
         },
 
         areaUpdated(room, area) {
-            // Emit an event on the bus so that the measurement inputs can be aware that this input was updated manually.
-            EventBus.$emit('areaUpdatedManually', room.roomNumber);
-            // Then call the function on the room which will clear the measurement inputs and update the room's area.
+            // Call the function on the room which will clear the measurement inputs and update the room's area.
             room.updateAreaFromInputs(area);
-            // Update the total area and other related values on the room splitter.
-            this.RoomSplitter.updateAreaRelatedValues();
-            // Update values on the room object that are related to the other rooms, such as percent of common space.
-            this.RoomSplitter.updateARoomsValues(room);
-            this.RoomSplitter.updatePaymentRelatedValues();
+            // Then emit an event on the bus so that the measurement inputs can be aware that this input was updated manually.
+            EventBus.$emit('areaUpdatedManually', room.roomNumber);
+            this.updateARoomRelatedValues(room);
         },
 
         occupantsUpdated() {
             this.RoomSplitter.updatePaymentRelatedValues();
-        }
-    },
+        },
 
-    data: function () {
-        console.log(this.RoomSplitter);
-        return {
-        };
+        updateARoomRelatedValues(room) {
+            // Update the total area and other related values on the room splitter.
+            this.RoomSplitter.updateAreaRelatedValues();
+            // Update values on the room object that are related to the other rooms, such as percent of common space.
+            this.RoomSplitter.updateARoomsValues(room);
+            // Then update values related to the payment.
+            this.RoomSplitter.updatePaymentRelatedValues();
+        }
     }
 };
 </script>

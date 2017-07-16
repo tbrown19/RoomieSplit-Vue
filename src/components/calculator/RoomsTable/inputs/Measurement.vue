@@ -30,12 +30,12 @@ export default {
         });
 
         EventBus.$on('measurementsCleared', () => {
-            console.log('do we get hur?');
             // Update the measurement so it is matching the new currently cleared measurement and then get rid of the errors.
             this.measurement = this.currentRoom[this.type];
             this.errorsCleared = true;
         });
     },
+
     computed: {
         feetHasErrors() {
             if (this.errorsCleared) {
@@ -45,6 +45,7 @@ export default {
             return this.errors.has(`feet${this.currentRoom.roomNumber}`);
         }
     },
+
     methods: {
         checkFeet(feetValue) {
             this.measurement.feet = validateInput(feetValue, 0, 99, '');

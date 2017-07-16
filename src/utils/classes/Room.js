@@ -1,6 +1,5 @@
 export default class Room {
     constructor(roomData, roomNumber) {
-        this.roomData = roomData;
         this.roomNumber = roomData.roomNumber;
         this.length = roomData.length;
         this.width = roomData.width;
@@ -26,7 +25,7 @@ export default class Room {
 
         this.area = '';
 
-        this.occupants = 0;
+        this.occupants = 1;
 
         this.percentOfTotalSpace = 0;
 
@@ -50,7 +49,6 @@ export default class Room {
 
     updateAreaFromMeasurements() {
         this.area = this.calculateAreaFromMeasurements();
-        console.log(this.area);
     }
 
     calculateAreaFromMeasurements() {

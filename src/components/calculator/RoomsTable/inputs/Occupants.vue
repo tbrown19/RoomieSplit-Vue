@@ -1,25 +1,24 @@
 <template>
-    <input class='occupants-input' @input="checkOccupants(currentRow.occupants)" v-model.number="currentRow.occupants" v-validate="'required'" :class="{'input': true, 
+    <input class='occupants-input' @input="checkOccupants(room.occupants)" v-model.number="room.occupants" v-validate="'required'" :class="{'input': true, 
                                 'is-danger': errors.has('occupants'), 
-                                'is-success': !errors.has('occupants') && this.currentRow.occupants != ''}" type="number" placeholder="0" name="occupants">
+                                'is-success': !errors.has('occupants') && this.room.occupants != ''}" type="number" placeholder="0" name="occupants">
 </template>
 
 <script>
 import { validateInput } from '../../../../utils/helpers/input-helpers.js';
 export default {
-    props: ['scope'],
+    props: ['row'],
 
     methods: {
         checkOccupants(occupants) {
-            this.currentRow.occupants = validateInput(occupants, 1, 5, '');
-            this.$emit('occupantsUpdated', this.currentRow);
+            this.room.occupants = validateInput(occupants, 1, 5, '');
+            this.$emit('occupantsUpdated', this.room);
         }
     },
 
     data: function () {
-        let currentRow = this.scope.row;
         return {
-            currentRow
+            room: this.row
         };
     }
 };
