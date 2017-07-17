@@ -35,12 +35,41 @@ export function getRoomConfiguration(id) {
 }
 
 export function updateRoomConfiguration(id, roomConfiguration) {
-    const currentRoom = Database.ref('RoomConfigurations').child(id);
-    currentRoom.child('numRooms').set(roomConfiguration.numRooms);
-    currentRoom.child('area').set(roomConfiguration.area);
-    currentRoom.child('rent').set(roomConfiguration.rent);
+    const updatedNumRooms = updateConfigurationNumRooms(id, roomConfiguration.numRooms);
+    const updatedArea = updateConfigurationArea(id, roomConfiguration.area);
+    const updatedRent = updateConfigurationRent(id, roomConfiguration.rent);
+
 }
 
+function updateConfigurationNumRooms(id, numRooms) {
+    return new Promise((resolve, reject) => {
+        Database.ref('RoomConfigurations').child(id).child('numRooms').set(numRooms).then((roomConfiguration) => {
+            resolve();
+        }, (error) => {
+            reject(error);
+        });
+    });
+}
+
+function updateConfigurationArea(id, area) {
+    return new Promise((resolve, reject) => {
+        Database.ref('RoomConfigurations').child(id).child('area').set(area).then((roomConfiguration) => {
+            resolve();
+        }, (error) => {
+            reject(error);
+        });
+    });
+}
+
+function updateConfigurationRent(id, rent) {
+    return new Promise((resolve, reject) => {
+        Database.ref('RoomConfigurations').child(id).child('rent').set(rent).then((roomConfiguration) => {
+            resolve();
+        }, (error) => {
+            reject(error);
+        });
+    });
+}
 export function updateRoomConfigruationRooms(id, rooms) {
     return new Promise((resolve, reject) => {
         Database.ref('RoomConfigurations').child(id).child('rooms').set(rooms).then((roomConfiguration) => {

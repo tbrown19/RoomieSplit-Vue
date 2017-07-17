@@ -84,12 +84,15 @@ export default new Vuex.Store({
     },
     actions: {
         loadRoomConfiguration(context, routeId) {
+            // Make it known that we are current loading from the databse.
             context.commit('SET_LOADING_FROM_DATABASE', true);
             getRoomConfiguration(routeId).then((roomConfiguration) => {
+                // We are done loading, and can update our room configuration to contain the loaded one.
                 context.commit('SET_LOADING_FROM_DATABASE', false);
                 // this.roomConfiguration = roomConfiguration;
                 context.commit('SET_ROOM_CONFIGURATION', roomConfiguration);
             }, (error) => {
+                // We are done loading, but we got an error. update our error state to reflect this.
                 context.commit('SET_LOADING_FROM_DATABASE', false);
                 context.commit('SET_FIREBASE_ERROR', error);
             });

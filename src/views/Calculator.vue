@@ -9,7 +9,6 @@
                 <el-col :span="14" :lg="{span:12}">
                     <b-notification type="is-danger" has-icon>
                         {{ error }}
-                        <br> Please try again.
                     </b-notification>
                 </el-col>
             </el-row>
@@ -48,20 +47,8 @@ export default {
 
     methods: {
         ...mapActions([
-            'loadRoomConfiguration' // map `this.add()` to `this.$store.dispatch('increment')`
+            'loadRoomConfiguration'
         ]),
-        // handleGetRoomConfiguration() {
-        //     this.loading = true;
-        //     getRoomConfiguration(this.routeId).then((roomConfiguration) => {
-        //         this.loading = false;
-        //         // this.roomConfiguration = roomConfiguration;
-        //         this.$store.commit('SET_ROOM_CONFIGURATION', roomConfiguration);
-        //         this.roomConfiguration = this.$store.getters.roomConfiguration;
-        //     }, (error) => {
-        //         this.loading = false;
-        //         this.error = error;
-        //     });
-        // },
 
         handleUpdateRoomConfiguration() {
             console.log('time to update the rooms');
