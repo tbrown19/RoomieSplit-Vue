@@ -24,7 +24,7 @@
 <script>
 import Index from '../components/calculator/Index.vue';
 import SlideFadeOutIn from '../components/transitions/SlideFadeOutIn.vue';
-import { updateRoomConfiguration, updateRoomConfigruationRooms } from '../services/firebase-actions.js';
+// import { updateRoomConfigruationRooms } from '../services/firebase-actions.js';
 import { namedInputsWithoutValue } from '../config/room-configuration.js';
 import { mapGetters, mapActions } from 'vuex';
 
@@ -47,17 +47,20 @@ export default {
 
     methods: {
         ...mapActions([
-            'loadRoomConfiguration'
+            'loadRoomConfiguration',
+            'updateRoomConfiguration'
         ]),
 
         handleUpdateRoomConfiguration() {
             console.log('time to update the rooms');
             // Update the room configruation
-            updateRoomConfiguration(this.routeId, this.$store.getters.roomConfiguration);
-            // Then update the rooms, in case the user hadn't clicked save, or if the nubmer of rooms changed and now is different.
-            updateRoomConfigruationRooms(this.routeId, this.$store.getters.getRooms);
-            // Then reload the information from the database as that will also cause the page to rerender giving the table a chance to smoothly transition into the new values.
-            this.handleGetRoomConfiguration();
+            this.$store.dispatch('updateRoomConfiguration', this.$route.params.configId);
+
+            // updateRoomConfiguration(this.routeId, this.$store.getters.roomConfiguration);
+            // // Then update the rooms, in case the user hadn't clicked save, or if the nubmer of rooms changed and now is different.
+            // updateRoomConfigruationRooms(this.routeId, this.$store.getters.getRooms);
+            // // Then reload the information from the database as that will also cause the page to rerender giving the table a chance to smoothly transition into the new values.
+            // this.handleGetRoomConfiguration();
         }
     },
 

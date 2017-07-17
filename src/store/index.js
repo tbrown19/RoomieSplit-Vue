@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import {
-    getRoomConfiguration
+    getRoomConfiguration,
+    updateRoomConfiguration
 } from '../services/firebase-actions.js';
 Vue.use(Vuex);
 const debug = process.env.NODE_ENV !== 'production';
@@ -94,6 +95,15 @@ export default new Vuex.Store({
             }, (error) => {
                 // We are done loading, but we got an error. update our error state to reflect this.
                 context.commit('SET_LOADING_FROM_DATABASE', false);
+                context.commit('SET_FIREBASE_ERROR', error);
+            });
+        },
+        updateRoomConfiguration(context, routeId) {
+            console.log('are we here?');
+            updateRoomConfiguration(routeId, context.getters.roomConfiguration).then((hm) => {
+                // maybe add something here about saving a room configuration. idk.
+                console.log('saved properly.');
+            }, (error) => {
                 context.commit('SET_FIREBASE_ERROR', error);
             });
         }

@@ -35,10 +35,20 @@ export function getRoomConfiguration(id) {
 }
 
 export function updateRoomConfiguration(id, roomConfiguration) {
+    // Update each room and assign the promise object to a variable.
     const updatedNumRooms = updateConfigurationNumRooms(id, roomConfiguration.numRooms);
     const updatedArea = updateConfigurationArea(id, roomConfiguration.area);
     const updatedRent = updateConfigurationRent(id, roomConfiguration.rent);
 
+    return new Promise((resolve, reject) => {
+        Promise.all([updatedNumRooms, updatedArea, updatedRent]).then(values => {
+            // Do nothing on success. there is no need for the values to be returned as they are already in the store.
+            resolve();
+        }, error => {
+            // If we get an error while updating any of the values then we reject the entire promise and return the error.
+            reject(error);
+        });
+    });
 }
 
 function updateConfigurationNumRooms(id, numRooms) {
