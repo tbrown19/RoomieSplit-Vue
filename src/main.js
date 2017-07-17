@@ -5,6 +5,7 @@ import App from './App';
 import router from './router';
 import VeeValidate from 'vee-validate';
 import Buefy from 'buefy';
+import store from './store';
 
 Vue.use(Buefy);
 
@@ -65,6 +66,7 @@ router.beforeEach((to, from, next) => {
 new Vue({
     el: '#app',
     router,
+    store,
     template: '<App/>',
     components: {
         App

@@ -16,7 +16,7 @@ export default class RoomSplitter {
         this.area = roomConfiguration.area;
         this.rent = roomConfiguration.rent;
         this.rooms = this.createRoomObjects();
-        this.currentErrors = [];
+        this.currentErrors = new Set();
         this.updateInitalValues();
     }
 
@@ -43,6 +43,7 @@ export default class RoomSplitter {
         console.log('new number of rooms is ' + newNumberRooms);
         this.numberRooms = newNumberRooms;
         this.rooms = this.createRoomObjects();
+        console.log(this.rooms);
     }
 
     updateInitalValues() {
@@ -74,8 +75,12 @@ export default class RoomSplitter {
         this.commonSpace = this.Calculator.calculateCommonSpace(this.rooms, this.area);
         this.privateSpace = this.area - this.commonSpace;
         if (this.privateSpace > this.area) {
-            console.log('error room footage to gr8');
-            this.currentErrors.push('Area of all rooms cannot be greater than total area.');
+            this.currentErrors.add('Area of all rooms cannot be greater than total area.');
+        } else {
+            console.log(' the error has been fixed.');
+            console.log('wtf');
+            console.log('dos this change');
+            this.currentErrors.delete('Area of all rooms cannot be greater than total area.');
         }
         this.commonSpacePercentage = this.Calculator.calculateCommonSpacePercentage(this.area, this.commonSpace);
         this.privateSpacePercentage = 1 - this.commonSpacePercentage;

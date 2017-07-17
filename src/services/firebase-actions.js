@@ -36,11 +36,6 @@ export function getRoomConfiguration(id) {
 
 export function updateRoomConfiguration(id, roomConfiguration) {
     const currentRoom = Database.ref('RoomConfigurations').child(id);
-    // currentRoom.set({
-    //     numRooms: roomConfiguration.numRooms,
-    //     area: roomConfiguration.area,
-    //     rent: roomConfiguration.rent
-    // });
     currentRoom.child('numRooms').set(roomConfiguration.numRooms);
     currentRoom.child('area').set(roomConfiguration.area);
     currentRoom.child('rent').set(roomConfiguration.rent);
@@ -49,7 +44,6 @@ export function updateRoomConfiguration(id, roomConfiguration) {
 export function updateRoomConfigruationRooms(id, rooms) {
     return new Promise((resolve, reject) => {
         Database.ref('RoomConfigurations').child(id).child('rooms').set(rooms).then((roomConfiguration) => {
-            console.log(roomConfiguration);
             resolve();
         }, (error) => {
             reject(error);
