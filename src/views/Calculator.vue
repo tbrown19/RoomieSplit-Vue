@@ -25,39 +25,43 @@
 <script>
 import Index from '../components/calculator/Index.vue';
 import SlideFadeOutIn from '../components/transitions/SlideFadeOutIn.vue';
-import { getRoomConfiguration, updateRoomConfiguration, updateRoomConfigruationRooms } from '../services/firebase-actions.js';
+import { updateRoomConfiguration, updateRoomConfigruationRooms } from '../services/firebase-actions.js';
 import { namedInputsWithoutValue } from '../config/room-configuration.js';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
 
     created() {
-        this.handleGetRoomConfiguration();
+        this.$store.dispatch('loadRoomConfiguration', this.$route.params.configId);
     },
 
     components: {
         Index, SlideFadeOutIn
     },
     computed: {
-        // mix the getters into computed with object spread operator
-        ...mapGetters([
-            'roomConfiguration'
-        ])
+        ...mapGetters({
+            loading: 'isLoadingFromDatabase',
+            error: 'getFirebaseActionErrors',
+            roomConfiguration: 'roomConfiguration'
+        })
     },
 
     methods: {
-        handleGetRoomConfiguration() {
-            this.loading = true;
-            getRoomConfiguration(this.routeId).then((roomConfiguration) => {
-                this.loading = false;
-                // this.roomConfiguration = roomConfiguration;
-                this.$store.commit('SET_ROOM_CONFIGURATION', roomConfiguration);
-                this.roomConfiguration = this.$store.getters.roomConfiguration;
-            }, (error) => {
-                this.loading = false;
-                this.error = error;
-            });
-        },
+        ...mapActions([
+            'loadRoomConfiguration' // map `this.add()` to `this.$store.dispatch('increment')`
+        ]),
+        // handleGetRoomConfiguration() {
+        //     this.loading = true;
+        //     getRoomConfiguration(this.routeId).then((roomConfiguration) => {
+        //         this.loading = false;
+        //         // this.roomConfiguration = roomConfiguration;
+        //         this.$store.commit('SET_ROOM_CONFIGURATION', roomConfiguration);
+        //         this.roomConfiguration = this.$store.getters.roomConfiguration;
+        //     }, (error) => {
+        //         this.loading = false;
+        //         this.error = error;
+        //     });
+        // },
 
         handleUpdateRoomConfiguration() {
             console.log('time to update the rooms');
@@ -75,9 +79,7 @@ export default {
         const inputs = namedInputsWithoutValue();
         return {
             routeId,
-            inputs,
-            loading: false,
-            error: null
+            inputs
         };
     }
 };

@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-
+import {
+    getRoomConfiguration
+} from '../services/firebase-actions.js';
 Vue.use(Vuex);
 const debug = process.env.NODE_ENV !== 'production';
 
@@ -11,6 +13,8 @@ export default new Vuex.Store({
         area: 0,
         rent: 0,
         rooms: [],
+        loadingFromDatabase: false,
+        firebaseActionErrors: null,
         currentTableErrors: []
     },
 
@@ -31,6 +35,12 @@ export default new Vuex.Store({
         },
         getCurrentTableErrors: state => {
             return state.currentTableErrors;
+        },
+        isLoadingFromDatabase: state => {
+            return state.loadingFromDatabase;
+        },
+        getFirebaseActionErrors: state => {
+            return state.firebaseActionErrors;
         }
     },
 
@@ -64,11 +74,25 @@ export default new Vuex.Store({
                 console.log(indexOfError);
                 state.currentTableErrors.splice(indexOfError, 1);
             }
+        },
+        SET_LOADING_FROM_DATABASE(state, isLoading) {
+            state.loadingFromDatabase = isLoading;
+        },
+        SET_FIREBASE_ERROR(state, error) {
+            state.firebaseActionErrors = error;
         }
     },
     actions: {
-        setRoomConfiguration(context, roomConfiguration) {
-            context.commit('SET_ROOM_CONFIGURATION', roomConfiguration);
+        loadRoomConfiguration(context, routeId) {
+            context.commit('SET_LOADING_FROM_DATABASE', true);
+            getRoomConfiguration(routeId).then((roomConfiguration) => {
+                context.commit('SET_LOADING_FROM_DATABASE', false);
+                // this.roomConfiguration = roomConfiguration;
+                context.commit('SET_ROOM_CONFIGURATION', roomConfiguration);
+            }, (error) => {
+                context.commit('SET_LOADING_FROM_DATABASE', false);
+                context.commit('SET_FIREBASE_ERROR', error);
+            });
         }
     }
 });
