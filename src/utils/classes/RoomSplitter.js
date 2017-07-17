@@ -1,5 +1,6 @@
 import Room from './Room.js';
 import Calculator from './RoomSplitterCalculator.js';
+import store from '../../store/index.js';
 export default class RoomSplitter {
 
     /**
@@ -10,13 +11,14 @@ export default class RoomSplitter {
      * @memberof Rooms
      */
     constructor(roomConfiguration) {
+        console.log(roomConfiguration);
         this.Calculator = new Calculator();
         this.roomConfiguration = roomConfiguration;
         this.numberRooms = roomConfiguration.numRooms;
         this.area = roomConfiguration.area;
         this.rent = roomConfiguration.rent;
         this.rooms = this.createRoomObjects();
-        this.currentErrors = new Set();
+        this.currentErrors = [];
         this.updateInitalValues();
     }
 
@@ -43,7 +45,6 @@ export default class RoomSplitter {
         console.log('new number of rooms is ' + newNumberRooms);
         this.numberRooms = newNumberRooms;
         this.rooms = this.createRoomObjects();
-        console.log(this.rooms);
     }
 
     updateInitalValues() {
@@ -74,14 +75,7 @@ export default class RoomSplitter {
     updateAreaRelatedValues() {
         this.commonSpace = this.Calculator.calculateCommonSpace(this.rooms, this.area);
         this.privateSpace = this.area - this.commonSpace;
-        if (this.privateSpace > this.area) {
-            this.currentErrors.add('Area of all rooms cannot be greater than total area.');
-        } else {
-            console.log(' the error has been fixed.');
-            console.log('wtf');
-            console.log('dos this change');
-            this.currentErrors.delete('Area of all rooms cannot be greater than total area.');
-        }
+
         this.commonSpacePercentage = this.Calculator.calculateCommonSpacePercentage(this.area, this.commonSpace);
         this.privateSpacePercentage = 1 - this.commonSpacePercentage;
 
@@ -90,10 +84,20 @@ export default class RoomSplitter {
 
         // Update the values related to all the rooms, and then go an update each rooms values relative to the new totals.
         this.updateEachRoomsValues();
+        this.checkForErrors();
+    }
+
+    checkForErrors() {
+        if (this.privateSpace > this.area) {
+            store.commit('ADD_TABLE_ERROR', 'Area of all rooms cannot be greater than total area.');
+        } else {
+            store.commit('REMOVE_TABLE_ERROR', 'Area of all rooms cannot be greater than total area.');
+        }
     }
 
     updatePaymentRelatedValues() {
-        if (this.allRoomsAreValid()) {
+        // If all the rooms are valid, have area and occupants, and we have no other errors than we can calculate the payments for each room.
+        if (this.allRoomsAreValid() && store.getters.getCurrentTableErrors.length === 0) {
             this.basePayment = this.Calculator.calculateBasePayment(this.rooms, this.commonSpaceValue);
             this.rooms.forEach(room => {
                 this.updateARoomsPaymentRelatedValues(room);

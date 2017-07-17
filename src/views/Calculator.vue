@@ -14,7 +14,7 @@
                 </el-col>
             </el-row>
     
-            <div v-if="roomConfiguration && !loading && !error" key="loaded">
+            <div v-if="roomConfiguration.numRooms != 0 && !loading && !error" key="loaded">
                 <index :inputs="inputs" :roomConfiguration="roomConfiguration" @updateRoomConfiguration="handleUpdateRoomConfiguration" :routeId="routeId"></index>
             </div>
         </slide-fade-out-in>
@@ -27,6 +27,7 @@ import Index from '../components/calculator/Index.vue';
 import SlideFadeOutIn from '../components/transitions/SlideFadeOutIn.vue';
 import { getRoomConfiguration, updateRoomConfiguration, updateRoomConfigruationRooms } from '../services/firebase-actions.js';
 import { namedInputsWithoutValue } from '../config/room-configuration.js';
+import { mapGetters } from 'vuex';
 
 export default {
 
@@ -37,13 +38,21 @@ export default {
     components: {
         Index, SlideFadeOutIn
     },
+    computed: {
+        // mix the getters into computed with object spread operator
+        ...mapGetters([
+            'roomConfiguration'
+        ])
+    },
 
     methods: {
         handleGetRoomConfiguration() {
             this.loading = true;
             getRoomConfiguration(this.routeId).then((roomConfiguration) => {
                 this.loading = false;
-                this.roomConfiguration = roomConfiguration;
+                // this.roomConfiguration = roomConfiguration;
+                this.$store.commit('SET_ROOM_CONFIGURATION', roomConfiguration);
+                this.roomConfiguration = this.$store.getters.roomConfiguration;
             }, (error) => {
                 this.loading = false;
                 this.error = error;
@@ -53,9 +62,9 @@ export default {
         handleUpdateRoomConfiguration() {
             console.log('time to update the rooms');
             // Update the room configruation
-            updateRoomConfiguration(this.routeId, this.roomConfiguration);
+            updateRoomConfiguration(this.routeId, this.$store.getters.roomConfiguration);
             // Then update the rooms, in case the user hadn't clicked save, or if the nubmer of rooms changed and now is different.
-            updateRoomConfigruationRooms(this.routeId, this.RoomSplitter.rooms);
+            updateRoomConfigruationRooms(this.routeId, this.$store.getters.getRooms);
             // Then reload the information from the database as that will also cause the page to rerender giving the table a chance to smoothly transition into the new values.
             this.handleGetRoomConfiguration();
         }
@@ -67,7 +76,6 @@ export default {
         return {
             routeId,
             inputs,
-            roomConfiguration: null,
             loading: false,
             error: null
         };

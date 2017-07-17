@@ -1,8 +1,8 @@
 <template>
     <div>
         <updatable-inputs :inputs="inputs" :roomConfiguration="roomConfiguration" @saveInput="triggerRoomConfigruationUpdate"></updatable-inputs>
-        <errors-on-table v-if="this.RoomSplitter.currentErrors.size > 0" :tableErrors="this.RoomSplitter.currentErrors"></errors-on-table>
-        <rooms-table :RoomSplitter="RoomSplitter"></rooms-table>
+        <errors-on-table></errors-on-table>    
+        <rooms-table :RoomSplitter="roomSplitter"></rooms-table>
         <action-buttons :isSaving="savingTable" @save="save" @clearAll="clearAll"></action-buttons>
     </div>
 </template>
@@ -18,29 +18,18 @@ import { updateRoomConfigruationRooms } from '../../services/firebase-actions.js
 import { EventBus } from '../../utils/event-bus.js';
 
 export default {
-    props: ['inputs', 'roomConfiguration', 'routeId'],
+    props: ['inputs', 'routeId'],
 
     components: {
         UpdatableInputs, RoomsTable, ActionButtons, ErrorsOnTable
     },
 
-    created() {
-        console.log(this.$store);
-        this.RoomSplitter = new RoomSplitter(this.roomConfiguration);
-    },
-
-    watch: {
-        'RoomSplitter.currentErrors': function () {
-            console.log('we detected an error change in index.');
-        }
-    },
     computed: {
         tableErrors() {
             console.log(this.RoomSplitter.currentErrors.size > 0);
             return this.RoomSplitter.currentErrors > 0;
         }
     },
-
     methods: {
         triggerRoomConfigruationUpdate(inputKey, inputValue) {
             this.roomConfiguration[inputKey] = inputValue;
@@ -54,7 +43,7 @@ export default {
 
         save() {
             this.savingTable = true;
-            updateRoomConfigruationRooms(this.routeId, this.RoomSplitter.rooms).then(() => {
+            updateRoomConfigruationRooms(this.routeId, this.roomSplitter.rooms).then(() => {
                 this.savingTable = false;
             }, (error) => {
                 this.error = error.code;
@@ -68,8 +57,12 @@ export default {
     },
 
     data: function () {
+        let roomConfiguration = this.$store.getters.roomConfiguration;
+        let roomSplitter = new RoomSplitter(this.$store.getters.roomConfiguration);
         return {
-            savingTable: false
+            savingTable: false,
+            roomConfiguration,
+            roomSplitter
         };
     }
 };
