@@ -4,6 +4,7 @@ export default class Room {
             this.createEmptyRoom(roomNumber);
         } else {
             this.roomNumber = roomData.roomNumber;
+            this.roomsIndex = roomData.roomNumber - 1;
             this.length = roomData.length;
             this.width = roomData.width;
             this.area = roomData.area;

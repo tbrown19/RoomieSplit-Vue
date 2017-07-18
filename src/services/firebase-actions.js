@@ -34,7 +34,7 @@ export function getRoomConfiguration(id) {
     });
 }
 
-export function updateRoomConfiguration(id, roomConfiguration) {
+export function updateRoomConfigurationInDB(id, roomConfiguration) {
     // Update each room and assign the promise object to a variable.
     const updatedNumRooms = updateConfigurationNumRooms(id, roomConfiguration.numRooms);
     const updatedArea = updateConfigurationArea(id, roomConfiguration.area);
@@ -80,7 +80,7 @@ function updateConfigurationRent(id, rent) {
         });
     });
 }
-export function updateRoomConfigruationRooms(id, rooms) {
+export function updateRoomConfigruationRoomsInDB(id, rooms) {
     return new Promise((resolve, reject) => {
         Database.ref('RoomConfigurations').child(id).child('rooms').set(rooms).then((roomConfiguration) => {
             resolve();

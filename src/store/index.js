@@ -1,15 +1,17 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import {
-    getRoomConfiguration,
-    updateRoomConfiguration,
-    updateRoomConfigruationRooms
-} from '../services/firebase-actions.js';
+import * as getters from './getters';
+import * as actions from './actions';
+import room from './modules/room';
+
 Vue.use(Vuex);
 const debug = process.env.NODE_ENV !== 'production';
 
 export default new Vuex.Store({
     strict: debug,
+    modules: {
+        room
+    },
     state: {
         numRooms: 0,
         area: 0,
@@ -21,44 +23,8 @@ export default new Vuex.Store({
         savingRoomsToDatabase: false
     },
 
-    getters: {
-        roomConfiguration: state => {
-            return {
-                'numRooms': state.numRooms,
-                'area': state.area,
-                'rent': state.rent,
-                'rooms': state.rooms
-            };
-        },
-        numRooms: state => {
-            return state.numRooms;
-        },
-        area: state => {
-            return state.area;
-        },
-        rent: state => {
-            return state.rent;
-        },
-        rooms: state => {
-            return state.rooms;
-        },
-        getRoomByNumber: (state, getters) => (roomNumber) => {
-            return state.getters.getRooms[roomNumber];
-        },
-        getCurrentTableErrors: state => {
-            return state.currentTableErrors;
-        },
-        isLoadingFromDatabase: state => {
-            return state.loadingFromDatabase;
-        },
-        getFirebaseActionErrors: state => {
-            return state.firebaseActionErrors;
-        },
-        isSavingRoomsToDatabase: state => {
-            return state.savingRoomsToDatabase;
-        }
-    },
-
+    getters,
+    actions,
     mutations: {
         SET_NUM_ROOMS(state, numRooms) {
             state.numRooms = numRooms;
@@ -77,6 +43,9 @@ export default new Vuex.Store({
             state.area = roomConfiguration.area;
             state.rent = roomConfiguration.rent;
             state.rooms = roomConfiguration.rooms;
+        },
+        UPDATE_A_ROOMS_ATTRIBUTE(state, payload) {
+            state.rooms[payload.roomsIndex][payload.attribute] = payload.value;
         },
         ADD_TABLE_ERROR(state, errorName) {
             if (!state.currentTableErrors.includes(errorName)) {
@@ -98,38 +67,6 @@ export default new Vuex.Store({
         },
         SET_SAVING_ROOMS_TO_DATABASE(state, isSaving) {
             state.savingRoomsToDatabase = isSaving;
-        }
-    },
-    actions: {
-        loadRoomConfiguration(context, routeId) {
-            // Make it known that we are current loading from the databse.
-            context.commit('SET_LOADING_FROM_DATABASE', true);
-            getRoomConfiguration(routeId).then((roomConfiguration) => {
-                // We are done loading, and can update our room configuration to contain the loaded one.
-                context.commit('SET_LOADING_FROM_DATABASE', false);
-                // this.roomConfiguration = roomConfiguration;
-                context.commit('SET_ROOM_CONFIGURATION', roomConfiguration);
-            }, (error) => {
-                // We are done loading, but we got an error. update our error state to reflect this.
-                context.commit('SET_LOADING_FROM_DATABASE', false);
-                context.commit('SET_FIREBASE_ERROR', error);
-            });
-        },
-        updateRoomConfiguration(context, routeId) {
-            updateRoomConfiguration(routeId, context.getters.roomConfiguration).then((hm) => {
-                // maybe add something here about saving a room configuration. idk.
-            }, (error) => {
-                context.commit('SET_FIREBASE_ERROR', error);
-            });
-        },
-
-        updateRooms(context, routeId) {
-            context.commit('SET_SAVING_ROOMS_TO_DATABASE', true);
-            updateRoomConfigruationRooms(routeId, context.getters.rooms).then(() => {
-                context.commit('SET_SAVING_ROOMS_TO_DATABASE', false);
-            }, (error) => {
-                context.commit('SET_FIREBASE_ERROR', error);
-            });
         }
     }
 });

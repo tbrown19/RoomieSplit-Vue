@@ -13,10 +13,6 @@ export default class RoomSplitter {
     constructor(roomConfiguration) {
         console.log(roomConfiguration);
         this.Calculator = new Calculator();
-        this.roomConfiguration = roomConfiguration;
-        this.numberRooms = roomConfiguration.numRooms;
-        this.area = roomConfiguration.area;
-        this.rent = roomConfiguration.rent;
         this.rooms = this.createRoomObjects();
         this.updateInitalValues();
     }
@@ -55,12 +51,23 @@ export default class RoomSplitter {
     }
 
     updateARoomsValues(room) {
+        console.log(room);
         this.updateARoomsPercentOfTotalSpace(room);
-        this.updateARoomsPercentOfPrivateSpace(room);
+        // this.updateARoomsPercentOfPrivateSpace(room);
     }
 
     updateARoomsPercentOfTotalSpace(room) {
-        room.percentOfTotalSpace = this.Calculator.calculateARoomsPercentOfTotalSpace(room, this.area);
+        // let newRoom = [...room];
+        let percentOfTotalSpace = this.Calculator.calculateARoomsPercentOfTotalSpace(room, store.getters.area);
+        console.log(percentOfTotalSpace);
+        console.log({
+            room: room.roomsIndex,
+            percentage: percentOfTotalSpace
+        });
+        store.dispatch('updateARoomsPercentOfTotalSpace', {
+            roomsIndex: room.roomsIndex,
+            percentage: percentOfTotalSpace
+        });
     }
 
     updateARoomsPercentOfPrivateSpace(room) {
@@ -68,10 +75,10 @@ export default class RoomSplitter {
     }
 
     updateAreaRelatedValues() {
-        this.commonSpace = this.Calculator.calculateCommonSpace(this.rooms, this.area);
-        this.privateSpace = this.area - this.commonSpace;
+        this.commonSpace = this.Calculator.calculateCommonSpace(store.getters.rooms, store.getters.area);
+        this.privateSpace = store.getters.area - this.commonSpace;
 
-        this.commonSpacePercentage = this.Calculator.calculateCommonSpacePercentage(this.area, this.commonSpace);
+        this.commonSpacePercentage = this.Calculator.calculateCommonSpacePercentage(store.getters.area, this.commonSpace);
         this.privateSpacePercentage = 1 - this.commonSpacePercentage;
         // Update the values related to all the rooms, and then go an update each rooms values relative to the new totals.
         this.updateEachRoomsValues();
@@ -87,15 +94,11 @@ export default class RoomSplitter {
     }
 
     updatePaymentRelatedValues() {
-        this.commonSpaceValue = this.Calculator.calculateValueCommonSpace(this.rent, this.commonSpacePercentage);
-        this.privateSpaceValue = store.getters.rent - this.commonSpaceValue;
-
-        console.log('the rent is ' + store.getters.rent);
-
-        console.log('we get here right?');
         // If all the rooms are valid, have area and occupants, and we have no other errors than we can calculate the payments for each room.
         if (this.allRoomsAreValid() && store.getters.getCurrentTableErrors.length === 0) {
-            console.log('we get here right 2.0?');
+            // this.commonSpaceValue = this.Calculator.calculateValueCommonSpace(store.getters.rent, this.commonSpacePercentage);
+            // this.privateSpaceValue = store.getters.rent - this.commonSpaceValue;
+
             this.basePayment = this.Calculator.calculateBasePayment(this.rooms, this.commonSpaceValue);
             this.rooms.forEach(room => {
                 this.updateARoomsPaymentRelatedValues(room);
@@ -104,11 +107,11 @@ export default class RoomSplitter {
     }
 
     updateARoomsPaymentRelatedValues(room) {
-        room.eachOccupantsPercentOfPrivateSpace = room.percentOfPrivateSpace / room.occupants;
+        // room.eachOccupantsPercentOfPrivateSpace = room.percentOfPrivateSpace / room.occupants;
 
-        room.privatePayment = this.privateSpaceValue * room.eachOccupantsPercentOfPrivateSpace;
+        // room.privatePayment = this.privateSpaceValue * room.eachOccupantsPercentOfPrivateSpace;
 
-        room.payment = this.basePayment + room.privatePayment;
+        // room.payment = this.basePayment + room.privatePayment;
     }
 
     allRoomsAreValid() {
