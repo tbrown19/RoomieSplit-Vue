@@ -1,6 +1,6 @@
 <template>
     <div>
-        <updatable-inputs :inputs="inputs" :roomConfiguration="roomConfiguration" @saveInput="triggerRoomConfigruationUpdate"></updatable-inputs>
+        <updatable-inputs :inputs="inputs" :roomConfiguration="this.$store.getters.roomConfiguration" @saveInput="triggerRoomConfigruationUpdate"></updatable-inputs>
         <errors-on-table></errors-on-table>
         <rooms-table :RoomSplitter="roomSplitter"></rooms-table>
         <action-buttons :isSaving="savingTable" @save="save" @clearAll="clearAll"></action-buttons>

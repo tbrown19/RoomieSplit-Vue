@@ -53,12 +53,8 @@ export default {
         ]),
 
         handleUpdateRoomConfiguration() {
-            console.log('time to update the rooms');
-            // Update the room configruation
+            this.updateRoomConfiguration(this.routeId);
             this.updateRooms(this.routeId);
-            // Then update the rooms, in case the user hadn't clicked save, or if the nubmer of rooms changed and now is different.
-            // // Then reload the information from the database as that will also cause the page to rerender giving the table a chance to smoothly transition into the new values.
-            // this.handleGetRoomConfiguration();
         },
         handleUpdateRooms() {
             console.log('do we update the rooms');
