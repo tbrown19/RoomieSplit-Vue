@@ -14,14 +14,17 @@ export default class RoomSplitter {
         console.log(roomConfiguration);
         this.Calculator = new Calculator();
         this.rooms = this.createRoomObjects();
+        store.commit('SET_ROOMS', this.rooms);
         this.updateInitalValues();
     }
 
     createRoomObjects() {
         let rooms = [];
+        console.log('we need to create this many rooms ' + store.getters.numRooms);
         for (let i = 0; i < store.getters.numRooms; i++) {
             rooms.push(new Room(store.getters.rooms[i], i + 1));
         }
+        console.log(rooms);
         return rooms;
     }
 
@@ -36,6 +39,7 @@ export default class RoomSplitter {
      */
     numberOfRoomsUpdated() {
         this.rooms = this.createRoomObjects();
+        store.commit('SET_ROOMS', this.rooms);
     }
 
     updateInitalValues() {
