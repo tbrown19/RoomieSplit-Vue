@@ -2,7 +2,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import {
     getRoomConfiguration,
-    updateRoomConfiguration
+    updateRoomConfiguration,
+    updateRoomConfigruationRooms
 } from '../services/firebase-actions.js';
 Vue.use(Vuex);
 const debug = process.env.NODE_ENV !== 'production';
@@ -16,7 +17,8 @@ export default new Vuex.Store({
         rooms: [],
         loadingFromDatabase: false,
         firebaseActionErrors: null,
-        currentTableErrors: []
+        currentTableErrors: [],
+        savingRoomsToDatabase: false
     },
 
     getters: {
@@ -28,7 +30,16 @@ export default new Vuex.Store({
                 'rooms': state.rooms
             };
         },
-        getRooms: state => {
+        numRooms: state => {
+            return state.numRooms;
+        },
+        area: state => {
+            return state.area;
+        },
+        rent: state => {
+            return state.rent;
+        },
+        rooms: state => {
             return state.rooms;
         },
         getRoomByNumber: (state, getters) => (roomNumber) => {
@@ -46,7 +57,7 @@ export default new Vuex.Store({
     },
 
     mutations: {
-        SET_NUM_ROOMS(state, numRooms) {
+        SET_NUMROOMS(state, numRooms) {
             state.numRooms = numRooms;
         },
         SET_AREA(state, area) {
@@ -99,10 +110,8 @@ export default new Vuex.Store({
             });
         },
         updateRoomConfiguration(context, routeId) {
-            console.log('are we here?');
             updateRoomConfiguration(routeId, context.getters.roomConfiguration).then((hm) => {
                 // maybe add something here about saving a room configuration. idk.
-                console.log('saved properly.');
             }, (error) => {
                 context.commit('SET_FIREBASE_ERROR', error);
             });

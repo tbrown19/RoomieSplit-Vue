@@ -18,14 +18,13 @@ export default class RoomSplitter {
         this.area = roomConfiguration.area;
         this.rent = roomConfiguration.rent;
         this.rooms = this.createRoomObjects();
-        this.currentErrors = [];
         this.updateInitalValues();
     }
 
     createRoomObjects() {
         let rooms = [];
-        for (let i = 0; i < this.numberRooms; i++) {
-            rooms.push(new Room(this.roomConfiguration.rooms[i], i + 1));
+        for (let i = 0; i < store.getters.numRooms; i++) {
+            rooms.push(new Room(store.getters.rooms[i], i + 1));
         }
         return rooms;
     }
@@ -37,13 +36,9 @@ export default class RoomSplitter {
     }
 
     /**
-     * Updates the number of rooms, and then generates that many new empty rooms.
-\     * @param {number} newNumberRooms
      * @memberof Rooms
      */
-    numberOfRoomsUpdated(newNumberRooms) {
-        console.log('new number of rooms is ' + newNumberRooms);
-        this.numberRooms = newNumberRooms;
+    numberOfRoomsUpdated() {
         this.rooms = this.createRoomObjects();
     }
 
@@ -80,8 +75,8 @@ export default class RoomSplitter {
         this.privateSpacePercentage = 1 - this.commonSpacePercentage;
 
         this.commonSpaceValue = this.Calculator.calculateValueCommonSpace(this.rent, this.commonSpacePercentage);
-        this.privateSpaceValue = this.rent - this.commonSpaceValue;
-
+        this.privateSpaceValue = store.getters.rent - this.commonSpaceValue;
+        console.log('the rent is ' + store.getters.rent);
         // Update the values related to all the rooms, and then go an update each rooms values relative to the new totals.
         this.updateEachRoomsValues();
         this.checkForErrors();
@@ -96,8 +91,10 @@ export default class RoomSplitter {
     }
 
     updatePaymentRelatedValues() {
+        console.log('we get here right?');
         // If all the rooms are valid, have area and occupants, and we have no other errors than we can calculate the payments for each room.
         if (this.allRoomsAreValid() && store.getters.getCurrentTableErrors.length === 0) {
+            console.log('we get here right 2.0?');
             this.basePayment = this.Calculator.calculateBasePayment(this.rooms, this.commonSpaceValue);
             this.rooms.forEach(room => {
                 this.updateARoomsPaymentRelatedValues(room);

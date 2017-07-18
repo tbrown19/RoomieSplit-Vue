@@ -53,7 +53,7 @@ export function updateRoomConfiguration(id, roomConfiguration) {
 
 function updateConfigurationNumRooms(id, numRooms) {
     return new Promise((resolve, reject) => {
-        Database.ref('RoomConfigurations').child(id).child('numRooms').set(numRooms).then((roomConfiguration) => {
+        Database.ref('RoomConfigurations').child(id).child('numRooms').set(numRooms).then(() => {
             resolve();
         }, (error) => {
             reject(error);
@@ -63,7 +63,7 @@ function updateConfigurationNumRooms(id, numRooms) {
 
 function updateConfigurationArea(id, area) {
     return new Promise((resolve, reject) => {
-        Database.ref('RoomConfigurations').child(id).child('area').set(area).then((roomConfiguration) => {
+        Database.ref('RoomConfigurations').child(id).child('area').set(area).then(() => {
             resolve();
         }, (error) => {
             reject(error);
@@ -73,7 +73,7 @@ function updateConfigurationArea(id, area) {
 
 function updateConfigurationRent(id, rent) {
     return new Promise((resolve, reject) => {
-        Database.ref('RoomConfigurations').child(id).child('rent').set(rent).then((roomConfiguration) => {
+        Database.ref('RoomConfigurations').child(id).child('rent').set(rent).then(() => {
             resolve();
         }, (error) => {
             reject(error);
