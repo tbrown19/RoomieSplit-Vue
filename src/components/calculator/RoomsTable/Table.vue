@@ -14,21 +14,21 @@
             </template>
         </el-table-column>
     
-         <el-table-column label="Width" min-width='120px'>
+        <el-table-column label="Width" min-width='120px'>
             <template scope="scope">
                 <Measurement :roomsIndex="currentIndex(scope)" :measurement="currentRoom(scope).width" type='width' @measurementUpdated="measurementUpdated"></Measurement>
             </template>
         </el-table-column>
-
+    
         <el-table-column label="Area" min-width='100px'>
             <template scope="scope">
-                <Footage :roomsIndex="currentIndex(scope)"  @areaUpdated="areaUpdated"></Footage>
+                <Footage :roomsIndex="currentIndex(scope)" @areaUpdated="areaUpdated"></Footage>
             </template>
         </el-table-column>
     
         <el-table-column label="Occupants" min-width='100px'>
             <template scope="scope">
-                <Occupants v-if="scope.row.area > 0" :row="scope.row" @occupantsUpdated="occupantsUpdated"></Occupants>
+                <Occupants :index="scope.row.roomsIndex" @occupantsUpdated="occupantsUpdated"></Occupants>
             </template>
         </el-table-column>
     
@@ -95,17 +95,18 @@ export default {
             this.updateARoomRelatedValues(room);
         },
 
-        occupantsUpdated() {
+        occupantsUpdated(roomsIndex, occupants) {
+            this.$store.dispatch('occupants', {
+                roomsIndex: roomsIndex,
+                value: occupants
+            });
             this.RoomSplitter.updatePaymentRelatedValues();
         },
 
         updateARoomRelatedValues(room) {
             // this.$store.commit('SET_ROOMS', this.RoomSplitter.rooms);
-            console.log(this.RoomSplitter.commonSpace);
             // Update the total area and other related values on the room splitter.
             this.RoomSplitter.updateAreaRelatedValues();
-            // Update values on the room object that are related to the other rooms, such as percent of common space.
-            this.RoomSplitter.updateARoomsValues(room);
             // Then update values related to the payment.
             this.RoomSplitter.updatePaymentRelatedValues();
         }

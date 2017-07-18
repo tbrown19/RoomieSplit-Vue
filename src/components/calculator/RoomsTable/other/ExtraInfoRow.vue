@@ -29,7 +29,6 @@ export default {
             return this.readablePercent(percentOfTotalSpace);
         },
         percentOfPrivateSpace() {
-            console.log('in the computed' + this.$store.getters.percentOfPrivateSpace(this.index));
             // Either get it off the object or calculate it. We usually will only calculate it on the inital load of the file.
             let percentOfPrivateSpace = this.$store.getters.percentOfPrivateSpace(this.index) || 0;
             return this.readablePercent(percentOfPrivateSpace);

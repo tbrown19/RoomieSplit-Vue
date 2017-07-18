@@ -20,6 +20,7 @@ export default class Room {
 
     createEmptyRoom(roomNumber) {
         this.roomNumber = roomNumber;
+        this.roomsIndex = roomNumber - 1;
         // Call clear since that function already initializes all the values to 0 except for room number anyways.
         this.clear();
     }

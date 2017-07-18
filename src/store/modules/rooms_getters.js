@@ -31,8 +31,8 @@ export const eachOccupantsPercentOfPrivateSpace = (state, getters, rootState) =>
     return getters.rooms[roomsIndex]['eachOccupantsPercentOfPrivateSpace'];
 };
 export const privatePayment = (state, getters, rootState) => (roomsIndex) => {
-    return getters.rooms[roomsIndex]['occupants'];
+    return getters.rooms[roomsIndex]['privatePayment'];
 };
 export const payment = (state, getters, rootState) => (roomsIndex) => {
-    return getters.rooms[roomsIndex]['occupants'];
+    return getters.rooms[roomsIndex]['payment'];
 };

@@ -13,10 +13,10 @@ export default {
     props: ['index'],
     computed: {
         roundedPayment: function () {
-            return parseFloat(this.$store.getters.rooms[this.index].payment).toFixed(2);
+            return parseFloat(this.$store.getters.payment(this.index)).toFixed(2);
         },
         occupants: function () {
-            return this.$store.getters.rooms[this.index].occupants;
+            return this.$store.getters.occupants(this.index);
         }
     }
 };

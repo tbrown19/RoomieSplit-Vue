@@ -45,13 +45,12 @@ export default class RoomSplitter {
     }
 
     updateEachRoomsValues() {
-        for (let i = 0; i < this.numberRooms; i++) {
-            this.updateARoomsValues(this.rooms[i]);
+        for (let i = 0; i < store.getters.numRooms; i++) {
+            this.updateARoomsValues(store.getters.rooms[i]);
         }
     }
 
     updateARoomsValues(room) {
-        console.log(room);
         this.updateARoomsPercentOfTotalSpace(room);
         this.updateARoomsPercentOfPrivateSpace(room);
     }
@@ -66,6 +65,7 @@ export default class RoomSplitter {
     }
 
     updateARoomsPercentOfPrivateSpace(room) {
+        console.log('private space before we update a rooms private space ' + this.privateSpace);
         const percentOfPrivateSpace = this.Calculator.calculateARoomsPercentOfPrivateSpace(room, this.privateSpace);
         console.log('percent of private sapce is ' + percentOfPrivateSpace);
         store.dispatch('percentOfPrivateSpace', {
@@ -104,7 +104,8 @@ export default class RoomSplitter {
             this.commonSpaceValue = this.Calculator.calculateValueCommonSpace(store.getters.rent, this.commonSpacePercentage);
             this.privateSpaceValue = store.getters.rent - this.commonSpaceValue;
 
-            this.basePayment = this.Calculator.calculateBasePayment(this.rooms, this.commonSpaceValue);
+            this.basePayment = this.Calculator.calculateBasePayment(store.getters.rooms, this.commonSpaceValue);
+            console.log('base payment: ' + this.basePayment);
             this.rooms.forEach(room => {
                 this.updateARoomsPaymentRelatedValues(room);
             });
@@ -113,13 +114,16 @@ export default class RoomSplitter {
 
     updateARoomsPaymentRelatedValues(room) {
         let roomsIndex = room.roomsIndex;
+        console.log('percent private space in updateARoomsPaymentRelatedValues : ' + store.getters.percentOfPrivateSpace(roomsIndex));
         const eachOccupantsPercentOfPrivateSpace = store.getters.percentOfPrivateSpace(roomsIndex) / store.getters.occupants(roomsIndex);
+        console.log('eachOccupantsPercentOfPrivateSpace: ' + eachOccupantsPercentOfPrivateSpace);
         store.dispatch('eachOccupantsPercentOfPrivateSpace', {
             roomsIndex: roomsIndex,
             value: eachOccupantsPercentOfPrivateSpace
         });
 
         const privatePayment = this.privateSpaceValue * eachOccupantsPercentOfPrivateSpace;
+        console.log('privatePayment: ' + privatePayment);
         store.dispatch('privatePayment', {
             roomsIndex: roomsIndex,
             value: privatePayment
@@ -134,13 +138,15 @@ export default class RoomSplitter {
 
     allRoomsAreValid() {
         let allRoomsAreValid = true;
-        this.rooms.forEach(room => {
+        this.rooms.forEach(currentRoom => {
             // We set the rooms payment here to 0 because that way if all the rooms are not valid, the payment is already set to 0
             // and if they rooms are valid, the payment will be recalculated for each room anyways.
             store.dispatch('payment', {
-                roomsIndex: room.roomsIndex,
+                roomsIndex: currentRoom.roomsIndex,
                 value: 0
             });
+
+            let room = store.getters.getRoomByNumber(currentRoom.roomsIndex);
             if (room.occupants <= 0 || room.area <= 0 || room.area === '') {
                 allRoomsAreValid = false;
             }

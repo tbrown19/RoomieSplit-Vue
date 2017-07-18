@@ -47,6 +47,15 @@ export const roomsArea = (context, payload) => {
     });
 };
 
+export const occupants = (context, payload) => {
+    // state.percentOfTotalSpace = percentage;
+    context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
+        roomsIndex: payload.roomsIndex,
+        attribute: 'occupants',
+        value: payload.value
+    });
+};
+
 export const percentTotalSpace = (context, payload) => {
     // state.percentOfTotalSpace = percentage;
     context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {

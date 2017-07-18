@@ -27,7 +27,7 @@ export default {
         // This bus watches for that so that it can remove the errors that result from the inputs being cleared.
         EventBus.$on('areaUpdatedManually', roomNumber => {
             // We set the errors cleared field to true if the bus event room number matches the current room number.
-            if (this.currentRoom.roomsIndex === roomNumber) {
+            if (this.roomsIndex + 1 === roomNumber) {
                 this.errorsCleared = true;
             }
         });

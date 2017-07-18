@@ -16,7 +16,7 @@ export const rent = state => state.rent;
 export const rooms = state => state.rooms;
 
 export const getRoomByNumber = (state, getters) => (roomNumber) => {
-    return getters.getRooms[roomNumber];
+    return getters.rooms[roomNumber];
 };
 export const getRoomAttribute = (state, getters) => (payload) => {
     return getters.getRoomByNumber(payload.roomsIndex)[payload.attr];
