@@ -40,7 +40,6 @@ export default {
     },
 
     computed: {
-
         feetHasErrors() {
             if (this.errorsCleared) {
                 this.errorsCleared = false;

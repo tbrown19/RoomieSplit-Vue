@@ -76,11 +76,9 @@ export default class RoomSplitter {
     }
 
     updateAreaRelatedValues() {
-        console.log(store.getters.rooms);
         this.commonSpace = this.Calculator.calculateCommonSpace(store.getters.rooms, store.getters.area);
         this.privateSpace = store.getters.area - this.commonSpace;
-        console.error('common space: ' + this.commonSpace);
-        console.error('private space: ' + this.privateSpace);
+
         this.commonSpacePercentage = this.Calculator.calculateCommonSpacePercentage(store.getters.area, this.commonSpace);
         this.privateSpacePercentage = 1 - this.commonSpacePercentage;
         // Update the values related to all the rooms, and then go an update each rooms values relative to the new totals.

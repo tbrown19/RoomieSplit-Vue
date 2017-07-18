@@ -2,7 +2,8 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import * as getters from './getters';
 import * as actions from './actions';
-import room from './modules/room';
+import room from './modules/room/room.js';
+import firebase from './modules/firebase/firebase.js';
 
 Vue.use(Vuex);
 const debug = process.env.NODE_ENV !== 'production';
@@ -10,17 +11,15 @@ const debug = process.env.NODE_ENV !== 'production';
 export default new Vuex.Store({
     strict: debug,
     modules: {
-        room
+        room,
+        firebase
     },
     state: {
         numRooms: 0,
         area: 0,
         rent: 0,
         rooms: [],
-        loadingFromDatabase: false,
-        firebaseActionErrors: null,
-        currentTableErrors: [],
-        savingRoomsToDatabase: false
+        currentTableErrors: []
     },
 
     getters,
@@ -66,15 +65,6 @@ export default new Vuex.Store({
             if (indexOfError !== -1) {
                 state.currentTableErrors.splice(indexOfError, 1);
             }
-        },
-        SET_LOADING_FROM_DATABASE(state, isLoading) {
-            state.loadingFromDatabase = isLoading;
-        },
-        SET_FIREBASE_ERROR(state, error) {
-            state.firebaseActionErrors = error;
-        },
-        SET_SAVING_ROOMS_TO_DATABASE(state, isSaving) {
-            state.savingRoomsToDatabase = isSaving;
         }
     }
 });
