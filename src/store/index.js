@@ -53,6 +53,9 @@ export default new Vuex.Store({
         },
         getFirebaseActionErrors: state => {
             return state.firebaseActionErrors;
+        },
+        isSavingRoomsToDatabase: state => {
+            return state.savingRoomsToDatabase;
         }
     },
 
@@ -92,6 +95,9 @@ export default new Vuex.Store({
         },
         SET_FIREBASE_ERROR(state, error) {
             state.firebaseActionErrors = error;
+        },
+        SET_SAVING_ROOMS_TO_DATABASE(state, isSaving) {
+            state.savingRoomsToDatabase = isSaving;
         }
     },
     actions: {
@@ -112,6 +118,15 @@ export default new Vuex.Store({
         updateRoomConfiguration(context, routeId) {
             updateRoomConfiguration(routeId, context.getters.roomConfiguration).then((hm) => {
                 // maybe add something here about saving a room configuration. idk.
+            }, (error) => {
+                context.commit('SET_FIREBASE_ERROR', error);
+            });
+        },
+
+        updateRooms(context, routeId) {
+            context.commit('SET_SAVING_ROOMS_TO_DATABASE', true);
+            updateRoomConfigruationRooms(routeId, context.getters.rooms).then(() => {
+                context.commit('SET_SAVING_ROOMS_TO_DATABASE', false);
             }, (error) => {
                 context.commit('SET_FIREBASE_ERROR', error);
             });

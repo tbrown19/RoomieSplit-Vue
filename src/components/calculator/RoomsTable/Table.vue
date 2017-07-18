@@ -87,6 +87,7 @@ export default {
         },
 
         updateARoomRelatedValues(room) {
+            this.$store.commit('SET_ROOMS', this.RoomSplitter.rooms);
             console.log(this.RoomSplitter.commonSpace);
             // Update the total area and other related values on the room splitter.
             this.RoomSplitter.updateAreaRelatedValues();

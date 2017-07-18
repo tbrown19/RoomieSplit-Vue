@@ -14,22 +14,21 @@ import RoomsTable from './RoomsTable/Table.vue';
 import ActionButtons from './Actions/ActionButtons.vue';
 import ErrorsOnTable from './RoomsTable/Other/TableErrors.vue';
 import RoomSplitter from '../../utils/classes/RoomSplitter.js';
-import { updateRoomConfigruationRooms } from '../../services/firebase-actions.js';
 import { EventBus } from '../../utils/event-bus.js';
-
+import { mapGetters } from 'vuex';
 export default {
-    props: ['inputs', 'routeId'],
+    props: ['inputs'],
 
     components: {
         UpdatableInputs, RoomsTable, ActionButtons, ErrorsOnTable
     },
 
     computed: {
-        tableErrors() {
-            console.log(this.RoomSplitter.currentErrors.size > 0);
-            return this.RoomSplitter.currentErrors > 0;
-        }
+        ...mapGetters({
+            savingTable: 'isSavingRoomsToDatabase'
+        })
     },
+
     methods: {
         triggerRoomConfigruationUpdate(inputKey, inputValue) {
             // Update the value we just changed on the room splitter class.
@@ -45,12 +44,8 @@ export default {
         },
 
         save() {
-            this.savingTable = true;
-            updateRoomConfigruationRooms(this.routeId, this.roomSplitter.rooms).then(() => {
-                this.savingTable = false;
-            }, (error) => {
-                this.error = error.code;
-            });
+            console.log('ghmmmm');
+            this.$emit('updateRooms');
         },
 
         clearAll() {
@@ -63,7 +58,6 @@ export default {
         let roomConfiguration = this.$store.getters.roomConfiguration;
         let roomSplitter = new RoomSplitter(this.$store.getters.roomConfiguration);
         return {
-            savingTable: false,
             roomConfiguration,
             roomSplitter
         };

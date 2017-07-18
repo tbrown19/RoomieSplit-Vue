@@ -14,7 +14,7 @@
             </el-row>
     
             <div v-if="roomConfiguration.numRooms != 0 && !loading && !error" key="loaded">
-                <index :inputs="inputs" :roomConfiguration="roomConfiguration" @updateRoomConfiguration="handleUpdateRoomConfiguration" :routeId="routeId"></index>
+                <index :inputs="inputs" :roomConfiguration="roomConfiguration" @updateRoomConfiguration="handleUpdateRoomConfiguration" @updateRooms="handleUpdateRooms"></index>
             </div>
         </slide-fade-out-in>
     
@@ -31,7 +31,7 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
 
     created() {
-        this.$store.dispatch('loadRoomConfiguration', this.$route.params.configId);
+        this.loadRoomConfiguration(this.$route.params.configId);
     },
 
     components: {
@@ -48,19 +48,25 @@ export default {
     methods: {
         ...mapActions([
             'loadRoomConfiguration',
-            'updateRoomConfiguration'
+            'updateRoomConfiguration',
+            'updateRooms'
         ]),
 
         handleUpdateRoomConfiguration() {
             console.log('time to update the rooms');
             // Update the room configruation
-            this.$store.dispatch('updateRoomConfiguration', this.$route.params.configId);
-
+            this.updateRoomConfiguration(this.routeId);
+            this.roomSplitter.updateAreaRelatedValues();
+            this.roomSplitter.updatePaymentRelatedValues();
             // updateRoomConfiguration(this.routeId, this.$store.getters.roomConfiguration);
             // // Then update the rooms, in case the user hadn't clicked save, or if the nubmer of rooms changed and now is different.
             // updateRoomConfigruationRooms(this.routeId, this.$store.getters.getRooms);
             // // Then reload the information from the database as that will also cause the page to rerender giving the table a chance to smoothly transition into the new values.
             // this.handleGetRoomConfiguration();
+        },
+        handleUpdateRooms() {
+            console.log('do we update the rooms');
+            this.updateRooms(this.routeId);
         }
     },
 
