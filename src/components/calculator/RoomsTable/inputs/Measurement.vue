@@ -1,12 +1,16 @@
 <template>
     <div>
-        <el-form :inline="true" :model="measurement">
+        <el-form :inline="true">
             <el-form-item class="measurement-input">
-                <input @input="checkFeet(measurement.feet)" v-model.number="measurement.feet" v-validate="'required|between:1,99'" :class="{'input': true, 'is-danger': feetHasErrors, 'is-success': !feetHasErrors && this.measurement.feet != ''}" type="number" placeholder="ft" :name="'feet' + currentRoom.roomNumber.toString()">
+                <input @input="checkFeet(currentMeasurement.feet)" v-model.number="currentMeasurement.feet" v-validate="'required|between:1,99'" 
+                :class="{'input': true, 'is-danger': feetHasErrors, 'is-success': !feetHasErrors && this.currentMeasurement.feet != ''}" type="number" placeholder="ft" 
+                :name="'feet' + roomsIndex.toString()">
             </el-form-item>
     
             <el-form-item class="measurement-input">
-                <input @input="checkInches(measurement.inches)" v-model.number="measurement.inches" v-validate="'between:0,12'" :class="{'input': true, 'is-danger': errors.has('inches'), 'is-success': !errors.has('inches') && this.measurement.inches != ''}" type="number" placeholder="in" :name="'inches' + currentRoom.roomNumber.toString()">
+                <input @input="checkInches(currentMeasurement.inches)" v-model.number="currentMeasurement.inches" v-validate="'between:0,12'" 
+                :class="{'input': true, 'is-danger': errors.has('inches'), 'is-success': !errors.has('inches') && this.currentMeasurement.inches != ''}" type="number" placeholder="in" 
+                :name="'inches' + roomsIndex.toString()">
             </el-form-item>
         </el-form>
     </div>
@@ -15,55 +19,53 @@
 <script>
 import { validateInput } from '../../../../utils/helpers/input-helpers.js';
 import { EventBus } from '../../../../utils/event-bus.js';
-
 export default {
-    props: ['row', 'type'],
+    props: ['roomsIndex', 'measurement', 'type'],
 
     created() {
         // If the user updated the area manually then it will clear all these inputs.
         // This bus watches for that so that it can remove the errors that result from the inputs being cleared.
         EventBus.$on('areaUpdatedManually', roomNumber => {
             // We set the errors cleared field to true if the bus event room number matches the current room number.
-            if (this.currentRoom.roomNumber === roomNumber) {
+            if (this.currentRoom.roomsIndex === roomNumber) {
                 this.errorsCleared = true;
             }
         });
 
         EventBus.$on('measurementsCleared', () => {
             // Update the measurement so it is matching the new currently cleared measurement and then get rid of the errors.
-            this.measurement = this.currentRoom[this.type];
+            this.currentMeasurement = this.currentRoom[this.type];
             this.errorsCleared = true;
         });
     },
 
     computed: {
+
         feetHasErrors() {
             if (this.errorsCleared) {
                 this.errorsCleared = false;
                 return false;
             }
-            return this.errors.has(`feet${this.currentRoom.roomNumber}`);
+            return this.errors.has(`feet${this.roomsIndex}`);
         }
     },
 
     methods: {
         checkFeet(feetValue) {
-            this.measurement.feet = validateInput(feetValue, 0, 99, '');
-            this.$emit('measurementUpdated', this.currentRoom);
+            this.currentMeasurement.feet = validateInput(feetValue, 0, 99, '');
+            this.$emit('measurementUpdated', this.roomsIndex, this.type, 'Feet', this.currentMeasurement.feet);
         },
 
         checkInches(inchesValue) {
-            this.measurement.inches = validateInput(inchesValue, 0, 11, '');
-            this.$emit('measurementUpdated', this.currentRoom);
+            this.currentMeasurement.inches = validateInput(inchesValue, 0, 11, '');
+            this.$emit('measurementUpdated', this.roomsIndex, this.type, 'Inches', this.currentMeasurement.inches);
         }
     },
 
     data: function () {
         // Get the current row, and then get the current measurement type either length or width.
-        let currentRoom = this.row;
         return {
-            currentRoom,
-            measurement: currentRoom[this.type],
+            currentMeasurement: {...this.measurement}, // creates a copy of the measurement values so that we are not directly editing the store.
             errorsCleared: false
         };
     }

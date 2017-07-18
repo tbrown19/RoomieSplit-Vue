@@ -17,14 +17,7 @@
 import { validateInput } from '../../../../utils/helpers/input-helpers.js';
 
 export default {
-    props: ['room', 'area'],
-
-    watch: {
-        // If the area changes from the parent, then update the current area to be the new one.
-        area() {
-            this.currentArea = this.area;
-        }
-    },
+    props: ['roomsIndex', 'area'],
 
     computed: {
         roundedArea: function () {
@@ -36,7 +29,7 @@ export default {
     methods: {
         checkArea(area) {
             this.currentArea = validateInput(area, 0, 999, 0);
-            this.$emit('areaUpdated', this.room, this.currentArea);
+            this.$emit('areaUpdated', this.roomsIndex, this.currentArea);
         }
     },
 

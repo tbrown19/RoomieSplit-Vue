@@ -1,5 +1,5 @@
 <template>
-    <div class="payment-value" v-if="payment > 0">
+    <div class="payment-value" v-if="roundedPayment > 0">
         <h2>{{ roundedPayment }}</h2>
         <div v-if="occupants > 1">
             each
@@ -10,10 +10,13 @@
 
 <script>
 export default {
-    props: ['payment', 'occupants'],
+    props: ['index'],
     computed: {
         roundedPayment: function () {
-            return parseFloat(this.payment).toFixed(2);
+            return parseFloat(this.$store.getters.rooms[this.index].payment).toFixed(2);
+        },
+        occupants: function () {
+            return this.$store.getters.rooms[this.index].occupants;
         }
     }
 };

@@ -44,8 +44,16 @@ export default new Vuex.Store({
             state.rent = roomConfiguration.rent;
             state.rooms = roomConfiguration.rooms;
         },
+        UPDATE_A_ROOM(state, payload) {
+            state.rooms[payload.roomsIndex] = payload.value;
+        },
         UPDATE_A_ROOMS_ATTRIBUTE(state, payload) {
+            // console.log(payload);
             state.rooms[payload.roomsIndex][payload.attribute] = payload.value;
+        },
+        UPDATE_A_ROOMS_NESTED_ATTRIBUTE(state, payload) {
+            // console.log(payload);
+            state.rooms[payload.roomsIndex][payload.attribute][payload.nested] = payload.value;
         },
         ADD_TABLE_ERROR(state, errorName) {
             if (!state.currentTableErrors.includes(errorName)) {
@@ -55,7 +63,6 @@ export default new Vuex.Store({
         REMOVE_TABLE_ERROR(state, errorName) {
             let indexOfError = state.currentTableErrors.indexOf(errorName);
             if (indexOfError !== -1) {
-                console.log(indexOfError);
                 state.currentTableErrors.splice(indexOfError, 1);
             }
         },

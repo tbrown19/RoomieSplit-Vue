@@ -1,5 +1,6 @@
 <template>
     <slide-fade-slow>
+        {{currentErrors}}
         <div class="table-errors" v-if="currentErrors.length > 0">
             <div class="notification is-danger" v-for="tableError in currentErrors" :key="tableError">
                 <h2 class="is-title">{{ tableError }}</h2>

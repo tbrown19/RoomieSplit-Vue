@@ -10,19 +10,19 @@
     
         <el-table-column label="Length" min-width='120px'>
             <template scope="scope">
-                <Measurement type='length' :row="scope.row" @measurementUpdated="measurementUpdated"></Measurement>
+                <Measurement :roomsIndex="currentIndex(scope)" :measurement="currentRoom(scope).length" type='length' @measurementUpdated="measurementUpdated"></Measurement>
             </template>
         </el-table-column>
     
-        <el-table-column label="Width" min-width='120px'>
-            <template scope="scope">
-                <Measurement type='width' :row="scope.row" @measurementUpdated="measurementUpdated"></Measurement>
-            </template>
-        </el-table-column>
+        <!-- <el-table-column label="Width" min-width='120px'>
+                        <template scope="scope">
+                            <Measurement type='width' :measurement="currentRoom(scope.row.roomsIndex).width" @measurementUpdated="measurementUpdated"></Measurement>
+                        </template>
+                    </el-table-column>  -->
     
         <el-table-column label="Area" min-width='100px'>
             <template scope="scope">
-                <Footage :room="scope.row" :area="scope.row.area" @areaUpdated="areaUpdated"></Footage>
+                <Footage :roomsIndex="currentIndex(scope)" :area="currentRoom(scope).area" @areaUpdated="areaUpdated"></Footage>
             </template>
         </el-table-column>
     
@@ -34,7 +34,7 @@
     
         <el-table-column label="Payment" min-width='100px'>
             <template scope="scope">
-                <Payment :occupants="scope.row.occupants" :payment="scope.row.payment"></Payment>
+                <Payment :index="scope.row.roomsIndex"></Payment>
             </template>
         </el-table-column>
     </el-table>
@@ -63,18 +63,35 @@ export default {
     },
 
     methods: {
+        currentIndex(scope) {
+            return scope.row.roomsIndex;
+        },
+        currentRoom(scope) {
+            const index = scope.row.roomsIndex;
+            return this.$store.getters.rooms[index];
+        },
         clearRoom(room) {
             room.clear();
             this.updateARoomRelatedValues(room);
         },
 
-        measurementUpdated(room) {
+        measurementUpdated(roomsIndex, type, measurementType, measurement) {
+            console.log('roomsIndex' + roomsIndex);
+            console.log('type' + type);
+            console.log('measurementType' + measurementType);
+            console.log('measurement' + measurement);
+
             // Update the rooms footage by calculating it with the measurement values.
-            room.updateAreaFromMeasurements();
-            this.updateARoomRelatedValues(room);
+            // room.updateAreaFromMeasurements();
+            // this.updateARoomRelatedValues(room);
+            this.$store.dispatch(`${type}${measurementType}`, {
+                roomsIndex: roomsIndex,
+                value: measurement
+            });
         },
 
-        areaUpdated(room, area) {
+        areaUpdated(roomsIndex, area) {
+            let room = this.RoomSplitter.rooms[roomsIndex];
             // Call the function on the room which will clear the measurement inputs and update the room's area.
             room.updateAreaFromInputs(area);
             // Then emit an event on the bus so that the measurement inputs can be aware that this input was updated manually.

@@ -16,9 +16,11 @@ export const rent = state => state.rent;
 export const rooms = state => state.rooms;
 
 export const getRoomByNumber = (state, getters) => (roomNumber) => {
-    return state.getters.getRooms[roomNumber];
+    return getters.getRooms[roomNumber];
 };
-
+export const getRoomAttribute = (state, getters) => (payload) => {
+    return getters.getRoomByNumber(payload.roomsIndex)[payload.attr];
+};
 export const getCurrentTableErrors = state => state.currentTableErrors;
 
 export const isLoadingFromDatabase = state => state.loadingFromDatabase;
