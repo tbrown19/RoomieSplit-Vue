@@ -12,7 +12,7 @@ export const widthFeet = (state, getters, rootState) => (roomsIndex) => {
 };
 
 export const widthInches = (state, getters, rootState) => (roomsIndex) => {
-    return getters.rooms[roomsIndex]['width']['feet'];
+    return getters.rooms[roomsIndex]['width']['inches'];
 };
 
 export const roomArea = (state, getters, rootState) => (roomsIndex) => {

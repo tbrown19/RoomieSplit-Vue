@@ -21,20 +21,18 @@
 
 <script>
 export default {
-    props: ['RoomSplitter', 'room'],
-    created() {
-        console.log(this.room);
-    },
+    props: ['index'],
 
     computed: {
         percentOfTotalSpace() {
-            let percentOfTotalSpace = this.room.percentOfTotalSpace || 0;
+            let percentOfTotalSpace = this.$store.getters.percentOfTotalSpace(this.index) || 0;
             return this.readablePercent(percentOfTotalSpace);
         },
         percentOfPrivateSpace() {
+            console.log('in the computed' + this.$store.getters.percentOfPrivateSpace(this.index));
             // Either get it off the object or calculate it. We usually will only calculate it on the inital load of the file.
-            let percentOfTotalSpace = this.room.percentOfPrivateSpace || 0;
-            return this.readablePercent(percentOfTotalSpace);
+            let percentOfPrivateSpace = this.$store.getters.percentOfPrivateSpace(this.index) || 0;
+            return this.readablePercent(percentOfPrivateSpace);
         }
     },
 
@@ -56,8 +54,8 @@ export default {
 </script>
 
 <style>
-    .info-header {
-        font-size: 1.1rem;
-        font-weight: 700;
-    }
+.info-header {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
 </style>

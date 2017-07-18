@@ -2,7 +2,7 @@
     <el-table :data="roomsData" style="width: 100%" stripe tooltip-effect="dark">
         <el-table-column label="Actions" type="expand">
             <template scope="scope">
-                <ExtraInfoRow @clearRoom="clearRoom" :RoomSplitter="RoomSplitter" :room="scope.row"></ExtraInfoRow>
+                <ExtraInfoRow :index="currentIndex(scope)" @clearRoom="clearRoom"></ExtraInfoRow>
             </template>
         </el-table-column>
     
@@ -14,15 +14,15 @@
             </template>
         </el-table-column>
     
-        <!-- <el-table-column label="Width" min-width='120px'>
-                        <template scope="scope">
-                            <Measurement type='width' :measurement="currentRoom(scope.row.roomsIndex).width" @measurementUpdated="measurementUpdated"></Measurement>
-                        </template>
-                    </el-table-column>  -->
-    
+         <el-table-column label="Width" min-width='120px'>
+            <template scope="scope">
+                <Measurement :roomsIndex="currentIndex(scope)" :measurement="currentRoom(scope).width" type='width' @measurementUpdated="measurementUpdated"></Measurement>
+            </template>
+        </el-table-column>
+
         <el-table-column label="Area" min-width='100px'>
             <template scope="scope">
-                <Footage :roomsIndex="currentIndex(scope)" :area="currentRoom(scope).area" @areaUpdated="areaUpdated"></Footage>
+                <Footage :roomsIndex="currentIndex(scope)"  @areaUpdated="areaUpdated"></Footage>
             </template>
         </el-table-column>
     
@@ -76,18 +76,14 @@ export default {
         },
 
         measurementUpdated(roomsIndex, type, measurementType, measurement) {
-            console.log('roomsIndex' + roomsIndex);
-            console.log('type' + type);
-            console.log('measurementType' + measurementType);
-            console.log('measurement' + measurement);
-
             // Update the rooms footage by calculating it with the measurement values.
-            // room.updateAreaFromMeasurements();
-            // this.updateARoomRelatedValues(room);
+            let room = this.RoomSplitter.rooms[roomsIndex];
             this.$store.dispatch(`${type}${measurementType}`, {
                 roomsIndex: roomsIndex,
                 value: measurement
             });
+            room.updateAreaFromMeasurements();
+            this.updateARoomRelatedValues(room);
         },
 
         areaUpdated(roomsIndex, area) {
@@ -104,7 +100,7 @@ export default {
         },
 
         updateARoomRelatedValues(room) {
-            this.$store.commit('SET_ROOMS', this.RoomSplitter.rooms);
+            // this.$store.commit('SET_ROOMS', this.RoomSplitter.rooms);
             console.log(this.RoomSplitter.commonSpace);
             // Update the total area and other related values on the room splitter.
             this.RoomSplitter.updateAreaRelatedValues();

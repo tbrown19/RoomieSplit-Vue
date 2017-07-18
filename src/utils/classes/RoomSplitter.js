@@ -61,16 +61,18 @@ export default class RoomSplitter {
         const percentOfTotalSpace = this.Calculator.calculateARoomsPercentOfTotalSpace(room, store.getters.area);
         store.dispatch('percentTotalSpace', {
             roomsIndex: room.roomsIndex,
-            percentage: percentOfTotalSpace
+            value: percentOfTotalSpace
         });
     }
 
     updateARoomsPercentOfPrivateSpace(room) {
         const percentOfPrivateSpace = this.Calculator.calculateARoomsPercentOfPrivateSpace(room, this.privateSpace);
+        console.log('percent of private sapce is ' + percentOfPrivateSpace);
         store.dispatch('percentOfPrivateSpace', {
             roomsIndex: room.roomsIndex,
-            percentage: percentOfPrivateSpace
+            value: percentOfPrivateSpace
         });
+        console.log('percent of private sapce in store is  ' + percentOfPrivateSpace);
     }
 
     updateAreaRelatedValues() {

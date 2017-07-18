@@ -50,6 +50,7 @@ export default new Vuex.Store({
         UPDATE_A_ROOMS_ATTRIBUTE(state, payload) {
             // console.log(payload);
             state.rooms[payload.roomsIndex][payload.attribute] = payload.value;
+            // console.log(payload.attribute + ': ' + state.rooms[payload.roomsIndex][payload.attribute]);
         },
         UPDATE_A_ROOMS_NESTED_ATTRIBUTE(state, payload) {
             // console.log(payload);

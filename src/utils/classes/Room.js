@@ -75,9 +75,10 @@ export default class Room {
     }
 
     updateAreaFromMeasurements() {
+        let calculatedArea = this.calculateAreaFromMeasurements();
         store.dispatch('roomsArea', {
             roomsIndex: this.roomsIndex,
-            value: this.calculateAreaFromMeasurements()
+            value: calculatedArea
         });
     }
 
