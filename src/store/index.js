@@ -60,7 +60,7 @@ export default new Vuex.Store({
     },
 
     mutations: {
-        SET_NUMROOMS(state, numRooms) {
+        SET_NUM_ROOMS(state, numRooms) {
             state.numRooms = numRooms;
         },
         SET_AREA(state, area) {

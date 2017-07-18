@@ -31,20 +31,31 @@ export default {
 
     methods: {
         triggerRoomConfigruationUpdate(inputKey, inputValue) {
-            // Update the value we just changed on the room splitter class.
-            // this.roomSplitter[inputKey] = inputValue;
-            // If the number of rooms was updated then we call the method which either creates new empty rooms, or deletes the extra rooms,
-            // before we update the database.
-            let mutationName = 'SET_' + inputKey.toUpperCase();
-            this.$store.commit(mutationName, inputValue);
             if (inputKey === 'numRooms') {
-                this.roomSplitter.numberOfRoomsUpdated();
+                this.updateNumRooms(inputValue);
+            } else if (inputKey === 'area') {
+                this.updateArea(inputValue);
+            } else if (inputKey === 'rent') {
+                this.updateRent(inputValue);
             }
             this.$emit('updateRoomConfiguration');
         },
 
+        updateNumRooms(inputValue) {
+            this.$store.commit('SET_NUM_ROOMS', inputValue);
+            this.roomSplitter.numberOfRoomsUpdated();
+        },
+        updateArea(inputValue) {
+            this.$store.commit('SET_AREA', inputValue);
+            this.roomSplitter.updateAreaRelatedValues();
+        },
+        updateRent(inputValue) {
+            console.log(inputValue);
+            this.$store.commit('SET_RENT', inputValue);
+            console.log('rent here is : ' + this.$store.getters.rent);
+            this.roomSplitter.updatePaymentRelatedValues();
+        },
         save() {
-            console.log('ghmmmm');
             this.$emit('updateRooms');
         },
 

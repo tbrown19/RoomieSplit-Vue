@@ -73,10 +73,6 @@ export default class RoomSplitter {
 
         this.commonSpacePercentage = this.Calculator.calculateCommonSpacePercentage(this.area, this.commonSpace);
         this.privateSpacePercentage = 1 - this.commonSpacePercentage;
-
-        this.commonSpaceValue = this.Calculator.calculateValueCommonSpace(this.rent, this.commonSpacePercentage);
-        this.privateSpaceValue = store.getters.rent - this.commonSpaceValue;
-        console.log('the rent is ' + store.getters.rent);
         // Update the values related to all the rooms, and then go an update each rooms values relative to the new totals.
         this.updateEachRoomsValues();
         this.checkForErrors();
@@ -91,6 +87,11 @@ export default class RoomSplitter {
     }
 
     updatePaymentRelatedValues() {
+        this.commonSpaceValue = this.Calculator.calculateValueCommonSpace(this.rent, this.commonSpacePercentage);
+        this.privateSpaceValue = store.getters.rent - this.commonSpaceValue;
+
+        console.log('the rent is ' + store.getters.rent);
+
         console.log('we get here right?');
         // If all the rooms are valid, have area and occupants, and we have no other errors than we can calculate the payments for each room.
         if (this.allRoomsAreValid() && store.getters.getCurrentTableErrors.length === 0) {

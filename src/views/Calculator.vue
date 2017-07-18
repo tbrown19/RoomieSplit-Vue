@@ -56,8 +56,6 @@ export default {
             console.log('time to update the rooms');
             // Update the room configruation
             this.updateRoomConfiguration(this.routeId);
-            this.roomSplitter.updateAreaRelatedValues();
-            this.roomSplitter.updatePaymentRelatedValues();
             // updateRoomConfiguration(this.routeId, this.$store.getters.roomConfiguration);
             // // Then update the rooms, in case the user hadn't clicked save, or if the nubmer of rooms changed and now is different.
             // updateRoomConfigruationRooms(this.routeId, this.$store.getters.getRooms);
