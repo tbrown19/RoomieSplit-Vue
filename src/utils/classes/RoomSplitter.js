@@ -14,6 +14,7 @@ export default class RoomSplitter {
         console.log(roomConfiguration);
         this.Calculator = new Calculator();
         this.rooms = this.createRoomObjects();
+        this.commonSpaceValueModifier = 1.5;
         store.commit('SET_ROOMS', this.rooms);
         this.updateInitalValues();
     }
@@ -103,8 +104,8 @@ export default class RoomSplitter {
         // If all the rooms are valid, have area and occupants, and we have no other errors than we can calculate the payments for each room.
         if (this.allRoomsAreValid() && store.getters.getCurrentTableErrors.length === 0) {
             console.log('do we get into here?');
-            this.commonSpaceValue = this.Calculator.calculateValueCommonSpace(store.getters.rent, this.commonSpacePercentage);
-            this.privateSpaceValue = store.getters.rent - this.commonSpaceValue;
+            this.commonSpaceValue = this.Calculator.calculateValueCommonSpace(store.getters.rent, this.commonSpacePercentage) / this.commonSpaceValueModifier;
+            this.privateSpaceValue = (store.getters.rent - this.commonSpaceValue);
 
             this.basePayment = this.Calculator.calculateBasePayment(store.getters.rooms, this.commonSpaceValue);
             console.log('base payment: ' + this.basePayment);
