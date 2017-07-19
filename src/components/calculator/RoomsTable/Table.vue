@@ -1,5 +1,6 @@
 <template>
     <el-table :data="roomsData" style="width: 100%" stripe tooltip-effect="dark">
+        Settings
         <el-table-column label="Actions" type="expand">
             <template scope="scope">
                 <ExtraInfoRow :index="currentIndex(scope)" @clearRoom="clearRoom"></ExtraInfoRow>

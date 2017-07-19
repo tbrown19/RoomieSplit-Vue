@@ -70,14 +70,11 @@ export default class RoomSplitter {
     }
 
     updateARoomsPercentOfPrivateSpace(room) {
-        console.log('private space before we update a rooms private space ' + this.privateSpace);
         const percentOfPrivateSpace = this.Calculator.calculateARoomsPercentOfPrivateSpace(room, this.privateSpace);
-        console.log('percent of private sapce is ' + percentOfPrivateSpace);
         store.dispatch('percentOfPrivateSpace', {
             roomsIndex: room.roomsIndex,
             value: percentOfPrivateSpace
         });
-        console.log('percent of private sapce in store is  ' + percentOfPrivateSpace);
     }
 
     updateAreaRelatedValues() {
@@ -103,12 +100,11 @@ export default class RoomSplitter {
         console.log('are we ever even calling update payment');
         // If all the rooms are valid, have area and occupants, and we have no other errors than we can calculate the payments for each room.
         if (this.allRoomsAreValid() && store.getters.getCurrentTableErrors.length === 0) {
-            console.log('do we get into here?');
             this.commonSpaceValue = this.Calculator.calculateValueCommonSpace(store.getters.rent, this.commonSpacePercentage) / this.commonSpaceValueModifier;
             this.privateSpaceValue = (store.getters.rent - this.commonSpaceValue);
 
             this.basePayment = this.Calculator.calculateBasePayment(store.getters.rooms, this.commonSpaceValue);
-            console.log('base payment: ' + this.basePayment);
+
             this.rooms.forEach(room => {
                 this.updateARoomsPaymentRelatedValues(room);
             });
@@ -117,8 +113,10 @@ export default class RoomSplitter {
 
     updateARoomsPaymentRelatedValues(room) {
         let roomsIndex = room.roomsIndex;
+
         console.log('percent private space in updateARoomsPaymentRelatedValues : ' + store.getters.percentOfPrivateSpace(roomsIndex));
         const eachOccupantsPercentOfPrivateSpace = store.getters.percentOfPrivateSpace(roomsIndex) / store.getters.occupants(roomsIndex);
+
         console.log('eachOccupantsPercentOfPrivateSpace: ' + eachOccupantsPercentOfPrivateSpace);
         store.dispatch('eachOccupantsPercentOfPrivateSpace', {
             roomsIndex: roomsIndex,

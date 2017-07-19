@@ -45,7 +45,6 @@ body {
 
 #main-content {
     padding-top: 2%;
-    padding-bottom: 50px;
 }
 
 
