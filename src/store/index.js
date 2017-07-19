@@ -18,6 +18,7 @@ export default new Vuex.Store({
         numRooms: 0,
         area: 0,
         rent: 0,
+        commonSpaceValueModifier: 0,
         rooms: [],
         currentTableErrors: []
     },
@@ -34,6 +35,9 @@ export default new Vuex.Store({
         SET_RENT(state, rent) {
             state.rent = rent;
         },
+        SET_COMMON_SPACE_VALUE_MODIFIER(state, commonSpaceValueModifier) {
+            state.commonSpaceValueModifier = commonSpaceValueModifier;
+        },
         SET_ROOMS(state, rooms) {
             state.rooms = rooms;
         },
@@ -41,6 +45,7 @@ export default new Vuex.Store({
             state.numRooms = roomConfiguration.numRooms;
             state.area = roomConfiguration.area;
             state.rent = roomConfiguration.rent;
+            state.commonSpaceValueModifier = roomConfiguration.commonSpaceValueModifier;
             state.rooms = roomConfiguration.rooms;
         },
         UPDATE_A_ROOM(state, payload) {

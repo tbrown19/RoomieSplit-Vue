@@ -14,7 +14,6 @@ export default class RoomSplitter {
         console.log(roomConfiguration);
         this.Calculator = new Calculator();
         this.rooms = this.createRoomObjects();
-        this.commonSpaceValueModifier = 1.5;
         store.commit('SET_ROOMS', this.rooms);
         this.updateInitalValues();
     }
@@ -97,10 +96,11 @@ export default class RoomSplitter {
     }
 
     updatePaymentRelatedValues() {
-        console.log('are we ever even calling update payment');
         // If all the rooms are valid, have area and occupants, and we have no other errors than we can calculate the payments for each room.
         if (this.allRoomsAreValid() && store.getters.getCurrentTableErrors.length === 0) {
-            this.commonSpaceValue = this.Calculator.calculateValueCommonSpace(store.getters.rent, this.commonSpacePercentage) / this.commonSpaceValueModifier;
+            let commonSpaceValue = this.Calculator.calculateValueCommonSpace(store.getters.rent, this.commonSpacePercentage);
+            // Set the value to actually be the value divided by the modifier.
+            this.commonSpaceValue = commonSpaceValue / store.getters.commonSpaceValueModifier;
             this.privateSpaceValue = (store.getters.rent - this.commonSpaceValue);
 
             this.basePayment = this.Calculator.calculateBasePayment(store.getters.rooms, this.commonSpaceValue);
@@ -114,10 +114,8 @@ export default class RoomSplitter {
     updateARoomsPaymentRelatedValues(room) {
         let roomsIndex = room.roomsIndex;
 
-        console.log('percent private space in updateARoomsPaymentRelatedValues : ' + store.getters.percentOfPrivateSpace(roomsIndex));
         const eachOccupantsPercentOfPrivateSpace = store.getters.percentOfPrivateSpace(roomsIndex) / store.getters.occupants(roomsIndex);
 
-        console.log('eachOccupantsPercentOfPrivateSpace: ' + eachOccupantsPercentOfPrivateSpace);
         store.dispatch('eachOccupantsPercentOfPrivateSpace', {
             roomsIndex: roomsIndex,
             value: eachOccupantsPercentOfPrivateSpace

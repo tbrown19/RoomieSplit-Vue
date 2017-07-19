@@ -3,16 +3,19 @@
         <hr>
         <div class="level">
             <div class="level-left">
-                <a @click="isComponentModalActive = true" class="button is-info is-large is-outlined">Help</a>
-                <a @click="clearAll" class="button is-primary is-large is-outlined">Settings</a>
+                <a @click="isHelpModalActive = true" class="button is-info is-large is-outlined">Help</a>
+                <a @click="isSettingsModalActive = true" class="button is-primary is-large is-outlined">Settings</a>
             </div>
             <div class="level-right">
                 <a @click="save" :class="{'button is-success is-large is-outlined': true, 'is-loading': isSaving}">Save</a>
                 <a @click="clearAll" class="button is-danger is-large is-outlined">Clear</a>
             </div>
         </div>
-        <b-modal :active.sync="isComponentModalActive" has-modal-card data-backdrop="false">
-            <help-modal v-bind="formProps"></help-modal>
+        <b-modal :active.sync="isHelpModalActive" has-modal-card>
+            <help-modal></help-modal>
+        </b-modal>
+        <b-modal :active.sync="isSettingsModalActive" has-modal-card>
+            <settings-modal></settings-modal>
         </b-modal>
     </div>
 </template>
@@ -20,11 +23,12 @@
 
 <script>
 import HelpModal from './HelpModal.vue';
+import SettingsModal from './SettingsModal.vue';
 export default {
     props: ['isSaving'],
 
     components: {
-        HelpModal
+        HelpModal, SettingsModal
     },
 
     methods: {
@@ -39,11 +43,8 @@ export default {
     data: function () {
         return {
             saving: this.isSaving,
-            isComponentModalActive: false,
-            formProps: {
-                email: 'evan@you.com',
-                password: 'testing'
-            }
+            isHelpModalActive: false,
+            isSettingsModalActive: false
         };
     }
 };

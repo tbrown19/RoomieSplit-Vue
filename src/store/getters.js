@@ -15,6 +15,8 @@ export const rent = state => state.rent;
 
 export const rooms = state => state.rooms;
 
+export const commonSpaceValueModifier = state => state.commonSpaceValueModifier;
+
 export const getRoomByNumber = (state, getters) => (roomNumber) => {
     return getters.rooms[roomNumber];
 };
