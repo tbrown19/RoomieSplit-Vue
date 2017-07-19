@@ -3,6 +3,7 @@ export const roomConfiguration = state => {
         'numRooms': state.numRooms,
         'area': state.area,
         'rent': state.rent,
+        'commonSpaceValueModifier': state.commonSpaceValueModifier,
         'rooms': state.rooms
     };
 };

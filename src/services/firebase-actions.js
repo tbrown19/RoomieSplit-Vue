@@ -39,9 +39,10 @@ export function updateRoomConfigurationInDB(id, roomConfiguration) {
     const updatedNumRooms = updateConfigurationNumRooms(id, roomConfiguration.numRooms);
     const updatedArea = updateConfigurationArea(id, roomConfiguration.area);
     const updatedRent = updateConfigurationRent(id, roomConfiguration.rent);
+    const updatedCommonSpaceValueModifier = commonSpaceValueModifier(id, roomConfiguration.commonSpaceValueModifier);
 
     return new Promise((resolve, reject) => {
-        Promise.all([updatedNumRooms, updatedArea, updatedRent]).then(values => {
+        Promise.all([updatedNumRooms, updatedArea, updatedRent, updatedCommonSpaceValueModifier]).then(values => {
             // Do nothing on success. there is no need for the values to be returned as they are already in the store.
             resolve();
         }, error => {
@@ -74,6 +75,16 @@ function updateConfigurationArea(id, area) {
 function updateConfigurationRent(id, rent) {
     return new Promise((resolve, reject) => {
         Database.ref('RoomConfigurations').child(id).child('rent').set(rent).then(() => {
+            resolve();
+        }, (error) => {
+            reject(error);
+        });
+    });
+}
+
+function commonSpaceValueModifier(id, commonSpaceValueModifier) {
+    return new Promise((resolve, reject) => {
+        Database.ref('RoomConfigurations').child(id).child('commonSpaceValueModifier').set(commonSpaceValueModifier).then(() => {
             resolve();
         }, (error) => {
             reject(error);

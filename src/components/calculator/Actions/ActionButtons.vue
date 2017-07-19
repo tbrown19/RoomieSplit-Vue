@@ -15,7 +15,7 @@
             <help-modal></help-modal>
         </b-modal>
         <b-modal :active.sync="isSettingsModalActive" has-modal-card>
-            <settings-modal></settings-modal>
+            <settings-modal @updateRoomConfiguration="updateRoomConfiguration"></settings-modal>
         </b-modal>
     </div>
 </template>
@@ -37,6 +37,9 @@ export default {
         },
         clearAll() {
             this.$emit('clearAll');
+        },
+        updateRoomConfiguration() {
+            this.$emit('updateRoomConfiguration');
         }
     },
 

@@ -42,7 +42,8 @@ export default {
             let roomConfigruation = {
                 'numRooms': inputs.rooms.value,
                 'area': inputs.area.value,
-                'rent': inputs.rent.value
+                'rent': inputs.rent.value,
+                'commonSpaceValueModifier': 1.5
             };
             return roomConfigruation;
         }

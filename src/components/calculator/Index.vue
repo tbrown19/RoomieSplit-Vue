@@ -3,7 +3,7 @@
         <updatable-inputs :inputs="inputs" :roomConfiguration="this.$store.getters.roomConfiguration" @saveInput="triggerRoomConfigruationUpdate"></updatable-inputs>
         <errors-on-table></errors-on-table>
         <rooms-table :RoomSplitter="roomSplitter"></rooms-table>
-        <action-buttons :isSaving="savingTable" @save="save" @clearAll="clearAll"></action-buttons>
+        <action-buttons :isSaving="savingTable" @save="save" @clearAll="clearAll" @updateRoomConfiguration="triggerRoomConfigruationUpdate"></action-buttons>
     </div>
 </template>
 
@@ -37,6 +37,9 @@ export default {
                 this.updateArea(inputValue);
             } else if (inputKey === 'rent') {
                 this.updateRent(inputValue);
+            } else {
+                this.roomSplitter.updateAreaRelatedValues();
+                this.roomSplitter.updatePaymentRelatedValues();
             }
             this.$emit('updateRoomConfiguration');
         },
