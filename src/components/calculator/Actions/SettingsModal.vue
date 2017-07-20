@@ -5,14 +5,19 @@
                 <p class="modal-card-title">Settings</p>
             </header>
             <section class="modal-card-body">
-                <b-field label="Private Space Value Modifier">
+                <div id="privateSpaceValue">
+                    <label class="label"> Private Space Value Modifier: </label>
+                    <div class="control">
+                        <input name="commonSpaceValueModifier" v-model.number="commonSpaceValueModifier" v-validate="`required|between:1,10`" step=".1" :class="{'input': true, 'is-danger': errors.has('commonSpaceValueModifier'), 'is-success': !errors.has('commonSpaceValueModifier') 
+                                                        && this.commonSpaceValueModifier != ''}" type="number" placeholder="1">
+                    </div>
     
-                </b-field>
-                <input name="commonSpaceValueModifier" v-model.number="commonSpaceValueModifier" v-validate="`required|between:1,10`" step=".1" :class="{'input': true, 'is-danger': errors.has('commonSpaceValueModifier'), 'is-success': !errors.has('commonSpaceValueModifier') 
-                                            && this.commonSpaceValueModifier != ''}" type="number" placeholder="1">
-                <p>
-                    How much more valuable should private space be compared to shared space. A value of 1 means private space is valued the same as common space.    
-                </p>
+                    <p class="inputDescription">
+                        Value of private space relative to shared space.
+                        <br> A value of 2 means private space is considered twice as valuable as shared space.
+                    </p>
+                </div>
+    
                 <hr>
                 <div class="has-text-centered close-modal-div" @click="saveChanges">
                     <a v-if="formHasNoErrors" class="is-subsection-head">Save Changes</a>
@@ -55,6 +60,22 @@ export default {
 }
 
 .input {
-    max-width: 50%;
+    max-width: 30%;
+    margin-bottom: .2rem;
+}
+
+label {
+    font-size: 1.2rem;
+}
+
+#privateSpaceValue {
+    float: none;
+    /* if you had floats before? otherwise inline-block will behave differently */
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.inputDescription {
+    max-width: 400px;
 }
 </style>
