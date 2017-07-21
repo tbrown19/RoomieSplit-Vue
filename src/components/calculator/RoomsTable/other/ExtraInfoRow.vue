@@ -22,7 +22,7 @@
             <button class="button is-danger is-medium" @click="handleClear">Clear</button>
         </div>
         <b-modal :active.sync="isAdditionalValueModalActive" has-modal-card>
-            <help-modal></help-modal>
+            <additional-value-modal :index="index"></additional-value-modal>
         </b-modal>
     </div>
 </template>

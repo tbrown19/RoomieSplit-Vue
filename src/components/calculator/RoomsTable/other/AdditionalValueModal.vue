@@ -2,27 +2,37 @@
     <form action="">
         <div class="modal-card">
             <section class="modal-card-body">
-                <h2 class="is-section-head">Settings</h2>
+                <h2 class="is-section-head">Additional Values</h2>
                 <hr>
                 <div id="privateSpaceValue">
-                    <label class="label"> Private Space Value Modifier: </label>
-                    <div class="control">
-                        <input name="commonSpaceValueModifier" v-model.number="commonSpaceValueModifier" v-validate="`required|between:1,10`" step=".1" :class="{'input': true, 'is-danger': errors.has('commonSpaceValueModifier'), 'is-success': !errors.has('commonSpaceValueModifier') 
-                                                                && this.commonSpaceValueModifier != ''}" type="number" placeholder="1">
-                    </div>
-    
                     <p class="inputDescription">
-                        Value of private space relative to shared space.
-                        <br> A value of 2 means private space is considered twice as valuable as shared space.
+                        <div v-if="currentValues">
+                            <ul>
+                                <li v-for="(value, key, index) in currentValues" v-bind:key="key">
+                                    {{key}} {{value}}
+                                </li>
+                            </ul>
+                        </div>
+                        <div v-else>
+                            Currently no additonal values. You can add one below!
+                        </div>
                     </p>
                 </div>
     
                 <hr>
-                <div class="has-text-centered close-modal-div" @click="saveChanges">
-                    <a v-if="formHasNoErrors" class="is-subsection-head">Save Changes</a>
-                </div>
+                <h2 class="is-section-head" id="addNewHeader">Add New</h2>
+                <el-row type="flex">
+                    <el-col :span="14">
+                        <input id="nameInput" class="input" type="text" v-model="newAddition.name" placeholder="Name - Ex: Private Bathroom">
+                    </el-col>
+                    <el-col :span="8" :offset="1">
+                        <input id="valueInput" class="input" type="number" v-model="newAddition.value" placeholder="Value - Ex: $30">
+                    </el-col>
+                </el-row>
+                <el-row type="flex" justify="center">
+                    <button :disabled="!saveDisabled" @click.prevent="addNew" id="addButton" class="button is-primary is-large"> Add </button>
+                </el-row>
             </section>
-    
         </div>
     </form>
 </template>
@@ -33,20 +43,32 @@ export default {
     props: ['index'],
 
     computed: {
-        formHasNoErrors() {
-            return this.errors.errors.length === 0;
+        saveDisabled() {
+            const formHasNoError = this.errors.errors.length === 0;
+            const valuesNotEmpty = this.newAddition.name !== '' && this.newAddition.value !== '';
+
+            return formHasNoError && valuesNotEmpty;
         }
     },
     methods: {
-        saveChanges() {
-            this.$store.commit('SET_COMMON_SPACE_VALUE_MODIFIER', this.commonSpaceValueModifier);
-            this.$emit('updateRoomConfiguration');
-            this.$parent.close();
+        addNew() {
+            this.$store.dispatch('addAdditionalValue', {
+                roomsIndex: this.index,
+                name: this.newAddition.name,
+                value: this.newAddition.value
+            });
+            this.currentValues = this.$store.getters.additionalValues(this.index);
+            this.newAddition.name = '';
+            this.newAddition.value = '';
         }
     },
     data: function () {
         return {
-            commonSpaceValueModifier: this.$store.getters.additionalValues
+            newAddition: {
+                name: '',
+                value: ''
+            },
+            currentValues: this.$store.getters.additionalValues(this.index)
         };
     }
 };
@@ -54,23 +76,10 @@ export default {
 
 <style scoped>
 .modal-card {
-    min-width: 300px;
-    max-width: 500px;
+    min-width: 500px;
+    max-width: 600px;
     width: auto;
     color: black;
-}
-
-
-.input {
-    max-width: 30%;
-    margin-bottom: .2rem;
-}
-
-label {
-    font-size: 1.2rem;
-}
-.inputDescription {
-    max-width: 400px;
 }
 
 .is-section-head {
@@ -80,5 +89,19 @@ label {
 
 hr {
     margin: .75rem 0rem .75rem 0rem;
+}
+
+.newValueInputs {
+    margin-bottom: 2.5rem;
+}
+
+#addButton {
+    margin-top: 1rem;
+    padding: 0 3rem 0 3rem;
+}
+
+#addNewHeader {
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
 }
 </style>

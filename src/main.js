@@ -20,7 +20,8 @@ import {
     MenuItem,
     Tooltip,
     row,
-    col
+    col,
+    Input
 } from 'element-ui';
 Vue.use(table);
 Vue.use(TableColumn);
@@ -31,6 +32,8 @@ Vue.use(MenuItem);
 Vue.use(Tooltip);
 Vue.use(row);
 Vue.use(col);
+Vue.use(Input);
+
 import 'element-ui/lib/theme-default/index.css';
 
 // Vee validate configuration must be changed so it can properly interact with element ui

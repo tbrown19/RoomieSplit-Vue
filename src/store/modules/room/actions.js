@@ -113,9 +113,12 @@ export const note = (context, payload) => {
 
 export const addAdditionalValue = (context, payload) => {
     // state.percentOfTotalSpace = percentage;
-    let currentValues = context.getters.additionalValues;
+    let currentValues = context.getters.additionalValues(payload.roomsIndex);
+    if (currentValues === '') {
+        currentValues = {};
+    }
     currentValues[payload.name] = payload.value;
-
+    console.log(currentValues);
     context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
         roomsIndex: payload.roomsIndex,
         attribute: 'additionalValues',
@@ -124,7 +127,8 @@ export const addAdditionalValue = (context, payload) => {
 };
 export const removeAdditionalValue = (context, payload) => {
     // state.percentOfTotalSpace = percentage;
-    let currentValues = context.getters.additionalValues;
+    console.log(payload);
+    let currentValues = context.getters.additionalValues(payload.roomsIndex);
     delete currentValues[payload.name];
 
     context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
