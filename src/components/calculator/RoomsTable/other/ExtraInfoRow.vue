@@ -17,17 +17,25 @@
             </div>
         </div>
         <div class="level-right">
-            <button class="button is-primary is-medium add-value" @click="handleClear">Add Value</button>
+            <button class="button is-primary is-medium add-value" @click="isAdditionalValueModalActive =true">Add Value</button>
             <p></p>
             <button class="button is-danger is-medium" @click="handleClear">Clear</button>
         </div>
+        <b-modal :active.sync="isAdditionalValueModalActive" has-modal-card>
+            <help-modal></help-modal>
+        </b-modal>
     </div>
 </template>
 
 
 <script>
+import AdditionalValueModal from './AdditionalValueModal.vue';
 export default {
     props: ['index'],
+
+    components: {
+        AdditionalValueModal
+    },
 
     computed: {
         percentOfTotalSpace() {
@@ -65,7 +73,8 @@ export default {
 
     data: function () {
         return {
-            currentNote: this.$store.getters.note(this.index)
+            currentNote: this.$store.getters.note(this.index),
+            isAdditionalValueModalActive: false
         };
     }
 };

@@ -39,6 +39,9 @@ export const payment = (state, getters, rootState) => (roomsIndex) => {
 export const note = (state, getters, rootState) => (roomsIndex) => {
     return getters.rooms[roomsIndex]['note'];
 };
+export const additionalValues = (state, getters, rootState) => (roomsIndex) => {
+    return getters.rooms[roomsIndex]['additionalValues'];
+};
 export const additionalValue = (state, getters, rootState) => (roomsIndex) => {
     return getters.rooms[roomsIndex]['additionalValue'];
 };

@@ -30,6 +30,8 @@ export function createEmptyRooms(numRooms) {
 
             additionalValue: 0,
 
+            additionalValues: '',
+
             note: ''
         });
     }

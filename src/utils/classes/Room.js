@@ -45,6 +45,8 @@ export default class Room {
 
         this.additionalValue = 0;
 
+        this.additionalValues = '';
+
         this.notes = '';
     }
 

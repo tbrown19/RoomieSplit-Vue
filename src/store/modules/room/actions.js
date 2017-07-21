@@ -110,3 +110,26 @@ export const note = (context, payload) => {
         value: note
     });
 };
+
+export const addAdditionalValue = (context, payload) => {
+    // state.percentOfTotalSpace = percentage;
+    let currentValues = context.getters.additionalValues;
+    currentValues[payload.name] = payload.value;
+
+    context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
+        roomsIndex: payload.roomsIndex,
+        attribute: 'additionalValues',
+        value: currentValues
+    });
+};
+export const removeAdditionalValue = (context, payload) => {
+    // state.percentOfTotalSpace = percentage;
+    let currentValues = context.getters.additionalValues;
+    delete currentValues[payload.name];
+
+    context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
+        roomsIndex: payload.roomsIndex,
+        attribute: 'additionalValues',
+        value: currentValues
+    });
+};
