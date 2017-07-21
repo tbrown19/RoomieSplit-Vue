@@ -29,7 +29,7 @@
 
 
 <script>
-import AdditionalValueModal from './AdditionalValueModal.vue';
+import AdditionalValueModal from '../AdditionalValue/Modal.vue';
 export default {
     props: ['index'],
 
