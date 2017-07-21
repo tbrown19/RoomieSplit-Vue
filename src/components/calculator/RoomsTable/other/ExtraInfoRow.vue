@@ -12,7 +12,7 @@
             <div class="level-item notes">
                 <div style="font-size: 1rem">
                     <label class="label info-header">Notes:</label>
-                    <input class="input" type="text" placeholder="Ex: Jon's room" v-model='currentNote'>
+                    <input @input="noteUpdated" class="input" type="text" placeholder="Ex: Jon's room" v-model='currentNote'>
                 </div>
             </div>
         </div>
@@ -26,17 +26,10 @@
 
 
 <script>
-import { mapGetters } from 'vuex';
 export default {
     props: ['index'],
 
     computed: {
-        ...mapGetters([
-            'note'
-        ]),
-        currentNote() {
-            return this.$store.getters.note(this.index);
-        },
         percentOfTotalSpace() {
             let percentOfTotalSpace = this.$store.getters.percentOfTotalSpace(this.index) || 0;
             return this.readablePercent(percentOfTotalSpace);
@@ -47,7 +40,6 @@ export default {
             return this.readablePercent(percentOfPrivateSpace);
         }
     },
-
     methods: {
         readablePercent(percent) {
             const decimalToPercent = percent * 100;
@@ -60,7 +52,21 @@ export default {
 
         handleClear() {
             this.$emit('clearRoom', this.room);
+        },
+
+        noteUpdated() {
+            console.log(this.currentNote);
+            this.$store.dispatch('note', {
+                roomsIndex: this.index,
+                value: this.currentNote
+            });
         }
+    },
+
+    data: function () {
+        return {
+            currentNote: this.$store.getters.note(this.index)
+        };
     }
 };
 </script>

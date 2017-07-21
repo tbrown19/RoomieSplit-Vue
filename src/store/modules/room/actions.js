@@ -100,3 +100,13 @@ export const payment = (context, payload) => {
         value: payload.value
     });
 };
+
+export const note = (context, payload) => {
+    let note = payload.value.replace(/[^a-z0-9']+/ig, ' ');
+    // state.percentOfTotalSpace = percentage;
+    context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
+        roomsIndex: payload.roomsIndex,
+        attribute: 'note',
+        value: note
+    });
+};
