@@ -1,15 +1,14 @@
 <template>
     <form action="">
         <div class="modal-card">
-            <header class="modal-card-head">
-                <p class="modal-card-title">Settings</p>
-            </header>
             <section class="modal-card-body">
+                <h2 class="is-section-head">Settings</h2>
+                <hr>
                 <div id="privateSpaceValue">
                     <label class="label"> Private Space Value Modifier: </label>
                     <div class="control">
                         <input name="commonSpaceValueModifier" v-model.number="commonSpaceValueModifier" v-validate="`required|between:1,10`" step=".1" :class="{'input': true, 'is-danger': errors.has('commonSpaceValueModifier'), 'is-success': !errors.has('commonSpaceValueModifier') 
-                                                        && this.commonSpaceValueModifier != ''}" type="number" placeholder="1">
+                                                                && this.commonSpaceValueModifier != ''}" type="number" placeholder="1">
                     </div>
     
                     <p class="inputDescription">
@@ -59,6 +58,7 @@ export default {
     color: black;
 }
 
+
 .input {
     max-width: 30%;
     margin-bottom: .2rem;
@@ -67,15 +67,16 @@ export default {
 label {
     font-size: 1.2rem;
 }
-
-#privateSpaceValue {
-    float: none;
-    /* if you had floats before? otherwise inline-block will behave differently */
-    display: inline-block;
-    vertical-align: middle;
-}
-
 .inputDescription {
     max-width: 400px;
+}
+
+.is-section-head {
+    font-size: 1.3rem;
+    text-align: center;
+}
+
+hr {
+    margin: .75rem 0rem .75rem 0rem;
 }
 </style>

@@ -36,3 +36,9 @@ export const privatePayment = (state, getters, rootState) => (roomsIndex) => {
 export const payment = (state, getters, rootState) => (roomsIndex) => {
     return getters.rooms[roomsIndex]['payment'];
 };
+export const note = (state, getters, rootState) => (roomsIndex) => {
+    return getters.rooms[roomsIndex]['note'];
+};
+export const additionalValue = (state, getters, rootState) => (roomsIndex) => {
+    return getters.rooms[roomsIndex]['additionalValue'];
+};

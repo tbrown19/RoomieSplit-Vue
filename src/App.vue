@@ -45,8 +45,12 @@ body {
 
 #main-content {
     padding-top: 2%;
+    padding-bottom: 2%;
 }
 
+.modal-background {
+    background-color: rgba(10, 10, 10, 0.22) !important;
+}
 
 // Import Bulma and Buefy styles
 @import "~bulma";

@@ -59,7 +59,8 @@ export default {
     },
     computed: {
         roomsData() {
-            return this.RoomSplitter.rooms;
+            console.log(this.RoomSplitter.rooms);
+            return this.$store.getters.rooms;
         }
     },
 

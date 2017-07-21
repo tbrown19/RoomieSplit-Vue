@@ -4,17 +4,10 @@ export default class Room {
         if (roomData === undefined) {
             this.createEmptyRoom(roomNumber);
         } else {
-            this.roomNumber = roomData.roomNumber;
-            this.roomsIndex = roomData.roomNumber - 1;
-            this.length = roomData.length;
-            this.width = roomData.width;
-            this.area = roomData.area;
-            this.occupants = roomData.occupants;
-            this.percentOfTotalSpace = roomData.percentOfTotalSpace;
-            this.percentOfPrivateSpace = roomData.percentOfPrivateSpace;
-            this.eachOccupantsPercentOfPrivateSpace = roomData.eachOccupantsPercentOfPrivateSpace;
-            this.privatePayment = roomData.privatePayment;
-            this.payment = roomData.payment;
+            for (let dataName in roomData) {
+                this[dataName] = roomData[dataName];
+            }
+            this.roomsIndex = this.roomNumber - 1;
         }
     }
 
@@ -49,6 +42,10 @@ export default class Room {
         this.privatePayment = 0;
 
         this.payment = 0;
+
+        this.additionalValue = 0;
+
+        this.notes = '';
     }
 
     updateAreaFromInputs(area) {

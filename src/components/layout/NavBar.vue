@@ -7,7 +7,7 @@
                 </li>
     
                 <el-menu-item index="/">
-                    Home
+                    <a>Home</a>
                 </el-menu-item>
     
                 <el-menu-item index="/explanation">
@@ -49,7 +49,7 @@ export default {
 }
 
 .el-menu-item {
-    font-size: 1.1rem;
+    font-size: 1.1rem !important;
     font-family: 'Roboto', sans-serif;
 }
 

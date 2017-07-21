@@ -26,7 +26,11 @@ export function createEmptyRooms(numRooms) {
 
             privatePayment: 0,
 
-            payment: 0
+            payment: 0,
+
+            additionalValue: 0,
+
+            note: ''
         });
     }
     return roomData;
