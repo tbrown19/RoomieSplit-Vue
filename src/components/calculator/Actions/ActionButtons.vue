@@ -35,7 +35,7 @@
 
 
 <script>
-import HelpModal from './HelpModal.vue';
+import HelpModal from '../Help/Modal.vue';
 import SettingsModal from './SettingsModal.vue';
 export default {
     props: ['isSaving'],
