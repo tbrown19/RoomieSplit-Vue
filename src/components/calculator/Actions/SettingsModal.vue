@@ -26,8 +26,9 @@
     
         <hr>
         <div class="has-text-centered close-modal-div">
-            <a v-if="formHasNoErrors" class="is-subsection-head" @click="saveChanges">Save Changes</a>
-            <span v-else class="is-subsection-head disabled">Save Changes</span>
+            <a @click="$emit('close')">Close</a>
+            <a v-if="formHasNoErrors" @click="saveChanges">Save</a>
+            <span v-else class="disabled">Save</span>
         </div>
     </modal>
 </template>
@@ -59,22 +60,16 @@ export default {
 };
 </script>
 
-<style scoped>
-.input {
-    max-width: 100%;
-    margin-bottom: .2rem;
-}
-
+<style lang="scss" scoped>
 label {
     font-size: 1.2rem;
 }
 
 .close-modal-div {
-    font-size: 1.2rem;
-}
-
-.inputDescription {
-    max-width: 400px;
+    font-size: 1.3rem;
+    > a{
+        margin: 0 1rem 0 1rem;
+    }
 }
 
 .is-section-head {
@@ -84,10 +79,6 @@ label {
 
 .disabled {
     color: gray;
-}
-
-hr {
-    margin: .75rem 0rem .75rem 0rem;
 }
 
 .settings-group {
@@ -101,7 +92,7 @@ hr {
 }
 
 .level {
-    padding-bottom: 5px;
+    padding-bottom: 10px;
     margin-bottom: .5rem;
     border-bottom: 1px solid gainsboro;
 }
