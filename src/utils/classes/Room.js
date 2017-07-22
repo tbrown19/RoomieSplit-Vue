@@ -43,9 +43,13 @@ export default class Room {
 
         this.payment = 0;
 
-        this.additionalValue = 0;
+        this.positiveValue = 0;
 
-        this.additionalValues = '';
+        this.positiveValues = '';
+
+        this.negativeValue = 0;
+
+        this.negativeValues = '';
 
         this.notes = '';
     }

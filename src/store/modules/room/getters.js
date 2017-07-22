@@ -39,9 +39,19 @@ export const payment = (state, getters, rootState) => (roomsIndex) => {
 export const note = (state, getters, rootState) => (roomsIndex) => {
     return getters.rooms[roomsIndex]['note'];
 };
-export const additionalValues = (state, getters, rootState) => (roomsIndex) => {
-    return getters.rooms[roomsIndex]['additionalValues'];
+export const positiveValue = (state, getters, rootState) => (roomsIndex) => {
+    return getters.rooms[roomsIndex]['positiveValue'];
 };
-export const additionalValue = (state, getters, rootState) => (roomsIndex) => {
-    return getters.rooms[roomsIndex]['additionalValue'];
+export const positiveValues = (state, getters, rootState) => (roomsIndex) => {
+    return getters.rooms[roomsIndex]['positiveValues'];
+};
+export const negativeValue = (state, getters, rootState) => (roomsIndex) => {
+    return getters.rooms[roomsIndex]['negativeValue'];
+};
+export const negativeValues = (state, getters, rootState) => (roomsIndex) => {
+    return getters.rooms[roomsIndex]['negativeValues'];
+};
+export const valuesByType = (state, getters, rootState) => (roomsIndex, type) => {
+    const valuesName = type + 'Values';
+    return getters.rooms[roomsIndex][valuesName];
 };

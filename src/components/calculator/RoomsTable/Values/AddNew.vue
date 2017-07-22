@@ -1,13 +1,14 @@
 <template>
     <div>
         <h2 class="is-section-head" id="addNewHeader">
-            Add New</h2>
+            Add New
+        </h2>
         <el-row type="flex">
             <el-col :span="14">
-                <input id="nameInput" class="input" type="text" v-model="newAddition.name" placeholder="Name - Ex: Private Bathroom">
+                <name :type="type" @valueUpdated="valueUpdated"></name>
             </el-col>
             <el-col :span="8" :offset="1">
-                <input id="valueInput" class="input" type="number" v-model="newAddition.value" placeholder="Value - Ex: $30">
+                <value :type="type" @valueUpdated="valueUpdated"></value>
             </el-col>
         </el-row>
         <el-row type="flex" justify="center">
@@ -18,33 +19,57 @@
 
 
 <script>
+import Name from './inputs/Name.vue';
+import Value from './inputs/Value.vue';
 export default {
-    props: ['index'],
+    name: 'AddNewValue',
+
+    props: ['index', 'type'],
+
+    components: {
+        Name, Value
+    },
 
     computed: {
+        allowedValues() {
+            if (this.type === 'positive') {
+                return '1,300';
+            }
+            return '-1,-300';
+        },
+
+        placeHolderValue() {
+            if (this.type === 'positive') {
+                return 'Value - Ex: $30';
+            }
+            return 'Value - Ex: -$50';
+        },
+
         saveDisabled() {
             const formHasNoError = this.errors.errors.length === 0;
-            const valuesNotEmpty = this.newAddition.name !== '' && this.newAddition.value !== '';
+            const valuesNotEmpty = this.newValue.name !== '' && this.newValue.value !== '';
             return formHasNoError && valuesNotEmpty;
         }
     },
     methods: {
+        valueUpdated(type, value) {
+            this.newValue[type] = value;
+        },
         addNew() {
-            this.$store.dispatch('addAdditionalValue', {
+            this.$store.dispatch('addValue', {
                 roomsIndex: this.index,
-                name: this.newAddition.name,
-                value: this.newAddition.value
+                name: this.newValue.name,
+                value: this.newValue.value,
+                type: this.type
             });
-            this.newAddition.name = '';
-            this.newAddition.value = '';
-            let currentValues = this.$store.getters.additionalValues(this.index);
-            console.log(Object.keys(currentValues));
+            this.newValue.name = '';
+            this.newValue.value = '';
             this.$emit('valuesUpdated');
         }
     },
     data: function () {
         return {
-            newAddition: {
+            newValue: {
                 name: '',
                 value: ''
             }

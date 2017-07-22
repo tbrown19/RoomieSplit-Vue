@@ -14,6 +14,7 @@ import Modal from '../../Generic/Modal.vue';
 import Tabs from './Tabs.vue';
 
 export default {
+    name: 'HelpModal',
     components: {
         Modal, Tabs
     }

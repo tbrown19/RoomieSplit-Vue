@@ -28,9 +28,13 @@ export function createEmptyRooms(numRooms) {
 
             payment: 0,
 
-            additionalValue: 0,
+            positiveValue: 0,
 
-            additionalValues: '',
+            positiveValues: '',
+
+            negativeValue: 0,
+
+            negativeValues: '',
 
             note: ''
         });
