@@ -23,12 +23,13 @@
                 </a>
             </div>
         </div>
-        <b-modal :active.sync="isHelpModalActive" has-modal-card>
-            <help-modal></help-modal>
-        </b-modal>
-        <b-modal :active.sync="isSettingsModalActive" has-modal-card>
-            <settings-modal @updateRoomConfiguration="updateRoomConfiguration"></settings-modal>
-        </b-modal>
+        <!-- <b-modal :active.sync="isHelpModalActive" has-modal-card>
+                <help-modal></help-modal>
+            </b-modal> -->
+        <help-modal v-if="isHelpModalActive" @close="isHelpModalActive = false"></help-modal>
+        <settings-modal v-if="isSettingsModalActive"
+         @updateRoomConfiguration="updateRoomConfiguration" @close="isSettingsModalActive = false"></settings-modal>
+    
     </div>
 </template>
 
