@@ -17,9 +17,18 @@
             </div>
         </div>
         <div class="level-right">
-            <button class="button is-primary is-medium add-value" @click="isAdditionalValueModalActive =true">Add Value</button>
-            <p></p>
-            <button class="button is-danger is-medium" @click="handleClear">Clear</button>
+            <button class="button is-primary add-value" @click="isAdditionalValueModalActive =true">
+                <b-icon icon="add"></b-icon>
+                <span class="icon-message">Value</span>
+            </button>
+            <button class="button is-info add-value" @click="isAdditionalValueModalActive =true">
+                <b-icon icon="remove"></b-icon>
+                <span class="icon-message">Value</span>
+            </button>
+            <button class="button is-danger" @click="handleClear">
+                <b-icon icon="clear"></b-icon>
+                <span class="icon-message">Clear</span>
+            </button>
         </div>
         <b-modal :active.sync="isAdditionalValueModalActive" has-modal-card>
             <additional-value-modal :index="index"></additional-value-modal>
@@ -43,7 +52,6 @@ export default {
             return this.readablePercent(percentOfTotalSpace);
         },
         percentOfPrivateSpace() {
-            // Either get it off the object or calculate it. We usually will only calculate it on the inital load of the file.
             let percentOfPrivateSpace = this.$store.getters.percentOfPrivateSpace(this.index) || 0;
             return this.readablePercent(percentOfPrivateSpace);
         }

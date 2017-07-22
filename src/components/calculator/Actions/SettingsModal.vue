@@ -1,30 +1,27 @@
 <template>
-    <form action="">
-        <div class="modal-card">
-            <section class="modal-card-body">
-                <h2 class="is-section-head">Settings</h2>
-                <hr>
-                <div id="privateSpaceValue">
-                    <label class="label"> Private Space Value Modifier: </label>
-                    <div class="control">
-                        <input name="commonSpaceValueModifier" v-model.number="commonSpaceValueModifier" v-validate="`required|between:1,10`" step=".1" :class="{'input': true, 'is-danger': errors.has('commonSpaceValueModifier'), 'is-success': !errors.has('commonSpaceValueModifier') 
-                                                                && this.commonSpaceValueModifier != ''}" type="number" placeholder="1">
-                    </div>
-    
-                    <p class="inputDescription">
-                        Value of private space relative to shared space.
-                        <br> A value of 2 means private space is considered twice as valuable as shared space.
-                    </p>
+    <div class="modal-card">
+        <section class="modal-card-body">
+            <h2 class="is-section-head">Settings</h2>
+            <hr>
+            <div id="privateSpaceValue">
+                <label class="label"> Private Space Value Modifier: </label>
+                <div class="control">
+                    <input name="commonSpaceValueModifier" v-model.number="commonSpaceValueModifier" v-validate="`required|between:1,10`" step=".1" :class="{'input': true, 'is-danger': errors.has('commonSpaceValueModifier'), 'is-success': !errors.has('commonSpaceValueModifier') 
+                                                                    && this.commonSpaceValueModifier != ''}" type="number" placeholder="1">
                 </div>
     
-                <hr>
-                <div class="has-text-centered close-modal-div" @click="saveChanges">
-                    <a v-if="formHasNoErrors" class="is-subsection-head">Save Changes</a>
-                </div>
-            </section>
+                <p class="inputDescription">
+                    Value of private space relative to shared space.
+                    <br> A value of 2 means private space is considered twice as valuable as shared space.
+                </p>
+            </div>
     
-        </div>
-    </form>
+            <hr>
+            <div class="has-text-centered close-modal-div" @click="saveChanges">
+                <a v-if="formHasNoErrors" class="is-subsection-head">Save Changes</a>
+            </div>
+        </section>
+    </div>
 </template>
 
 <script>
@@ -67,6 +64,7 @@ export default {
 label {
     font-size: 1.2rem;
 }
+
 .inputDescription {
     max-width: 400px;
 }

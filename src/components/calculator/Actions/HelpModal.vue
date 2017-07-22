@@ -19,7 +19,7 @@
             <h2 class="is-section-head">Settings</h2>
             <h2 class="is-subsection-head">Values that effect all rooms' payments</h2>
             <p>
-                Click the settings button to change values that effect the entire tables payment calculations, such as changing how much private space is worth compared to share space.
+                Click the settings button to change values that effect the entire tables payment calculations, such as changing how much private space is worth compared to shared space.
             </p>
     
             <br>

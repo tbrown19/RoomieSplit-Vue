@@ -3,12 +3,24 @@
         <hr>
         <div class="level">
             <div class="level-left">
-                <a @click="isHelpModalActive = true" class="button is-info is-large is-outlined">Help</a>
-                <a @click="isSettingsModalActive = true" class="button is-primary is-large is-outlined">Settings</a>
+                <a @click="isHelpModalActive = true" class="button is-info is-large is-outlined">
+                    <b-icon icon="info"></b-icon>
+                    <span class="icon-message">Help</span>
+                </a>
+                <a @click="isSettingsModalActive = true" class="button is-primary is-large is-outlined">
+                    <b-icon icon="settings"></b-icon>
+                    <span class="icon-message">Settings</span>
+                </a>
             </div>
             <div class="level-right">
-                <a @click="save" :class="{'button is-success is-large is-outlined': true, 'is-loading': isSaving}">Save</a>
-                <a @click="clearAll" class="button is-danger is-large is-outlined">Clear</a>
+                <a @click="save" :class="{'button is-success is-large is-outlined': true, 'is-loading': isSaving}">
+                    <b-icon icon="save"></b-icon>
+                    <span class="icon-message">Save</span>
+                </a>
+                <a @click="clearAll" class="button is-danger is-large is-outlined">
+                    <b-icon icon="clear"></b-icon>
+                    <span class="icon-message">Clear</span>
+                </a>
             </div>
         </div>
         <b-modal :active.sync="isHelpModalActive" has-modal-card>
@@ -62,5 +74,4 @@ export default {
 // .modal.is-active {
 //     overflow-y: scroll;
 // }
-
 </style>

@@ -3,10 +3,7 @@
         <div class="modal-card">
             <section class="modal-card-body">
                 <h2 class="is-section-head">Additional Values</h2>
-                <hr>
                 <list :currentValues="currentValues"></list>
-    
-                <hr>
                 <add-new @valuesUpdated="valuesUpdated" :index="index"></add-new>
             </section>
         </div>
@@ -38,6 +35,12 @@ export default {
 </script>
 
 <style scoped>
+.is-section-head {
+    font-size: 1.3rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
 .modal-card {
     min-width: 500px;
     max-width: 600px;
