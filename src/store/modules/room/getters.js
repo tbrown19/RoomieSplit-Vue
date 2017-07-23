@@ -55,3 +55,7 @@ export const valuesByType = (state, getters, rootState) => (roomsIndex, type) =>
     const valuesName = type + 'Values';
     return getters.rooms[roomsIndex][valuesName];
 };
+export const totalValueByType = (state, getters, rootState) => (roomsIndex, type) => {
+    const valuesName = type + 'Value';
+    return getters.rooms[roomsIndex][valuesName];
+};

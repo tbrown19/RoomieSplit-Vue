@@ -24,7 +24,7 @@ export default {
             if (this.type === 'positive') {
                 return '1,300';
             }
-            return '-1,-300';
+            return '-300,-1';
         },
 
         placeHolderText() {

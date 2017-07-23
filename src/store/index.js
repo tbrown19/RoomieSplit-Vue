@@ -18,6 +18,7 @@ export default new Vuex.Store({
         numRooms: 0,
         area: 0,
         rent: 0,
+        valueAdjustedRent: 0,
         commonSpaceValueModifier: 0,
         rooms: [],
         currentTableErrors: []
@@ -34,6 +35,9 @@ export default new Vuex.Store({
         },
         SET_RENT(state, rent) {
             state.rent = rent;
+        },
+        SET_VALUE_ADJUSTED_RENT(state, rent) {
+            state.valueAdjustedRent = rent;
         },
         SET_COMMON_SPACE_VALUE_MODIFIER(state, commonSpaceValueModifier) {
             state.commonSpaceValueModifier = commonSpaceValueModifier;
@@ -52,11 +56,11 @@ export default new Vuex.Store({
             state.rooms[payload.roomsIndex] = payload.value;
         },
         UPDATE_A_ROOMS_ATTRIBUTE(state, payload) {
-            console.log(payload.roomsIndex);
-            console.log(state.rooms[payload.roomsIndex]);
+            // console.log(payload.roomsIndex);
+            // console.log(state.rooms[payload.roomsIndex]);
             // console.log(payload);
             state.rooms[payload.roomsIndex][payload.attribute] = payload.value;
-            console.log(state.rooms[payload.roomsIndex]);
+            // console.log(state.rooms[payload.roomsIndex]);
             // console.log(payload.attribute + ': ' + state.rooms[payload.roomsIndex][payload.attribute]);
         },
         UPDATE_A_ROOMS_NESTED_ATTRIBUTE(state, payload) {

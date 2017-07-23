@@ -3,6 +3,7 @@ export const roomConfiguration = state => {
         'numRooms': state.numRooms,
         'area': state.area,
         'rent': state.rent,
+        'valueAdjustedRent': state.valueAdjustedRent,
         'commonSpaceValueModifier': state.commonSpaceValueModifier,
         'rooms': state.rooms
     };
@@ -13,6 +14,8 @@ export const numRooms = state => state.numRooms;
 export const area = state => state.area;
 
 export const rent = state => state.rent;
+
+export const valueAdjustedRent = state => state.valueAdjustedRent;
 
 export const rooms = state => state.rooms;
 

@@ -3,7 +3,7 @@
         Settings
         <el-table-column label="Actions" type="expand">
             <template scope="scope">
-                <ExtraInfoRow :index="currentIndex(scope)" @clearRoom="clearRoom"></ExtraInfoRow>
+                <ExtraInfoRow :index="currentIndex(scope)" @clearRoom="clearRoom" @recalculatePayment="recalculatePayment"></ExtraInfoRow>
             </template>
         </el-table-column>
     
@@ -111,7 +111,11 @@ export default {
             this.RoomSplitter.updateAreaRelatedValues();
             // Then update values related to the payment.
             this.RoomSplitter.updatePaymentRelatedValues();
+        },
+        recalculatePayment() {
+            this.RoomSplitter.updatePaymentRelatedValues();
         }
+
     }
 };
 </script>

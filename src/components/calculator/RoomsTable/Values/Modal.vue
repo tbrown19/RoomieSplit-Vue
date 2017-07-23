@@ -2,7 +2,10 @@
     <modal>
         <div class="level">
             <div class="level-left">
-                <h2 class="is-section-head"> {{ typeToTitle }} Values</h2>
+                <h2 class="is-section-head">
+                    {{ typeToTitle }} Values - Current Total: {{ currentTotal }}
+                </h2>
+    
             </div>
             <div class="level-right">
                 <a @click="$emit('close')">
@@ -36,12 +39,15 @@ export default {
         valuesUpdated() {
             // update current value by setting it to a new object, that way vue can actually detect the change and rerender it.
             this.currentValues = { ...this.$store.getters.valuesByType(this.index, this.type) };
+            this.currentTotal = this.$store.getters.totalValueByType(this.index, this.type);
+            this.$emit('recalculatePayment');
         }
     },
 
     data: function () {
         return {
-            currentValues: this.$store.getters.valuesByType(this.index, this.type)
+            currentValues: this.$store.getters.valuesByType(this.index, this.type),
+            currentTotal: this.$store.getters.totalValueByType(this.index, this.type)
         };
     }
 };

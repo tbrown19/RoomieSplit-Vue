@@ -117,6 +117,15 @@ export const note = (context, payload) => {
     });
 };
 
+export const setTotalValue = (context, payload) => {
+    const attribute = payload.type + 'Value';
+    context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
+        roomsIndex: payload.roomsIndex,
+        attribute: attribute,
+        value: payload.value
+    });
+};
+
 export const addValue = (context, payload) => {
     let currentValues = {};
     // Get either the positive or negative values.
@@ -126,11 +135,26 @@ export const addValue = (context, payload) => {
     currentValues[payload.name] = payload.value;
     // Then commit it.
     const attribute = payload.type + 'Values';
-    console.log(attribute);
+
     context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
         roomsIndex: payload.roomsIndex,
         attribute: attribute,
         value: currentValues
+    });
+};
+
+export const addToTotalValue = (context, payload) => {
+    let currentTotal = context.getters.totalValueByType(
+        payload.roomsIndex, payload.type);
+    // Add the new one.
+    currentTotal += payload.value;
+    // Then commit it.
+    const attribute = payload.type + 'Value';
+
+    context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
+        roomsIndex: payload.roomsIndex,
+        attribute: attribute,
+        value: currentTotal
     });
 };
 

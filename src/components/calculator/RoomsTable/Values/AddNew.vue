@@ -62,8 +62,16 @@ export default {
                 value: this.newValue.value,
                 type: this.type
             });
+
+            this.$store.dispatch('addToTotalValue', {
+                roomsIndex: this.index,
+                value: this.newValue.value,
+                type: this.type
+            });
+
             this.newValue.name = '';
             this.newValue.value = '';
+
             this.$emit('valuesUpdated');
         }
     },

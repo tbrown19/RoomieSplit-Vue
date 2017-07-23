@@ -98,10 +98,11 @@ export default class RoomSplitter {
     updatePaymentRelatedValues() {
         // If all the rooms are valid, have area and occupants, and we have no other errors than we can calculate the payments for each room.
         if (this.allRoomsAreValid() && store.getters.getCurrentTableErrors.length === 0) {
-            let commonSpaceValue = this.Calculator.calculateValueCommonSpace(store.getters.rent, this.commonSpacePercentage);
+            let valueAdjustedRent = store.getters.valueAdjustedRent;
+            let commonSpaceValue = this.Calculator.calculateValueCommonSpace(valueAdjustedRent, this.commonSpacePercentage);
             // Set the value to actually be the value divided by the modifier.
             this.commonSpaceValue = commonSpaceValue / store.getters.commonSpaceValueModifier;
-            this.privateSpaceValue = (store.getters.rent - this.commonSpaceValue);
+            this.privateSpaceValue = (valueAdjustedRent - this.commonSpaceValue);
 
             this.basePayment = this.Calculator.calculateBasePayment(store.getters.rooms, this.commonSpaceValue);
 
@@ -128,7 +129,8 @@ export default class RoomSplitter {
             value: privatePayment
         });
 
-        const payment = this.basePayment + privatePayment;
+        const payment = this.basePayment + privatePayment + store.getters.positiveValue(room.roomsIndex);
+
         store.dispatch('payment', {
             roomsIndex: roomsIndex,
             value: payment
@@ -137,6 +139,7 @@ export default class RoomSplitter {
 
     allRoomsAreValid() {
         let allRoomsAreValid = true;
+        let newRent = store.getters.rent;
         this.rooms.forEach(currentRoom => {
             // We set the rooms payment here to 0 because that way if all the rooms are not valid, the payment is already set to 0
             // and if they rooms are valid, the payment will be recalculated for each room anyways.
@@ -144,7 +147,10 @@ export default class RoomSplitter {
                 roomsIndex: currentRoom.roomsIndex,
                 value: 0
             });
-
+            console.log('positive value = ' + store.getters.positiveValue(currentRoom.roomsIndex));
+            newRent = newRent - store.getters.positiveValue(currentRoom.roomsIndex);
+            store.commit('SET_VALUE_ADJUSTED_RENT', newRent);
+            console.log('new VALUE adjusted rent is : ' + newRent);
             let room = store.getters.getRoomByNumber(currentRoom.roomsIndex);
             if (room.occupants <= 0 || room.area <= 0 || room.area === '') {
                 allRoomsAreValid = false;

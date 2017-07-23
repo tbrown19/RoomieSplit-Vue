@@ -30,9 +30,9 @@
                 <span class="icon-message">Clear</span>
             </button>
         </div>
-        <values v-if="isPositiveValuesModalActive" :index="index" type="positive" @close="isPositiveValuesModalActive = false">
+        <values v-if="isPositiveValuesModalActive" :index="index" type="positive" @close="isPositiveValuesModalActive = false" @recalculatePayment="$emit('recalculatePayment')">
         </values>
-        <values v-if="isNegativeValuesModalActive" :index="index" type="negative" @close="isNegativeValuesModalActive = false">
+        <values v-if="isNegativeValuesModalActive" :index="index" type="negative" @close="isNegativeValuesModalActive = false" @recalculatePayment="$emit('recalculatePayment')">
         </values>
     </div>
 </template>
