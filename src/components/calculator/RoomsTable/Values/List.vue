@@ -3,7 +3,7 @@
         <p class="inputDescription">
             <div v-if="currentValues">
                 <transition-group name="values-list" class="values-list-group" tag="ul">
-                    <li is="list-item" v-for="(value, key, index) in currentValues" v-bind:key="key" :name="key" :value="value" :index="index" :type="type" class='list-item'>
+                    <li is="list-item" v-for="(value, key, index) in currentValues" v-bind:key="key" :name="key" :value="value" :index="index" :type="type" class='list-item' @removeValue="removeValue">
                     </li>
                 </transition-group>
             </div>
@@ -21,6 +21,11 @@ export default {
     props: ['currentValues', 'type'],
     components: {
         ListItem
+    },
+    methods: {
+        removeValue(name) {
+            this.$emit('removeValue', name);
+        }
     }
 };
 </script>
@@ -31,6 +36,7 @@ export default {
     border-radius: 5px;
     padding: 1rem;
 }
+
 
 
 /* .values-list-move {

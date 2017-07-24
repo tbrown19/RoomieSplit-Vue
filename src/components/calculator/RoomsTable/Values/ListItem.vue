@@ -4,18 +4,20 @@
             <el-col :span="4">
                 <span :class="type">
                     <b-icon v-if="type === 'positive'" icon="add"></b-icon>
-                    <b-icon v-else icon="remove"></b-icon>    
+                    <b-icon v-else icon="remove"></b-icon>
                     <span class="valueSpan">
                         {{ value }}
                     </span>
                 </span>
             </el-col>
-            <el-col :span="16" class="valueName">
+            <el-col :span="18" class="valueName">
                 {{ name }}
             </el-col>
-            <el-col :span="4">
-                <b-icon icon="edit"></b-icon>
-                <b-icon icon="delete"></b-icon>
+            <el-col :span="2">
+    
+                <a class='negative' @click="$emit('removeValue', name)">
+                    <b-icon icon="delete"></b-icon>
+                </a>
             </el-col>
         </el-row>
         </div>
@@ -61,11 +63,8 @@ li {
 .positive {
     color: rgb(35, 209, 96);
 }
+
 .negative {
     color: rgb(255, 56, 96);
-}
-
-.name-value-divider {
-    padding: 0 .5rem 0 .5rem;
 }
 </style>

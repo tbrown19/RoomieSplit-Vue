@@ -141,28 +141,33 @@ export default class RoomSplitter {
         let allRoomsAreValid = true;
         let adjustedRent = store.getters.rent;
 
-        this.rooms.forEach(currentRoom => {
+        this.rooms.forEach(room => {
             // We set the rooms payment here to 0 because that way if all the rooms are not valid, the payment is already set to 0
             // and if they rooms are valid, the payment will be recalculated for each room anyways.
+            let roomIndex = room.roomsIndex;
             store.dispatch('payment', {
-                roomsIndex: currentRoom.roomsIndex,
+                roomsIndex: roomIndex,
                 value: 0
             });
-            adjustedRent = this.valueAdjustTheRent(adjustedRent, currentRoom.roomsIndex);
-            let room = store.getters.getRoomByNumber(currentRoom.roomsIndex);
-            if (room.occupants <= 0 || room.area <= 0 || room.area === '') {
-                allRoomsAreValid = false;
-            }
+            // Adjust the rent and then check to see if we consider the room to be valid.
+            adjustedRent = this.valueAdjustRentByRoomsIndex(adjustedRent, roomIndex);
+            allRoomsAreValid = this.isRoomValid(roomIndex);
         });
         store.commit('SET_VALUE_ADJUSTED_RENT', adjustedRent);
-        console.log('new VALUE adjusted rent is : ' + adjustedRent);
         return allRoomsAreValid;
     }
 
-    valueAdjustTheRent(adjustedRent, roomsIndex) {
+    isRoomValid(roomsIndex) {
+        let room = store.getters.getRoomByNumber(roomsIndex);
+        if (room.occupants <= 0 || room.area <= 0 || room.area === '') {
+            return false;
+        }
+        return true;
+    }
+
+    valueAdjustRentByRoomsIndex(adjustedRent, roomsIndex) {
         adjustedRent = adjustedRent - store.getters.positiveValue(roomsIndex);
         adjustedRent = adjustedRent + store.getters.negativeValue(roomsIndex);
-
         return adjustedRent;
     }
 }

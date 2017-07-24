@@ -163,8 +163,9 @@ export const removeValue = (context, payload) => {
     // state.percentOfTotalSpace = percentage;
     currentValues = context.getters.valuesByType(
         payload.roomsIndex, payload.type);
-
+    console.log(payload);
     delete currentValues[payload.name];
+    console.log(currentValues);
     const attribute = payload.type + 'Values';
     context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
         roomsIndex: payload.roomsIndex,
@@ -173,6 +174,20 @@ export const removeValue = (context, payload) => {
     });
 };
 
+export const subtractFromTotalValue = (context, payload) => {
+    let currentTotal = context.getters.totalValueByType(
+        payload.roomsIndex, payload.type);
+    // Add the new one.
+    currentTotal -= payload.value;
+    // Then commit it.
+    const attribute = payload.type + 'Value';
+
+    context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
+        roomsIndex: payload.roomsIndex,
+        attribute: attribute,
+        value: currentTotal
+    });
+};
 export const updateValue = (context, payload) => {
     let currentValues = {};
     // state.percentOfTotalSpace = percentage;

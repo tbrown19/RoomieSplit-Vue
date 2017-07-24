@@ -13,8 +13,8 @@
                 </a>
             </div>
         </div>
-        <list :currentValues="currentValues" :type="type"></list>
-        <add-new @valuesUpdated="valuesUpdated" :index="index" :type="type"></add-new>
+        <list :currentValues="currentValues" :type="type" @removeValue="removeValue"></list>
+        <add-new @addValueToList="addValue" :index="index" :type="type"></add-new>
     </modal>
 </template>
 
@@ -36,6 +36,35 @@ export default {
         }
     },
     methods: {
+        addValue(name, value) {
+            this.$store.dispatch('addValue', {
+                roomsIndex: this.index,
+                type: this.type,
+                name: name,
+                value: value
+            });
+
+            this.$store.dispatch('addToTotalValue', {
+                roomsIndex: this.index,
+                type: this.type,
+                value: value
+            });
+            this.valuesUpdated();
+        },
+        removeValue(name) {
+            let value = this.currentValues[name];
+            this.$store.dispatch('removeValue', {
+                roomsIndex: this.index,
+                type: this.type,
+                name: name
+            });
+            this.$store.dispatch('subtractFromTotalValue', {
+                roomsIndex: this.index,
+                type: this.type,
+                value: value
+            });
+            this.valuesUpdated();
+        },
         valuesUpdated() {
             // update current value by setting it to a new object, that way vue can actually detect the change and rerender it.
             this.currentValues = { ...this.$store.getters.valuesByType(this.index, this.type) };

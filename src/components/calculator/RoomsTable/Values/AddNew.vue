@@ -3,7 +3,7 @@
         <h2 class="is-section-head" id="addNewHeader">
             Add New
         </h2>
-        <el-row type="flex">
+        <el-row type="flex" id="addNewBody">
             <el-col :span="14">
                 <name :type="type" :valueAddedToList="valueAddedToList" @valueUpdated="valueUpdated"></name>
             </el-col>
@@ -43,22 +43,8 @@ export default {
             this.newValue[type] = value;
         },
         addNew() {
-            this.$store.dispatch('addValue', {
-                roomsIndex: this.index,
-                name: this.newValue.name,
-                value: this.newValue.value,
-                type: this.type
-            });
-
-            this.$store.dispatch('addToTotalValue', {
-                roomsIndex: this.index,
-                value: this.newValue.value,
-                type: this.type
-            });
-
             this.valueAddedToList = true;
-
-            this.$emit('valuesUpdated');
+            this.$emit('addValueToList', this.newValue.name, this.newValue.value);
         }
     },
     data: function () {
@@ -92,5 +78,11 @@ export default {
 #addNewHeader {
     margin-top: 2.5rem;
     margin-bottom: 1rem;
+}
+
+#addNewBody {
+    border: 1px solid gainsboro;
+    border-radius: 5px;
+    padding: 1rem;
 }
 </style>
