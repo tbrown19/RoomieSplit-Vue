@@ -37,19 +37,23 @@ export default {
     },
     methods: {
         addValue(name, value) {
-            this.$store.dispatch('addValue', {
-                roomsIndex: this.index,
-                type: this.type,
-                name: name,
-                value: value
-            });
+            let itemAlreadyExists = Object.keys(this.currentValues).includes(name);
+            console.log(itemAlreadyExists);
+            if (!itemAlreadyExists) {
+                this.$store.dispatch('addValue', {
+                    roomsIndex: this.index,
+                    type: this.type,
+                    name: name,
+                    value: value
+                });
 
-            this.$store.dispatch('addToTotalValue', {
-                roomsIndex: this.index,
-                type: this.type,
-                value: value
-            });
-            this.valuesUpdated();
+                this.$store.dispatch('addToTotalValue', {
+                    roomsIndex: this.index,
+                    type: this.type,
+                    value: value
+                });
+                this.valuesUpdated();
+            }
         },
         removeValue(name) {
             let value = this.currentValues[name];

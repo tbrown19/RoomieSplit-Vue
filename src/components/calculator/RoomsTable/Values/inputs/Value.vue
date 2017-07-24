@@ -1,9 +1,9 @@
 <template>
     <div>
-        <input @input="$emit('valueUpdated', 'value', newItemValue)" type="number" v-model.number="newItemValue" name="value" v-validate="'required|between:1,300'" :placeholder="placeHolderText" class="input" :class="{'is-danger': errors.has('value'), 'is-success': isSuccess}">
+        <input @input="$emit('valueUpdated', 'value', newItemValue)" type="number"  v-model.number="newItemValue" name="value" v-validate="'required|between:1,300'" :placeholder="placeHolderText" class="input" :class="{'is-danger': errors.has('value'),'is-success': isSuccess}">
     
         <slide-fade>
-            <span v-if="errors.has('value')" class="help is-danger">{{ errors.first('value') }}</span>
+            <span v-if="errors.has('value') && !valueAddedToList" class="help is-danger">{{ errors.first('value') }}</span>
         </slide-fade>
     </div>
 </template>
@@ -19,6 +19,7 @@ export default {
         valueAddedToList() {
             // Update the value to nothing, then give vue a chance to commit the change to the model before clearing the errors on vee validate.
             this.newItemValue = '';
+            this.errors.clear();
             this.$nextTick(function () {
                 this.errors.clear();
             });
