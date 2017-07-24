@@ -5,10 +5,10 @@
         </h2>
         <el-row type="flex">
             <el-col :span="14">
-                <name :type="type" @valueUpdated="valueUpdated"></name>
+                <name :type="type" :valueAddedToList="valueAddedToList" @valueUpdated="valueUpdated"></name>
             </el-col>
             <el-col :span="8" :offset="1">
-                <value :type="type" @valueUpdated="valueUpdated"></value>
+                <value :type="type" :valueAddedToList="valueAddedToList" @valueUpdated="valueUpdated"></value>
             </el-col>
         </el-row>
         <el-row type="flex" justify="center">
@@ -31,20 +31,6 @@ export default {
     },
 
     computed: {
-        allowedValues() {
-            if (this.type === 'positive') {
-                return '1,300';
-            }
-            return '-1,-300';
-        },
-
-        placeHolderValue() {
-            if (this.type === 'positive') {
-                return 'Value - Ex: $30';
-            }
-            return 'Value - Ex: -$50';
-        },
-
         saveDisabled() {
             const formHasNoError = this.errors.errors.length === 0;
             const valuesNotEmpty = this.newValue.name !== '' && this.newValue.value !== '';
@@ -53,6 +39,7 @@ export default {
     },
     methods: {
         valueUpdated(type, value) {
+            this.valueAddedToList = false;
             this.newValue[type] = value;
         },
         addNew() {
@@ -69,8 +56,7 @@ export default {
                 type: this.type
             });
 
-            this.newValue.name = '';
-            this.newValue.value = '';
+            this.valueAddedToList = true;
 
             this.$emit('valuesUpdated');
         }
@@ -80,7 +66,9 @@ export default {
             newValue: {
                 name: '',
                 value: ''
-            }
+            },
+            // This changes after the user actual clicks add. this lets the inputs know they can clear them selves and not show errors.
+            valueAddedToList: false
         };
     }
 };

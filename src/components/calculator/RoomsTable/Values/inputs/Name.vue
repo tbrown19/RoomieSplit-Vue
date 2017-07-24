@@ -10,9 +10,17 @@
 <script>
 import SlideFade from '../../../../transitions/SlideFade.vue';
 export default {
-    props: ['type'],
+    props: ['type', 'valueAddedToList'],
     components: {
         SlideFade
+    },
+    watch: {
+        valueAddedToList() {
+            this.newItemName = '';
+            this.$nextTick(function () {
+                this.errors.clear();
+            });
+        }
     },
     computed: {
         isSuccess() {

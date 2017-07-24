@@ -13,7 +13,7 @@
                 </a>
             </div>
         </div>
-        <list :currentValues="currentValues"></list>
+        <list :currentValues="currentValues" :type="type"></list>
         <add-new @valuesUpdated="valuesUpdated" :index="index" :type="type"></add-new>
     </modal>
 </template>
@@ -40,6 +40,7 @@ export default {
             // update current value by setting it to a new object, that way vue can actually detect the change and rerender it.
             this.currentValues = { ...this.$store.getters.valuesByType(this.index, this.type) };
             this.currentTotal = this.$store.getters.totalValueByType(this.index, this.type);
+            // Then send it up to the parent method that the payment values must now be recalculated.
             this.$emit('recalculatePayment');
         }
     },

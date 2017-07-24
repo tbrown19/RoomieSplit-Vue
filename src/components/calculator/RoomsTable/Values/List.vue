@@ -3,7 +3,7 @@
         <p class="inputDescription">
             <div v-if="currentValues">
                 <transition-group name="values-list" class="values-list-group" tag="ul">
-                    <li is="list-item" v-for="(value, key, index) in currentValues" v-bind:key="key" :name="key" :value="value" :index="index" class='list-item'>
+                    <li is="list-item" v-for="(value, key, index) in currentValues" v-bind:key="key" :name="key" :value="value" :index="index" :type="type" class='list-item'>
                     </li>
                 </transition-group>
             </div>
@@ -18,7 +18,7 @@
 <script>
 import ListItem from './ListItem';
 export default {
-    props: ['currentValues'],
+    props: ['currentValues', 'type'],
     components: {
         ListItem
     }
