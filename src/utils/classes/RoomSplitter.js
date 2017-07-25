@@ -97,6 +97,7 @@ export default class RoomSplitter {
 
     updatePaymentRelatedValues() {
         // If all the rooms are valid, have area and occupants, and we have no other errors than we can calculate the payments for each room.
+        console.log('are all rooms valid: ' + this.allRoomsAreValid());
         if (this.allRoomsAreValid() && store.getters.getCurrentTableErrors.length === 0) {
             let valueAdjustedRent = store.getters.valueAdjustedRent;
             let commonSpaceValue = this.Calculator.calculateValueCommonSpace(valueAdjustedRent, this.commonSpacePercentage);
@@ -123,7 +124,7 @@ export default class RoomSplitter {
         });
 
         const privatePayment = this.privateSpaceValue * eachOccupantsPercentOfPrivateSpace;
-        console.log('privatePayment: ' + privatePayment);
+        // console.log('privatePayment: ' + privatePayment);
         store.dispatch('privatePayment', {
             roomsIndex: roomsIndex,
             value: privatePayment
@@ -151,15 +152,21 @@ export default class RoomSplitter {
             });
             // Adjust the rent and then check to see if we consider the room to be valid.
             adjustedRent = this.valueAdjustRentByRoomsIndex(adjustedRent, roomIndex);
-            allRoomsAreValid = this.isRoomValid(roomIndex);
+            // Only update the value if its already true, we don't want to change it if its false
+            if (allRoomsAreValid === true) {
+                allRoomsAreValid = this.isRoomValid(roomIndex);
+            }
         });
         store.commit('SET_VALUE_ADJUSTED_RENT', adjustedRent);
+        this.allRoomsValid = allRoomsAreValid;
         return allRoomsAreValid;
     }
 
     isRoomValid(roomsIndex) {
         let room = store.getters.getRoomByNumber(roomsIndex);
+        console.log(room.occupants <= 0);
         if (room.occupants <= 0 || room.area <= 0 || room.area === '') {
+            console.log('we have an invalid room.');
             return false;
         }
         return true;

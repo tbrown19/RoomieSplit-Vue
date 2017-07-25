@@ -132,7 +132,9 @@ export const addValue = (context, payload) => {
     currentValues = context.getters.valuesByType(
         payload.roomsIndex, payload.type) || {};
     // Add the new one.
-    currentValues[payload.name] = payload.value;
+    let name = payload.name.replace(
+        /[^a-z']+/ig, ' ');
+    currentValues[name] = payload.value;
     // Then commit it.
     const attribute = payload.type + 'Values';
 
@@ -174,7 +176,8 @@ export const removeValue = (context, payload) => {
     });
 };
 
-export const subtractFromTotalValue = (context, payload) => {
+export const subtractFromTotalValue = (context,
+    payload) => {
     let currentTotal = context.getters.totalValueByType(
         payload.roomsIndex, payload.type);
     // Add the new one.

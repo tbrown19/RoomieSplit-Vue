@@ -2,33 +2,45 @@
     <div>
         <hr>
         <div class="level">
-            <div class="level-left">
-                <a @click="isHelpModalActive = true" class="button is-info is-large is-outlined">
+    
+            <div class="level-item">
+                <a @click="isHelpModalActive = true" class="button is-info is-medium is-outlined">
                     <b-icon icon="info"></b-icon>
                     <span class="icon-message">Help</span>
                 </a>
-                <a @click="isSettingsModalActive = true" class="button is-primary is-large is-outlined">
+            </div>
+    
+            <div class="level-item">
+                <a @click="isSettingsModalActive = true" class="button is-primary is-medium is-outlined">
                     <b-icon icon="settings"></b-icon>
                     <span class="icon-message">Settings</span>
                 </a>
             </div>
-            <div class="level-right">
-                <a @click="save" :class="{'button is-success is-large is-outlined': true, 'is-loading': isSaving}">
+            <div class="level-item">
+                <a v-if="showRentGraph" @click="isVisualizationModalActive = true" class="button is-primary is-medium is-outlined">
+                    <b-icon icon="pie_chart"></b-icon>
+                    <span class="icon-message">Payments Graph </span>
+                </a>
+            </div>
+            <div class="level-item">
+                <a @click="save" :class="{'button is-success is-medium is-outlined': true, 'is-loading': isSaving}">
                     <b-icon icon="save"></b-icon>
                     <span class="icon-message">Save</span>
                 </a>
-                <a @click="clearAll" class="button is-danger is-large is-outlined">
+            </div>
+            <div class="level-item">
+                <a @click="clearAll" class="button is-danger is-medium is-outlined">
                     <b-icon icon="clear"></b-icon>
                     <span class="icon-message">Clear</span>
                 </a>
             </div>
         </div>
-        <!-- <b-modal :active.sync="isHelpModalActive" has-modal-card>
-                <help-modal></help-modal>
-            </b-modal> -->
         <help-modal v-if="isHelpModalActive" @close="isHelpModalActive = false"></help-modal>
-        <settings-modal v-if="isSettingsModalActive"
-         @updateRoomConfiguration="updateRoomConfiguration" @close="isSettingsModalActive = false"></settings-modal>
+        <settings-modal v-if="isSettingsModalActive" @updateRoomConfiguration="updateRoomConfiguration" @close="isSettingsModalActive = false">
+        </settings-modal>
+        <visualization-modal v-if="isVisualizationModalActive" @close="isSettingsModalActive = false">
+    
+        </visualization-modal>
     
     </div>
 </template>
@@ -37,11 +49,12 @@
 <script>
 import HelpModal from '../Help/HelpModal.vue';
 import SettingsModal from './SettingsModal.vue';
+import VisualizationModal from '../Visualization/Modal.vue';
 export default {
-    props: ['isSaving'],
+    props: ['isSaving', 'showRentGraph'],
 
     components: {
-        HelpModal, SettingsModal
+        HelpModal, SettingsModal, VisualizationModal
     },
 
     methods: {
@@ -60,7 +73,8 @@ export default {
         return {
             saving: this.isSaving,
             isHelpModalActive: false,
-            isSettingsModalActive: false
+            isSettingsModalActive: false,
+            isVisualizationModalActive: false
         };
     }
 };
