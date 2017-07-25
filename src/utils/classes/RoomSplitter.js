@@ -145,21 +145,26 @@ export default class RoomSplitter {
         this.rooms.forEach(room => {
             // We set the rooms payment here to 0 because that way if all the rooms are not valid, the payment is already set to 0
             // and if they rooms are valid, the payment will be recalculated for each room anyways.
-            let roomIndex = room.roomsIndex;
-            store.dispatch('payment', {
-                roomsIndex: roomIndex,
-                value: 0
-            });
+            let roomsIndex = room.roomsIndex;
+            this.updateRoomsRentToZero(roomsIndex);
             // Adjust the rent and then check to see if we consider the room to be valid.
-            adjustedRent = this.valueAdjustRentByRoomsIndex(adjustedRent, roomIndex);
+            adjustedRent = this.valueAdjustRentByRoomsIndex(adjustedRent, roomsIndex);
             // Only update the value if its already true, we don't want to change it if its false
             if (allRoomsAreValid === true) {
-                allRoomsAreValid = this.isRoomValid(roomIndex);
+                allRoomsAreValid = this.isRoomValid(roomsIndex);
             }
         });
+
         store.commit('SET_VALUE_ADJUSTED_RENT', adjustedRent);
         this.allRoomsValid = allRoomsAreValid;
         return allRoomsAreValid;
+    }
+
+    updateRoomsRentToZero(roomsIndex) {
+        store.dispatch('payment', {
+            roomsIndex: roomsIndex,
+            value: 0
+        });
     }
 
     isRoomValid(roomsIndex) {

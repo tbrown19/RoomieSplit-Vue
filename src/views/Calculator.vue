@@ -57,7 +57,6 @@ export default {
             this.updateRooms(this.routeId);
         },
         handleUpdateRooms() {
-            console.log('do we update the rooms');
             this.updateRooms(this.routeId);
         }
     },

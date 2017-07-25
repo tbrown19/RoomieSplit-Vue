@@ -28,3 +28,20 @@ export const getRoomAttribute = (state, getters) => (payload) => {
     return getters.getRoomByNumber(payload.roomsIndex)[payload.attr];
 };
 export const getCurrentTableErrors = state => state.currentTableErrors;
+
+export const getRoomsFootageAsArray = (state, getters) => {
+    let rooms = getters.rooms;
+    return rooms.map(room => {
+        return getters.roomArea(room.roomsIndex);
+    });
+};
+
+export const totalPrivateSpace = (state, getters) => {
+    let roomsFootage = getters.getRoomsFootageAsArray;
+    return roomsFootage.reduce((currentValue, nextValue) => currentValue + nextValue, 0);
+};
+
+export const totalCommonSpace = (state, getters) => {
+    return getters.area - getters.totalPrivateSpace;
+};
+

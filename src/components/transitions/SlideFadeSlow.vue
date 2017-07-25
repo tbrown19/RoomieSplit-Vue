@@ -3,6 +3,11 @@
         <slot></slot>
     </transition>
 </template>
+<script>
+export default {
+    name: 'SlideFadeSlow'
+};
+</script>
 
 <style>
 .slide-fade-enter-active {
