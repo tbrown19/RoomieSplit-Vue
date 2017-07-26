@@ -13,8 +13,8 @@
                 </el-col>
             </el-row>
     
-            <div v-if="roomConfiguration.numRooms != 0 && !loading && !error" key="loaded">
-                <index :inputs="inputs" :roomConfiguration="roomConfiguration" @updateRoomConfiguration="handleUpdateRoomConfiguration" @updateRooms="handleUpdateRooms"></index>
+            <div v-if="!loading && !error" key="loaded">
+                <index></index>
             </div>
         </slide-fade-out-in>
     
@@ -25,13 +25,16 @@
 import Index from '../components/charts/Index.vue';
 import SlideFadeOutIn from '../components/transitions/SlideFadeOutIn.vue';
 // import { updateRoomConfigruationRooms } from '../services/firebase-actions.js';
-import { namedInputsWithoutValue } from '../config/room-configuration.js';
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
 
     created() {
-        this.loadRoomConfiguration(this.$route.params.configId);
+        console.log(this.$store.getters.rooms);
+        if (this.$store.getters.rooms.length === 0) {
+            console.log('do we get in here??');
+            this.loadRoomConfiguration(this.$route.params.configId);
+        }
     },
 
     components: {
@@ -47,27 +50,8 @@ export default {
 
     methods: {
         ...mapActions([
-            'loadRoomConfiguration',
-            'updateRoomConfiguration',
-            'updateRooms'
-        ]),
-
-        handleUpdateRoomConfiguration() {
-            this.updateRoomConfiguration(this.routeId);
-            this.updateRooms(this.routeId);
-        },
-        handleUpdateRooms() {
-            this.updateRooms(this.routeId);
-        }
-    },
-
-    data: function () {
-        const routeId = this.$route.params.configId;
-        const inputs = namedInputsWithoutValue();
-        return {
-            routeId,
-            inputs
-        };
+            'loadRoomConfiguration'
+        ])
     }
 };
 </script>

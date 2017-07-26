@@ -31,7 +31,9 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
 
     created() {
-        this.loadRoomConfiguration(this.$route.params.configId);
+        if (this.$store.getters.rooms.length === 0) {
+            this.loadRoomConfiguration(this.$route.params.configId);
+        }
     },
 
     components: {

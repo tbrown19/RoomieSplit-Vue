@@ -73,6 +73,8 @@ export default {
         },
         viewGraphsPage() {
             // Get the id from the url,
+            let configId = this.$route.params.configId;
+            this.$router.push({ name: 'charts', params: { configId: configId } });
             // Transition to the charts page with the router using the id from the url.
         }
     },
