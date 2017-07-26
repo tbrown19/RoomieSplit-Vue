@@ -1,27 +1,14 @@
 <template>
-    <modal>
-        <a @click="$emit('close')">
-            <b-icon icon="close"></b-icon>
-        </a>
-        <el-row :gutter="20" type="flex" justify="center">
-            <el-col :span="24">
-                <div class="has-text-centered">
-                    <h2 class="is-title chart-header">Total Area</h2>
-                    <total-area :data="totalAreaData" :labels="totalAreaLabels"></total-area>
-                </div>
-    
-            </el-col>
-        </el-row>
-    </modal>
+    <div class="chart-container">
+        <pie-chart :data="totalAreaData" :labels="totalAreaLabels" :width="420" :height="420"></pie-chart>
+    </div>
 </template>
 
 <script>
-import Modal from '../../Generic/Modal.vue';
-import TotalArea from '../../charts/FootagePieChart.vue';
+import PieChart from '../../../charts/FootagePieChart.vue';
 export default {
-    name: 'VisualizationModal',
     components: {
-        Modal, TotalArea
+        PieChart
     },
     computed: {
         totalAreaData() {
@@ -42,9 +29,10 @@ export default {
     }
 };
 </script>
-
-<style lang="scss" scoped>
-.chart-header{
-    font-size: 1.4rem;
+<style>
+.chart-container {
+    width: 50%;
+    margin-left: 0 auto;
 }
 </style>
+

@@ -19,10 +19,10 @@
     
             <div class="level-item">
                 <slide-fade>
-                <a v-if="showRentGraph" @click="isVisualizationModalActive = true" class="button is-primary is-medium is-outlined">
-                    <b-icon icon="pie_chart"></b-icon>
-                    <span class="icon-message">Payments Graph </span>
-                </a>
+                    <a v-if="showRentGraph" @click="viewGraphsPage" class="button is-primary is-medium is-outlined">
+                        <b-icon icon="pie_chart"></b-icon>
+                        <span class="icon-message">Payments Graph </span>
+                    </a>
                 </slide-fade>
     
             </div>
@@ -45,9 +45,6 @@
         <help-modal v-if="isHelpModalActive" @close="isHelpModalActive = false"></help-modal>
         <settings-modal v-if="isSettingsModalActive" @updateRoomConfiguration="updateRoomConfiguration" @close="isSettingsModalActive = false">
         </settings-modal>
-        <visualization-modal v-if="isVisualizationModalActive" @close="isVisualizationModalActive = false">
-    
-        </visualization-modal>
     
     </div>
 </template>
@@ -57,12 +54,11 @@
 import SlideFade from '../../../components/transitions/SlideFadeSlow.vue';
 import HelpModal from '../Help/HelpModal.vue';
 import SettingsModal from './SettingsModal.vue';
-import VisualizationModal from '../Visualization/Modal.vue';
 export default {
     props: ['isSaving', 'showRentGraph'],
 
     components: {
-        HelpModal, SettingsModal, VisualizationModal, SlideFade
+        HelpModal, SettingsModal, SlideFade
     },
 
     methods: {
@@ -74,6 +70,10 @@ export default {
         },
         updateRoomConfiguration() {
             this.$emit('updateRoomConfiguration');
+        },
+        viewGraphsPage() {
+            // Get the id from the url,
+            // Transition to the charts page with the router using the id from the url.
         }
     },
 
@@ -81,8 +81,7 @@ export default {
         return {
             saving: this.isSaving,
             isHelpModalActive: false,
-            isSettingsModalActive: false,
-            isVisualizationModalActive: false
+            isSettingsModalActive: false
         };
     }
 };
