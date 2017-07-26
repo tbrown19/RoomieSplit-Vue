@@ -1,14 +1,20 @@
 <template>
-    <div class="chart-container">
-        <pie-chart :data="totalAreaData" :labels="totalAreaLabels" :width="420" :height="420"></pie-chart>
-    </div>
+    <card>
+        <div slot="content" class="has-text-centered">
+            <h3 class="is-title">Total Area</h3>
+            <pie-chart :data="totalAreaData" :labels="totalAreaLabels" :width="600" :height="420"></pie-chart>
+        </div>
+    </card>
 </template>
 
 <script>
-import PieChart from '../../../charts/FootagePieChart.vue';
+import Card from '../../generic/Card.vue';
+import PieChart from './PieChart.vue';
 export default {
+    name: 'TotalAreaChart',
+
     components: {
-        PieChart
+        Card, PieChart
     },
     computed: {
         totalAreaData() {
@@ -31,8 +37,7 @@ export default {
 </script>
 <style>
 .chart-container {
-    width: 50%;
-    margin-left: 0 auto;
+    margin-left: 10px;
 }
 </style>
 

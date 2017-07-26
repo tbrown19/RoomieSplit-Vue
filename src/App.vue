@@ -44,8 +44,8 @@ body {
 }
 
 #main-content {
-    padding-top: 2%;
-    padding-bottom: 2%;
+    padding-top: 1%;
+    padding-bottom: 1%;
 }
 
 .modal-background {

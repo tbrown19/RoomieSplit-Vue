@@ -2,7 +2,7 @@
 import { Pie } from 'vue-chartjs';
 
 export default Pie.extend({
-    props: ['data', 'labels'],
+    props: ['data', 'labels', 'dataLabel'],
     mounted() {
         console.log(this.data);
         // Overwriting base render method with actual data.
@@ -10,12 +10,12 @@ export default Pie.extend({
             labels: this.labels,
             datasets: [
                 {
-                    label: 'GitHub Commits',
+                    label: this.dataLabel,
                     backgroundColor: ['#1abc9c', '#9b59b6', '#3498db', '#f1c40f', '#e74c3c', '#34495e', '#f39c12', '#2ecc71', '#c0392b'],
                     data: this.data
                 }
             ]
-        }, {responsive: false, maintainAspectRatio: false});
+        }, {responsive: true, maintainAspectRatio: false});
     }
 });
 </script>

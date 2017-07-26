@@ -6,6 +6,7 @@ import Home from '@/views/Home';
 import Explanation from '@/views/Explanation';
 import About from '@/views/About';
 import Calculator from '@/views/Calculator';
+import Charts from '@/views/Charts';
 
 Vue.use(Router);
 
@@ -45,6 +46,15 @@ export default new Router({
             component: Calculator,
             meta: {
                 title: 'Roomie Split - Calculator'
+            }
+        },
+
+        {
+            path: '/charts/:configId',
+            name: 'charts',
+            component: Charts,
+            meta: {
+                title: 'Roomie Split - Charts'
             }
         }
     ]

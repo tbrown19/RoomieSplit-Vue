@@ -14,7 +14,7 @@
             </el-row>
     
             <div v-if="roomConfiguration.numRooms != 0 && !loading && !error" key="loaded">
-                <index :inputs="inputs" @updateRoomConfiguration="handleUpdateRoomConfiguration" @updateRooms="handleUpdateRooms"></index>
+                <index :inputs="inputs" :roomConfiguration="roomConfiguration" @updateRoomConfiguration="handleUpdateRoomConfiguration" @updateRooms="handleUpdateRooms"></index>
             </div>
         </slide-fade-out-in>
     
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import Index from '../components/calculator/Index.vue';
+import Index from '../components/charts/Index.vue';
 import SlideFadeOutIn from '../components/transitions/SlideFadeOutIn.vue';
 // import { updateRoomConfigruationRooms } from '../services/firebase-actions.js';
 import { namedInputsWithoutValue } from '../config/room-configuration.js';
