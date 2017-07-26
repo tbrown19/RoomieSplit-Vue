@@ -77,6 +77,7 @@ export default {
                 }
             },
             roomConfigruation: {},
+            inputsStarted: false,
             mainInputsCompleted: false
         };
     }
@@ -84,5 +85,7 @@ export default {
 </script>
 
 <style lang="scss">
-
+#example-text{
+    padding-top: 1rem;
+}
 </style>
