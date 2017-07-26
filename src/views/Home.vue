@@ -10,6 +10,11 @@
                 <button id="nextStepButton" @click='proceedToNextStep' class="button is-primary is-large is-outlined">Next Step</button>
             </el-row>
         </slide-fade>
+        <div id="example-text" class="has-text-centered">
+            <h1 class="title"> Or
+                <a href="https://roomie-split.firebaseapp.com/calculator/-KpuPGVGGs9DbehcO4xV"> checkout an example.</a>
+            </h1>
+        </div>
     
     </div>
 </template>
