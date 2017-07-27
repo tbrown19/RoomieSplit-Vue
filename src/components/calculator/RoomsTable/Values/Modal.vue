@@ -38,7 +38,6 @@ export default {
     methods: {
         addValue(name, value) {
             let itemAlreadyExists = Object.keys(this.currentValues).includes(name);
-            console.log(itemAlreadyExists);
             if (!itemAlreadyExists) {
                 this.$store.dispatch('addValue', {
                     roomsIndex: this.index,

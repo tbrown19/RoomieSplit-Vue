@@ -30,9 +30,7 @@ import { mapGetters, mapActions } from 'vuex';
 export default {
 
     created() {
-        console.log(this.$store.getters.rooms);
         if (this.$store.getters.rooms.length === 0) {
-            console.log('do we get in here??');
             this.loadRoomConfiguration(this.$route.params.configId);
         }
     },

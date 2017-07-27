@@ -28,7 +28,6 @@ export default {
     created() {
         // Clear the stores rooms, so that it doesnt have a reference to any previous calculations and will get the new ones from server.
         this.$store.commit('SET_ROOMS', []);
-        console.log(this.$store.getters.rooms);
     },
     components: {
         PrimaryInputs, SlideFade
@@ -41,14 +40,12 @@ export default {
 
         proceedToNextStep() {
             let roomConfigruation = this.inputsToroomConfigruation(this.inputs);
-            console.log(roomConfigruation);
             addRoomConfiguration(roomConfigruation).then((configId) => {
                 this.$router.push({ name: 'calculator', params: { configId: configId } });
             });
         },
 
         inputsToroomConfigruation(inputs) {
-            console.log(inputs);
             let roomConfigruation = {
                 'numRooms': inputs.rooms.value,
                 'area': inputs.area.value,

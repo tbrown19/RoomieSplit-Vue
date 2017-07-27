@@ -11,7 +11,6 @@ export default class RoomSplitter {
      * @memberof Rooms
      */
     constructor(roomConfiguration) {
-        console.log(roomConfiguration);
         this.Calculator = new Calculator();
         this.rooms = this.createRoomObjects();
         store.commit('SET_ROOMS', this.rooms);
@@ -20,11 +19,9 @@ export default class RoomSplitter {
 
     createRoomObjects() {
         let rooms = [];
-        console.log('we need to create this many rooms ' + store.getters.numRooms);
         for (let i = 0; i < store.getters.numRooms; i++) {
             rooms.push(new Room(store.getters.rooms[i], i + 1));
         }
-        console.log(rooms);
         return rooms;
     }
 
@@ -97,7 +94,6 @@ export default class RoomSplitter {
 
     updatePaymentRelatedValues() {
         // If all the rooms are valid, have area and occupants, and we have no other errors than we can calculate the payments for each room.
-        console.log('are all rooms valid: ' + this.allRoomsAreValid());
         if (this.allRoomsAreValid() && store.getters.getCurrentTableErrors.length === 0) {
             let valueAdjustedRent = store.getters.valueAdjustedRent;
             let commonSpaceValue = this.Calculator.calculateValueCommonSpace(valueAdjustedRent, this.commonSpacePercentage);
@@ -169,9 +165,7 @@ export default class RoomSplitter {
 
     isRoomValid(roomsIndex) {
         let room = store.getters.getRoomByNumber(roomsIndex);
-        console.log(room.occupants <= 0);
         if (room.occupants <= 0 || room.area <= 0 || room.area === '') {
-            console.log('we have an invalid room.');
             return false;
         }
         return true;

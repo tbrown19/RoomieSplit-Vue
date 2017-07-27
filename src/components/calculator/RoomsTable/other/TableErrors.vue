@@ -30,7 +30,7 @@ export default {
     },
     watch: {
         tableErrors: function () {
-            console.log('the errors have changed.');
+            // console.log('the errors have changed.');
         }
     }
 };

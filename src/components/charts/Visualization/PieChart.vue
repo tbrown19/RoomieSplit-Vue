@@ -4,7 +4,7 @@ import { Pie } from 'vue-chartjs';
 export default Pie.extend({
     props: ['data', 'labels', 'dataLabel'],
     mounted() {
-        console.log(this.data);
+        // console.log(this.data);
         // Overwriting base render method with actual data.
         this.renderChart({
             labels: this.labels,

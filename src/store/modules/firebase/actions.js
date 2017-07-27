@@ -20,7 +20,6 @@ export const loadRoomConfiguration = (context, routeId) => {
 };
 
 export const updateRoomConfiguration = (context, routeId) => {
-    console.log(context.getters.roomConfiguration);
     updateRoomConfigurationInDB(routeId, context.getters.roomConfiguration).then(() => {
         // maybe add something here about saving a room configuration. idk.
     }, (error) => {

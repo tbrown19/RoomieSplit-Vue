@@ -56,9 +56,7 @@ export default {
             this.roomSplitter.updateAreaRelatedValues();
         },
         updateRent(inputValue) {
-            console.log(inputValue);
             this.$store.commit('SET_RENT', inputValue);
-            console.log('rent here is : ' + this.$store.getters.rent);
             this.roomSplitter.updatePaymentRelatedValues();
         },
         save() {

@@ -13,7 +13,6 @@ let FirebaseDatabase = FirebaseApp.database();
 export const Database = FirebaseDatabase;
 
 function signInAnonUser() {
-    console.log('signing in an anon user');
     FirebaseApp.auth().signInAnonymously().catch(function (error) {
         var errorCode = error.code;
         var errorMessage = error.message;

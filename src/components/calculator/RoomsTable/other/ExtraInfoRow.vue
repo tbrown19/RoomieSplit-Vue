@@ -74,7 +74,6 @@ export default {
         },
 
         noteUpdated() {
-            console.log(this.currentNote);
             this.$store.dispatch('note', {
                 roomsIndex: this.index,
                 value: this.currentNote

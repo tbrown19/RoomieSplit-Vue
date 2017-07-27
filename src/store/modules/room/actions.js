@@ -165,9 +165,7 @@ export const removeValue = (context, payload) => {
     // state.percentOfTotalSpace = percentage;
     currentValues = context.getters.valuesByType(
         payload.roomsIndex, payload.type);
-    console.log(payload);
     delete currentValues[payload.name];
-    console.log(currentValues);
     const attribute = payload.type + 'Values';
     context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
         roomsIndex: payload.roomsIndex,

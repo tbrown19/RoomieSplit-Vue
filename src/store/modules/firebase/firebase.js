@@ -11,7 +11,6 @@ const state = {
 // actions
 const mutations = {
     SET_LOADING_FROM_DATABASE(state, isLoading) {
-        console.log('do we load from the database here?');
         state.loadingFromDatabase = isLoading;
     },
     SET_FIREBASE_ERROR(state, error) {
