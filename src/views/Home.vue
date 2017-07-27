@@ -12,7 +12,7 @@
         </slide-fade>
         <div id="example-text" class="has-text-centered">
             <h1 class="title"> Or
-                <a href="https://roomie-split.firebaseapp.com/calculator/-KpuPGVGGs9DbehcO4xV"> checkout an example.</a>
+                <a href="https://roomiesplit.com/calculator/-KpuPGVGGs9DbehcO4xV"> checkout an example.</a>
             </h1>
         </div>
     
@@ -25,6 +25,11 @@ import SlideFade from '../components/transitions/SlideFade.vue';
 import { addRoomConfiguration } from '../services/firebase-actions.js';
 
 export default {
+    created() {
+        // Clear the stores rooms, so that it doesnt have a reference to any previous calculations and will get the new ones from server.
+        this.$store.commit('SET_ROOMS', []);
+        console.log(this.$store.getters.rooms);
+    },
     components: {
         PrimaryInputs, SlideFade
     },
@@ -85,7 +90,7 @@ export default {
 </script>
 
 <style lang="scss">
-#example-text{
+#example-text {
     padding-top: 1rem;
 }
 </style>

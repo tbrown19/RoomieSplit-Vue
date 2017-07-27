@@ -1,6 +1,6 @@
 <template>
     <div>
-        <input @input="$emit('valueUpdated', 'name', newItemName)" type="text" v-model="newItemName" name="name" v-validate="'required|alpha_spaces|max:15'" :placeholder="placeHolderText" class="input" :class="{'is-danger': errors.has('name'), 'is-success': isSuccess}">
+        <input @input="$emit('valueUpdated', 'name', newItemName)" type="text" v-model="newItemName" name="name" v-validate="'required|alpha_spaces|max:20'" :placeholder="placeHolderText" class="input" :class="{'is-danger': errors.has('name'), 'is-success': isSuccess}">
         <slide-fade>
             <span v-if="errors.has('name') && !valueAddedToList" class="help is-danger">{{ errors.first('name') }}</span>
         </slide-fade>

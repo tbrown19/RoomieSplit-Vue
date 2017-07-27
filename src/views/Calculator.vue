@@ -32,6 +32,7 @@ export default {
 
     created() {
         if (this.$store.getters.rooms.length === 0) {
+            console.log(this.$store.getters.rooms);
             this.loadRoomConfiguration(this.$route.params.configId);
         }
     },
