@@ -35,6 +35,10 @@ export function getRoomConfiguration(id) {
 }
 
 export function updateRoomConfigurationInDB(id, roomConfiguration) {
+    // If its the example, don't actually let it updaate.
+    if (id === '-KpuPGVGGs9DbehcO4xV') {
+        return;
+    }
     // Update each room and assign the promise object to a variable.
     const updatedNumRooms = updateConfigurationNumRooms(id, roomConfiguration.numRooms);
     const updatedArea = updateConfigurationArea(id, roomConfiguration.area);
@@ -93,6 +97,11 @@ function commonSpaceValueModifier(id, commonSpaceValueModifier) {
 }
 export function updateRoomConfigruationRoomsInDB(id, rooms) {
     return new Promise((resolve, reject) => {
+        // If its the example, don't actually let it updaate.
+        if (id === '-KpuPGVGGs9DbehcO4xV') {
+            resolve();
+            return;
+        }
         Database.ref('RoomConfigurations').child(id).child('rooms').set(rooms).then((roomConfiguration) => {
             resolve();
         }, (error) => {

@@ -46,7 +46,6 @@ export default {
 
     watch: {
         value: function () {
-            console.log(this.name + ' is now ' + this.validInput);
             this.$emit('inputValueChanged', this.name, this.value, this.validInput);
         }
     },
