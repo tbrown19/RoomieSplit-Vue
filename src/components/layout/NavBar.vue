@@ -51,6 +51,7 @@ export default {
 .el-menu-item {
     font-size: 1.1rem !important;
     font-family: 'Roboto', sans-serif;
+    color: #dfe5ec !important;
 }
 
 .is-active{
