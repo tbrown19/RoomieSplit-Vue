@@ -66,10 +66,6 @@ export default {
     text-align: center;
 }
 
-.newValueInputs {
-    margin-bottom: 2.5rem;
-}
-
 #addButton {
     margin-top: 1rem;
     padding: 0 3rem 0 3rem;
