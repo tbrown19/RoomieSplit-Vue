@@ -45,16 +45,23 @@ export default {
     box-sizing: border-box;
     border-bottom: 5px solid transparent;
     font-family: 'Righteous', cursive;
-    font-size: 1.5rem;
+    font-size: 1.7rem;
 }
 
 .el-menu-item {
-    font-size: 1.1rem !important;
+    font-size: 1.3rem !important;
     font-family: 'Roboto', sans-serif;
     color: #dfe5ec !important;
 }
 
 .is-active{
     color: #00d1b2 !important;
+}
+
+@media only screen and (max-width: 768px)  {
+    /* For mobile phones: */
+    .el-menu-item {
+        font-size: 2rem !important;
+    }
 }
 </style>

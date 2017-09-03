@@ -3,7 +3,7 @@
         <navbar></navbar>
     
         <el-row type="flex" justify="center">
-            <el-col :span="24" :lg="{span:18}" id="main-content">
+            <el-col :gutter="20" :span="20" :lg="{span:18}" id="main-content">
                 <router-view></router-view>
             </el-col>
         </el-row>
@@ -51,6 +51,7 @@ body {
 .modal-background {
     background-color: rgba(10, 10, 10, 0.22) !important;
 }
+
 
 // Import Bulma and Buefy styles
 @import "~bulma";

@@ -37,12 +37,6 @@ export default {
     padding: 1rem;
 }
 
-
-
-/* .values-list-move {
-    transition: 1s;
-} */
-
 .list-item {
     margin-right: 10px;
 }
