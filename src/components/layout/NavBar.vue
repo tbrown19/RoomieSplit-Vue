@@ -58,10 +58,14 @@ export default {
     color: #00d1b2 !important;
 }
 
-@media only screen and (max-width: 768px)  {
+@media only screen and (min-width: 970px) and (max-width: 990px)  {
     /* For mobile phones: */
+    #site-header{
+        font-size: 2.7rem;
+    }
     .el-menu-item {
-        font-size: 2rem !important;
+        font-size: 2.5rem !important;
+        padding-bottom: 3rem;
     }
 }
 </style>

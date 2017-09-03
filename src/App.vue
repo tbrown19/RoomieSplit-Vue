@@ -51,8 +51,6 @@ body {
 .modal-background {
     background-color: rgba(10, 10, 10, 0.22) !important;
 }
-
-
 // Import Bulma and Buefy styles
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
