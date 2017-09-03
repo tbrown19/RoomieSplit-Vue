@@ -1,4 +1,3 @@
-
 export const lengthFeet = (state, getters, rootState) => (roomsIndex) => {
     return getters.rooms[roomsIndex].length.feet;
 };
@@ -15,7 +14,11 @@ export const widthInches = (state, getters, rootState) => (roomsIndex) => {
     return getters.rooms[roomsIndex]['width']['inches'];
 };
 
-export const roomArea = (state, getters, rootState) => (roomsIndex) => {
+export const roomArea = (state, getters, rootState) => (roomsIndex, caller) => {
+    // the getters try to preload themselves. add the if statement to check to make sure its not
+    // doing that, other wise it causes an error.
+    // https://stackoverflow.com/questions/43218643/vue-js-vuex-getters-error-before-state-rendered
+    if (!roomsIndex) return;
     return getters.rooms[roomsIndex]['area'];
 };
 export const occupants = (state, getters, rootState) => (roomsIndex) => {
