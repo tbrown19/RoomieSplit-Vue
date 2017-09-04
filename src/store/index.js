@@ -53,6 +53,7 @@ export default new Vuex.Store({
             state.rooms = roomConfiguration.rooms;
         },
         UPDATE_A_ROOM(state, payload) {
+            console.log(payload);
             state.rooms[payload.roomsIndex] = payload.value;
         },
         UPDATE_A_ROOMS_ATTRIBUTE(state, payload) {

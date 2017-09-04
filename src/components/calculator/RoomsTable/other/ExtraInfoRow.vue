@@ -70,7 +70,7 @@ export default {
         },
 
         handleClear() {
-            this.$emit('clearRoom', this.room);
+            this.$emit('clearRoom', this.index);
         },
 
         noteUpdated() {

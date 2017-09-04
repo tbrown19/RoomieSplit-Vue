@@ -6,33 +6,33 @@
                 <ExtraInfoRow :index="currentIndex(scope)" @clearRoom="clearRoom" @recalculatePayment="recalculatePayment"></ExtraInfoRow>
             </template>
         </el-table-column>
-    
+
         <el-table-column label="Room" prop="roomNumber"></el-table-column>
-    
+
         <el-table-column label="Length" min-width='120px'>
             <template scope="scope">
                 <Measurement :roomsIndex="currentIndex(scope)" :measurement="currentRoom(scope).length" type='length' @measurementUpdated="measurementUpdated"></Measurement>
             </template>
         </el-table-column>
-    
+
         <el-table-column label="Width" min-width='120px'>
             <template scope="scope">
                 <Measurement :roomsIndex="currentIndex(scope)" :measurement="currentRoom(scope).width" type='width' @measurementUpdated="measurementUpdated"></Measurement>
             </template>
         </el-table-column>
-    
+
         <el-table-column label="Area" min-width='100px'>
             <template scope="scope">
                 <Footage :roomsIndex="currentIndex(scope)" @areaUpdated="areaUpdated"></Footage>
             </template>
         </el-table-column>
-    
+
         <el-table-column label="Occupants" min-width='100px'>
             <template scope="scope">
                 <Occupants :index="scope.row.roomsIndex" @occupantsUpdated="occupantsUpdated"></Occupants>
             </template>
         </el-table-column>
-    
+
         <el-table-column label="Payment" min-width='100px'>
             <template scope="scope">
                 <Payment :index="scope.row.roomsIndex"></Payment>
@@ -71,9 +71,12 @@ export default {
             const index = scope.row.roomsIndex;
             return this.$store.getters.rooms[index];
         },
-        clearRoom(room) {
+        clearRoom(index) {
+            let room = this.RoomSplitter.rooms[index];
+            console.log(room);
             room.clear();
             this.updateARoomRelatedValues(room);
+            room.updateAreaFromMeasurements();
         },
 
         measurementUpdated(roomsIndex, type, measurementType, measurement) {
@@ -114,7 +117,12 @@ export default {
         recalculatePayment() {
             this.RoomSplitter.updatePaymentRelatedValues();
         }
+    },
 
+    data() {
+        return {
+
+        };
     }
 };
 </script>

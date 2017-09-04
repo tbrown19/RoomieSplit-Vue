@@ -25,10 +25,22 @@ export default class RoomSplitter {
         return rooms;
     }
 
+    createEmptyRoomObjects() {
+        let rooms = [];
+        for (let i = 0; i < store.getters.numRooms; i++) {
+            rooms.push(new Room([], i + 1));
+        }
+        console.log(rooms);
+        return rooms;
+    }
+
     clearRoomObjects() {
-        this.rooms.forEach(room => {
-            room.clear();
-        });
+        this.createEmptyRoomObjects().forEach(function (room) {
+            store.commit('UPDATE_A_ROOM', {
+                roomsIndex: room.roomsIndex,
+                value: room
+            });
+        }, this);
     }
 
     /**

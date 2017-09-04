@@ -17,7 +17,7 @@ import RoomsTable from './RoomsTable/Table.vue';
 import ActionButtons from './Actions/ActionButtons.vue';
 import ErrorsOnTable from './RoomsTable/Other/TableErrors.vue';
 import RoomSplitter from '../../utils/classes/RoomSplitter.js';
-import { EventBus } from '../../utils/event-bus.js';
+// import { EventBus } from '../../utils/event-bus.js';
 import { mapGetters } from 'vuex';
 export default {
     props: ['inputs'],
@@ -64,8 +64,8 @@ export default {
         },
 
         clearAll() {
-            this.RoomSplitter.clearRoomObjects();
-            EventBus.$emit('measurementsCleared');
+            this.roomSplitter.clearRoomObjects();
+            // EventBus.$emit('measurementsCleared');
         }
     },
 

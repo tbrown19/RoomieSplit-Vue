@@ -1,7 +1,7 @@
 import store from '../../store/index.js';
 export default class Room {
     constructor(roomData, roomNumber) {
-        if (roomData === undefined) {
+        if (roomData === undefined || roomData.length === 0) {
             this.createEmptyRoom(roomNumber);
         } else {
             for (let dataName in roomData) {
@@ -19,39 +19,50 @@ export default class Room {
     }
 
     clear() {
-        this.length = {
-            feet: '',
-            inches: ''
+        console.log('why is this not a function');
+        let tempRoom = {
+            roomNumber: this.roomNumber,
+
+            roomsIndex: this.roomsIndex,
+
+            length: {
+                feet: '',
+                inches: ''
+            },
+
+            width: {
+                feet: '',
+                inches: ''
+            },
+
+            area: '',
+
+            occupants: 1,
+
+            percentOfTotalSpace: 0,
+
+            percentOfPrivateSpace: 0,
+
+            eachOccupantsPercentOfPrivateSpace: 0,
+
+            privatePayment: 0,
+
+            payment: 0,
+
+            positiveValue: 0,
+
+            positiveValues: '',
+
+            negativeValue: 0,
+
+            negativeValues: '',
+
+            notes: ''
         };
-
-        this.width = {
-            feet: '',
-            inches: ''
-        };
-
-        this.area = '';
-
-        this.occupants = 1;
-
-        this.percentOfTotalSpace = 0;
-
-        this.percentOfPrivateSpace = 0;
-
-        this.eachOccupantsPercentOfPrivateSpace = 0;
-
-        this.privatePayment = 0;
-
-        this.payment = 0;
-
-        this.positiveValue = 0;
-
-        this.positiveValues = '';
-
-        this.negativeValue = 0;
-
-        this.negativeValues = '';
-
-        this.notes = '';
+        store.commit('UPDATE_A_ROOM', {
+            roomsIndex: this.roomsIndex,
+            value: tempRoom
+        });
     }
 
     updateAreaFromInputs(area) {
