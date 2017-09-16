@@ -12,7 +12,7 @@
         </slide-fade>
         <div id="example-text" class="has-text-centered">
             <h1 class="title"> Or
-                <a href="https://roomiesplit.com/calculator/-KpuPGVGGs9DbehcO4xV"> checkout an example.</a>
+                <a href="https://roomiesplit.com/calculator/-KpuPGVGGs9DbehcO4xV"> check out an example.</a>
             </h1>
         </div>
     
