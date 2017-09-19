@@ -108,13 +108,12 @@ export default class RoomSplitter {
     updatePaymentRelatedValues() {
         // If all the rooms are valid, have area and occupants, and we have no other errors than we can calculate the payments for each room.
         if (this.allRoomsAreValid() && store.getters.getCurrentTableErrors.length === 0) {
-            let valueAdjustedRent = store.getters.valueAdjustedRent;
-
-            let commonSpaceValue = valueAdjustedRent * this.commonSpacePercentage;
+            const valueAdjustedRent = store.getters.valueAdjustedRent;
+            const commonSpaceValue = valueAdjustedRent * this.commonSpacePercentage;
 
             // Set the value to actually be the value divided by the modifier - the private payment will cover the value lost.
             this.commonSpaceValue = commonSpaceValue / store.getters.commonSpaceValueModifier;
-            this.privateSpaceValue = (valueAdjustedRent - this.commonSpaceValue);
+            this.privateSpaceValue = valueAdjustedRent - this.commonSpaceValue;
 
             this.basePayment = this.Calculator.calculateBasePayment(store.getters.rooms, this.commonSpaceValue);
 
@@ -143,7 +142,7 @@ export default class RoomSplitter {
         const positiveValues = store.getters.positiveValue(room.roomsIndex);
         const negativeValues = store.getters.negativeValue(room.roomsIndex);
         const payment = this.basePayment + privatePayment + positiveValues - negativeValues;
-
+        console.log(payment);
         store.dispatch('payment', {
             roomsIndex: roomsIndex,
             value: payment
@@ -168,7 +167,7 @@ export default class RoomSplitter {
         store.commit('SET_VALUE_ADJUSTED_RENT', adjustedRent);
 
         // This is used to know whether or not to show the graph action button.
-        this.allRoomsAreValid = allRoomsAreValid;
+        this.allRoomsValid = allRoomsAreValid;
 
         return allRoomsAreValid;
     }
@@ -182,10 +181,7 @@ export default class RoomSplitter {
 
     isRoomValid(roomsIndex) {
         let room = store.getters.getRoomByNumber(roomsIndex);
-        if (room.occupants <= 0 || room.area <= 0 || room.area === '') {
-            return false;
-        }
-        return true;
+        return !(room.occupants <= 0 || room.area <= 0 || room.area === '');
     }
 
     valueAdjustRentByRoomsIndex(adjustedRent, roomsIndex) {

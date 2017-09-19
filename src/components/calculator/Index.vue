@@ -6,7 +6,7 @@
         
         <rooms-table :RoomSplitter="roomSplitter"></rooms-table>
         
-        <action-buttons :isSaving="savingTable" :showRentGraph="roomSplitter.allRoomsAreValid" @save="save" @clearAll="clearAll" @updateRoomConfiguration="triggerRoomConfigruationUpdate" ></action-buttons>
+        <action-buttons :isSaving="savingTable" :showRentGraph="roomSplitter.allRoomsValid" @save="save" @clearAll="clearAll" @updateRoomConfiguration="triggerRoomConfigruationUpdate" ></action-buttons>
     </div>
 </template>
 
