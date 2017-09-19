@@ -1,13 +1,5 @@
 export default class RoomSplitterCalculator {
 
-    calculateARoomsPercentOfTotalSpace(room, totalSpace) {
-        return room.area / totalSpace || 0;
-    }
-
-    calculateARoomsPercentOfPrivateSpace(room, privateSpace) {
-        return room.area / privateSpace || 0;
-    }
-
     calculateTotalRoomsArea(rooms) {
         return this.sumValueOfRoomData(rooms, 'area');
     }
@@ -20,10 +12,6 @@ export default class RoomSplitterCalculator {
         const totalRoomsArea = this.calculateTotalRoomsArea(rooms);
         const totalArea = area;
         return totalArea - totalRoomsArea;
-    }
-
-    calculateValueCommonSpace(rent, commonSpacePercentage) {
-        return rent * commonSpacePercentage;
     }
 
     calculateBasePayment(rooms, commonSpaceValue) {
