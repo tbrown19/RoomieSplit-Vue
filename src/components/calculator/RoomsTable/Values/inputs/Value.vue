@@ -30,10 +30,7 @@ export default {
             return !this.errors.has('value') && this.newItemValue !== '';
         },
         placeHolderText() {
-            if (this.type === 'positive') {
-                return 'Value - Ex: $30';
-            }
-            return 'Value - Ex: -$50';
+            return this.type === 'positive' ? 'Value - Ex: $30' : 'Value - Ex: -$50';
         }
     },
     data: function () {

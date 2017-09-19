@@ -27,14 +27,10 @@ export default {
         currentArea() {
             return this.$store.getters.rooms[this.roomsIndex].area;
         }
-        // editingArea() {
-        //     return this.$store.getters.rooms[this.roomsIndex].area;
-        // }
     },
 
     watch: {
         currentArea() {
-            console.log('the current area changed.');
             this.editingArea = this.$store.getters.rooms[this.roomsIndex].area;
         }
     },

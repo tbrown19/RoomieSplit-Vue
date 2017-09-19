@@ -17,7 +17,7 @@ export default {
     watch: {
         valueAddedToList() {
             this.newItemName = '';
-            this.errors.clear();
+            // Wait until the next tick to clear the error, that way the value can be updated to nothing but won't then show an error because its empty.
             this.$nextTick(function () {
                 this.errors.clear();
             });
@@ -28,10 +28,7 @@ export default {
             return !this.errors.has('name') && this.newItemName !== '';
         },
         placeHolderText() {
-            if (this.type === 'positive') {
-                return 'Name - Ex: Private Bathroom';
-            }
-            return 'Name - Ex: No Door';
+            return this.type === 'positive' ? 'Name - Ex: Private Bathroom' : 'Name - Ex: No Door';
         }
     },
     data: function () {

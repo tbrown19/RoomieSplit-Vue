@@ -1,5 +1,6 @@
 <template>
     <div class="level">
+
         <div class="level-left">
             <div class="level-item">
                 <div style="font-size: 1rem">
@@ -9,6 +10,7 @@
                     <!-- <p>Private Payment: {{ roundToTwoDecimalPlaces(room.privatePayment) }}</p> -->
                 </div>
             </div>
+
             <div class="level-item notes">
                 <div style="font-size: 1rem">
                     <label class="label info-header">Notes:</label>
@@ -16,6 +18,7 @@
                 </div>
             </div>
         </div>
+
         <div class="level-right">
             <button class="button is-primary add-value" @click="isPositiveValuesModalActive =true">
                 <b-icon icon="add"></b-icon>
@@ -30,17 +33,18 @@
                 <span class="icon-message">Clear</span>
             </button>
         </div>
+
         <values v-if="isPositiveValuesModalActive" :index="index" type="positive" @close="isPositiveValuesModalActive = false" @recalculatePayment="$emit('recalculatePayment')">
         </values>
+
         <values v-if="isNegativeValuesModalActive" :index="index" type="negative" @close="isNegativeValuesModalActive = false" @recalculatePayment="$emit('recalculatePayment')">
         </values>
+
     </div>
 </template>
 
 
 <script>
-// import PositiveValues from '../Modals/PositiveValues.vue';
-// import NegativeValues from '../Modals/NegativeValues.vue';
 import Values from '../Values/Modal.vue';
 export default {
     props: ['index'],

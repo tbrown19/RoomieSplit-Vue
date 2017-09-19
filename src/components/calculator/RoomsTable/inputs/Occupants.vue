@@ -18,14 +18,11 @@ export default {
     computed: {
         displayOccupants() {
             return this.$store.getters.roomArea(this.index) > 0;
-        },
-        inputSuccess() {
         }
     },
     methods: {
         checkOccupants(occupants) {
             this.occupants = validateInput(occupants, 1, 5, 1);
-            console.log('occs ', this.occupants);
             this.$emit('occupantsUpdated', this.index, this.occupants);
         }
     },

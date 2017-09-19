@@ -30,7 +30,6 @@ export default class RoomSplitter {
         for (let i = 0; i < store.getters.numRooms; i++) {
             rooms.push(new Room([], i + 1));
         }
-        console.log(rooms);
         return rooms;
     }
 
