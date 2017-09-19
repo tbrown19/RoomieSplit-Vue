@@ -78,8 +78,7 @@ export const percentOfPrivateSpace = (context, payload) => {
     });
 };
 
-export const eachOccupantsPercentOfPrivateSpace = (
-    context, payload) => {
+export const eachOccupantsPercentOfPrivateSpace = (context, payload) => {
     // state.percentOfTotalSpace = percentage;
     context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
         roomsIndex: payload.roomsIndex,
@@ -174,8 +173,7 @@ export const removeValue = (context, payload) => {
     });
 };
 
-export const subtractFromTotalValue = (context,
-    payload) => {
+export const subtractFromTotalValue = (context, payload) => {
     let currentTotal = context.getters.totalValueByType(
         payload.roomsIndex, payload.type);
     // Add the new one.
@@ -189,6 +187,7 @@ export const subtractFromTotalValue = (context,
         value: currentTotal
     });
 };
+
 export const updateValue = (context, payload) => {
     let currentValues = {};
     // state.percentOfTotalSpace = percentage;

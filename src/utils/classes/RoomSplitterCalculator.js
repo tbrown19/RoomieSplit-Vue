@@ -22,10 +22,6 @@ export default class RoomSplitterCalculator {
         return totalArea - totalRoomsArea;
     }
 
-    calculateCommonSpacePercentage(area, commonSpaceArea) {
-        return commonSpaceArea / area;
-    }
-
     calculateValueCommonSpace(rent, commonSpacePercentage) {
         return rent * commonSpacePercentage;
     }

@@ -114,6 +114,7 @@ export default {
             // Then update values related to the payment.
             this.RoomSplitter.updatePaymentRelatedValues();
         },
+
         recalculatePayment() {
             this.RoomSplitter.updatePaymentRelatedValues();
         }
