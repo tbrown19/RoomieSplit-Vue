@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import * as getters from './getters';
-import * as actions from './actions';
+// import * as actions from './actions';
 import room from './modules/room/room.js';
 import firebase from './modules/firebase/firebase.js';
 
@@ -25,7 +25,7 @@ export default new Vuex.Store({
     },
 
     getters,
-    actions,
+    // actions,
     mutations: {
         SET_NUM_ROOMS(state, numRooms) {
             state.numRooms = numRooms;
@@ -53,7 +53,6 @@ export default new Vuex.Store({
             state.rooms = roomConfiguration.rooms;
         },
         UPDATE_A_ROOM(state, payload) {
-            console.log(payload);
             state.rooms[payload.roomsIndex] = payload.value;
         },
         UPDATE_A_ROOMS_ATTRIBUTE(state, payload) {

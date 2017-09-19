@@ -73,7 +73,6 @@ export default {
         },
         clearRoom(index) {
             let room = this.RoomSplitter.rooms[index];
-            console.log(room);
             room.clear();
             this.updateARoomRelatedValues(room);
             room.updateAreaFromMeasurements();

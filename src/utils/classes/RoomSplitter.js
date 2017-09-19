@@ -141,7 +141,6 @@ export default class RoomSplitter {
         const positiveValues = store.getters.positiveValue(room.roomsIndex);
         const negativeValues = store.getters.negativeValue(room.roomsIndex);
         const payment = this.basePayment + privatePayment + positiveValues - negativeValues;
-        console.log(payment);
         store.dispatch('payment', {
             roomsIndex: roomsIndex,
             value: payment

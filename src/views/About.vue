@@ -7,7 +7,7 @@
       <h1 class="title is-3">Tyler Brown</h1>
       <br>
       <h1 class="title is-2"><strong>Updated:</strong></h1>
-      <h1 class="title is-3">July 2017</h1>
+      <h1 class="title is-3">September 2017</h1>
     </div>
   </div>
 </template>

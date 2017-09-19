@@ -71,7 +71,6 @@ export default {
 
     data: function () {
         let roomConfiguration = this.$store.getters.roomConfiguration;
-        console.error(roomConfiguration);
         let roomSplitter = new RoomSplitter(this.$store.getters.roomConfiguration);
         return {
             roomConfiguration,
