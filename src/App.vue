@@ -24,12 +24,14 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~bulma/sass/utilities/_all";
-$primary: #00d1b2;
-
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700');
 @import url('https://fonts.googleapis.com/css?family=Righteous');
 @import url('https://fonts.googleapis.com/css?family=Roboto');
+@import "~bulma/sass/utilities/_all";
+$primary: #00d1b2;
+// Import Bulma and Buefy styles
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
 
 body {
     margin: 0 !important;
@@ -51,7 +53,5 @@ body {
 .modal-background {
     background-color: rgba(10, 10, 10, 0.22) !important;
 }
-// Import Bulma and Buefy styles
-@import "~bulma";
-@import "~buefy/src/scss/buefy";
+
 </style>

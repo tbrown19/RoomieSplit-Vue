@@ -23,12 +23,8 @@ export default {
             return roomsFootageArary;
         },
         roomsAreaLabels() {
-            let roomsLabelsArray = [];
             let rooms = this.$store.getters.rooms;
-            rooms.forEach(function (room) {
-                roomsLabelsArray.push('Room ' + room.roomNumber);
-            }, this);
-            return roomsLabelsArray;
+            return rooms.map((room) => `Room ${room.roomNumber}`);
         }
     }
 };

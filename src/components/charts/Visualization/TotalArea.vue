@@ -19,16 +19,13 @@ export default {
     computed: {
         totalAreaData() {
             // Create a copy of all the rooms and their footage, so that we aren't editing the store, and then push the total common space.
-            let roomsFootageArary = [...this.$store.getters.getRoomsFootageAsArray];
+            const roomsFootageArary = [...this.$store.getters.getRoomsFootageAsArray];
             roomsFootageArary.push(this.$store.getters.totalCommonSpace);
             return roomsFootageArary;
         },
         totalAreaLabels() {
-            let roomsLabelsArray = [];
-            let rooms = this.$store.getters.rooms;
-            rooms.forEach(function (room) {
-                roomsLabelsArray.push('Room ' + room.roomNumber);
-            }, this);
+            const rooms = this.$store.getters.rooms;
+            const roomsLabelsArray = rooms.map((room) => `Room ${room.roomNumber}`);
             roomsLabelsArray.push('Common Space');
             return roomsLabelsArray;
         }
