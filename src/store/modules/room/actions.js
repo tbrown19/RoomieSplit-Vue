@@ -159,47 +159,41 @@ export const addToTotalValue = (context, payload) => {
     });
 };
 
-export const removeValue = (context, payload) => {
-    let currentValues = {};
-    // state.percentOfTotalSpace = percentage;
-    currentValues = context.getters.valuesByType(
-        payload.roomsIndex, payload.type);
-    delete currentValues[payload.name];
-    const attribute = payload.type + 'Values';
+export const removeValue = (context, {roomsIndex, type, name}) => {
+    let currentValues = context.getters.valuesByType(roomsIndex, type) || {};
+    delete currentValues[name];
+
     context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
-        roomsIndex: payload.roomsIndex,
-        attribute: attribute,
+        roomsIndex: roomsIndex,
+        attribute: type + 'Values',
         value: currentValues
     });
 };
 
-export const subtractFromTotalValue = (context, payload) => {
-    let currentTotal = context.getters.totalValueByType(
-        payload.roomsIndex, payload.type);
-    // Add the new one.
-    currentTotal -= payload.value;
-    // Then commit it.
-    const attribute = payload.type + 'Value';
+export const subtractFromTotalValue = (context, {roomsIndex, type, value}) => {
+    let currentTotal = context.getters.totalValueByType(roomsIndex, type);
 
     context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
-        roomsIndex: payload.roomsIndex,
-        attribute: attribute,
-        value: currentTotal
+        roomsIndex: roomsIndex,
+        attribute: type + 'Value',
+        value: currentTotal - value
     });
 };
 
-export const updateValue = (context, payload) => {
-    let currentValues = {};
-    // state.percentOfTotalSpace = percentage;
-    currentValues = context.getters.valuesByType(
-        payload.roomsIndex, payload.type);
+// Find why this was being used.
+// export const updateValue = (context, payload) => {
+//     console.log('when do we call this?');
+//     let currentValues = {};
+//     // state.percentOfTotalSpace = percentage;
+//     currentValues = context.getters.valuesByType(
+//         payload.roomsIndex, payload.type);
 
-    currentValues[payload.name] = payload.value;
+//     currentValues[payload.name] = payload.value;
 
-    const attribute = payload.type + 'Values';
-    context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
-        roomsIndex: payload.roomsIndex,
-        attribute: attribute,
-        value: currentValues
-    });
-};
+//     const attribute = payload.type + 'Values';
+//     context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
+//         roomsIndex: payload.roomsIndex,
+//         attribute: attribute,
+//         value: currentValues
+//     });
+// };

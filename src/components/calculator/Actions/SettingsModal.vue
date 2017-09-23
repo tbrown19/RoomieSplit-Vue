@@ -67,7 +67,7 @@ label {
 
 .close-modal-div {
     font-size: 1.3rem;
-    > a{
+    a{
         margin: 0 1rem 0 1rem;
     }
 }

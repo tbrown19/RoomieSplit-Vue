@@ -55,6 +55,7 @@ export default {
             }
         },
         removeValue(name) {
+            console.log('we at least get here.. right?');
             let value = this.currentValues[name];
             this.$store.dispatch('removeValue', {
                 roomsIndex: this.index,
