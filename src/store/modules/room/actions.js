@@ -1,5 +1,5 @@
-export const lengthFeet = (context, {roomsIndex, value}) => {
-    context.commit(
+export const lengthFeet = ({commit}, {roomsIndex, value}) => {
+    commit(
         'UPDATE_A_ROOMS_NESTED_ATTRIBUTE', {
             roomsIndex: roomsIndex,
             attribute: 'length',
