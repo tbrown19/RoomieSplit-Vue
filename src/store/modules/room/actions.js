@@ -1,161 +1,136 @@
-export const lengthFeet = (context, payload) => {
-    // state.percentOfTotalSpace = percentage;
+export const lengthFeet = (context, {roomsIndex, value}) => {
     context.commit(
         'UPDATE_A_ROOMS_NESTED_ATTRIBUTE', {
-            roomsIndex: payload.roomsIndex,
+            roomsIndex: roomsIndex,
             attribute: 'length',
             nested: 'feet',
-            value: payload.value
+            value: value
         });
 };
 
-export const lengthInches = (context, payload) => {
-    // state.percentOfTotalSpace = percentage;
+export const lengthInches = (context, {roomsIndex, value}) => {
     context.commit(
         'UPDATE_A_ROOMS_NESTED_ATTRIBUTE', {
-            roomsIndex: payload.roomsIndex,
+            roomsIndex: roomsIndex,
             attribute: 'length',
             nested: 'inches',
-            value: payload.value
+            value: value
         });
 };
 
-export const widthFeet = (context, payload) => {
-    // state.percentOfTotalSpace = percentage;
+export const widthFeet = (context, {roomsIndex, value}) => {
     context.commit(
         'UPDATE_A_ROOMS_NESTED_ATTRIBUTE', {
-            roomsIndex: payload.roomsIndex,
+            roomsIndex: roomsIndex,
             attribute: 'width',
             nested: 'feet',
-            value: payload.value
+            value: value
         });
 };
 
-export const widthInches = (context, payload) => {
-    // state.percentOfTotalSpace = percentage;
+export const widthInches = (context, {roomsIndex, value}) => {
     context.commit(
         'UPDATE_A_ROOMS_NESTED_ATTRIBUTE', {
-            roomsIndex: payload.roomsIndex,
+            roomsIndex: roomsIndex,
             attribute: 'width',
             nested: 'inches',
-            value: payload.value
+            value: value
         });
 };
 
-export const roomsArea = (context, payload) => {
-    // state.percentOfTotalSpace = percentage;
+export const roomsArea = (context, {roomsIndex, value}) => {
     context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
-        roomsIndex: payload.roomsIndex,
+        roomsIndex: roomsIndex,
         attribute: 'area',
-        value: payload.value
+        value: value
     });
 };
 
-export const occupants = (context, payload) => {
-    // state.percentOfTotalSpace = percentage;
+export const occupants = (context, {roomsIndex, value}) => {
     context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
-        roomsIndex: payload.roomsIndex,
+        roomsIndex: roomsIndex,
         attribute: 'occupants',
-        value: payload.value
+        value: value
     });
 };
 
-export const percentTotalSpace = (context, payload) => {
-    // state.percentOfTotalSpace = percentage;
+export const percentTotalSpace = (context, {roomsIndex, value}) => {
     context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
-        roomsIndex: payload.roomsIndex,
+        roomsIndex: roomsIndex,
         attribute: 'percentOfTotalSpace',
-        value: payload.value
+        value: value
     });
 };
 
-export const percentOfPrivateSpace = (context, payload) => {
-    // state.percentOfTotalSpace = percentage;
+export const percentOfPrivateSpace = (context, {roomsIndex, value}) => {
     context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
-        roomsIndex: payload.roomsIndex,
+        roomsIndex: roomsIndex,
         attribute: 'percentOfPrivateSpace',
-        value: payload.value
+        value: value
     });
 };
 
-export const eachOccupantsPercentOfPrivateSpace = (context, payload) => {
-    // state.percentOfTotalSpace = percentage;
+export const eachOccupantsPercentOfPrivateSpace = (context, {roomsIndex, value}) => {
     context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
-        roomsIndex: payload.roomsIndex,
+        roomsIndex: roomsIndex,
         attribute: 'eachOccupantsPercentOfPrivateSpace',
-        value: payload.value
+        value: value
     });
 };
 
-export const privatePayment = (context, payload) => {
-    // state.percentOfTotalSpace = percentage;
+export const privatePayment = (context, {roomsIndex, value}) => {
     context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
-        roomsIndex: payload.roomsIndex,
+        roomsIndex: roomsIndex,
         attribute: 'privatePayment',
-        value: payload.value
+        value: value
     });
 };
 
-export const payment = (context, payload) => {
-    // state.percentOfTotalSpace = percentage;
+export const payment = (context, {roomsIndex, value}) => {
     context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
-        roomsIndex: payload.roomsIndex,
+        roomsIndex: roomsIndex,
         attribute: 'payment',
-        value: payload.value
+        value: value
     });
 };
 
-export const note = (context, payload) => {
-    let note = payload.value.replace(
-        /[^a-z0-9']+/ig, ' ');
-    // state.percentOfTotalSpace = percentage;
+export const note = (context, {roomsIndex, value}) => {
+    let note = value.replace(/[^a-z0-9']+/ig, ' ');
     context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
-        roomsIndex: payload.roomsIndex,
+        roomsIndex: roomsIndex,
         attribute: 'note',
         value: note
     });
 };
 
-export const setTotalValue = (context, payload) => {
-    const attribute = payload.type + 'Value';
+export const setTotalValue = (context, {roomsIndex, type, value}) => {
     context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
-        roomsIndex: payload.roomsIndex,
-        attribute: attribute,
-        value: payload.value
+        roomsIndex: roomsIndex,
+        attribute: type + 'Value',
+        value: value
     });
 };
 
-export const addValue = (context, payload) => {
-    let currentValues = {};
-    // Get either the positive or negative values.
-    currentValues = context.getters.valuesByType(
-        payload.roomsIndex, payload.type) || {};
-    // Add the new one.
-    let name = payload.name.replace(
-        /[^a-z']+/ig, ' ');
-    currentValues[name] = payload.value;
-    // Then commit it.
-    const attribute = payload.type + 'Values';
+export const addValue = (context, {roomsIndex, type, name, value}) => {
+    let currentValues = context.getters.valuesByType(roomsIndex, type) || {};
+
+    let cleanedName = name.replace(/[^a-z']+/ig, ' ');
+    currentValues[cleanedName] = value;
 
     context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
-        roomsIndex: payload.roomsIndex,
-        attribute: attribute,
+        roomsIndex: roomsIndex,
+        attribute: type + 'Values',
         value: currentValues
     });
 };
 
-export const addToTotalValue = (context, payload) => {
-    let currentTotal = context.getters.totalValueByType(
-        payload.roomsIndex, payload.type);
-    // Add the new one.
-    currentTotal += payload.value;
-    // Then commit it.
-    const attribute = payload.type + 'Value';
+export const addToTotalValue = (context, {roomsIndex, type, value}) => {
+    let currentTotal = context.getters.totalValueByType(roomsIndex, type);
 
     context.commit('UPDATE_A_ROOMS_ATTRIBUTE', {
-        roomsIndex: payload.roomsIndex,
-        attribute: attribute,
-        value: currentTotal
+        roomsIndex: roomsIndex,
+        attribute: type + 'Value',
+        value: currentTotal + value
     });
 };
 

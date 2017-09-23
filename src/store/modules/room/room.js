@@ -1,11 +1,9 @@
 // initial state
 import * as getters from './getters';
 import * as actions from './actions';
+import * as mutations from './mutations';
 
 const state = {};
-
-// actions
-const mutations = {};
 
 export default {
     state,

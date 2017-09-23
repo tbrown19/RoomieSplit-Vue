@@ -21,9 +21,8 @@ export const rooms = state => state.rooms;
 
 export const commonSpaceValueModifier = state => state.commonSpaceValueModifier;
 
-export const getRoomByNumber = (state, getters) => (roomNumber) => {
-    return getters.rooms[roomNumber];
-};
+export const getRoomByNumber = (state, getters) => (roomNumber) => getters.rooms[roomNumber];
+
 export const getRoomAttribute = (state, getters) => (payload) => {
     return getters.getRoomByNumber(payload.roomsIndex)[payload.attr];
 };
@@ -44,4 +43,3 @@ export const totalPrivateSpace = (state, getters) => {
 export const totalCommonSpace = (state, getters) => {
     return getters.area - getters.totalPrivateSpace;
 };
-
