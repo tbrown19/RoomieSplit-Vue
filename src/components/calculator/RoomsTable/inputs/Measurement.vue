@@ -2,7 +2,11 @@
     <div>
         <el-form :inline="true">
             <el-form-item class="measurement-input">
-                <input @input="checkFeet(currentMeasurement.feet)" v-model.number="currentMeasurement.feet" v-validate="'required|between:1,99'" :class="{'input': true, 'is-danger': feetHasErrors, 'is-success': !feetHasErrors && this.currentMeasurement.feet != ''}" type="number" placeholder="ft" :name="'feet' + roomsIndex.toString()">
+                <input 
+                class = 'input'
+                @input="checkFeet(currentMeasurement.feet)" v-model.number="currentMeasurement.feet" 
+                v-validate="'required|between:1,99'" 
+                :class="{'is-danger': feetHasErrors, 'is-success': !feetHasErrors && currentMeasurement.feet != ''}" type="number" placeholder="ft" :name="'feet' + roomsIndex.toString()">
             </el-form-item>
 
             <el-form-item class="measurement-input">
@@ -14,7 +18,7 @@
 
 <script>
 import { validateInput } from '../../../../utils/helpers/input-helpers.js';
-import { EventBus } from '../../../../utils/event-bus.js';
+// import { EventBus } from '../../../../utils/event-bus.js';
 export default {
     props: ['roomsIndex', 'measurement', 'type'],
 
@@ -41,20 +45,20 @@ export default {
 
     created() {
         console.log(this.measurementFromStore);
-        // If the user updated the area manually then it will clear all these inputs.
-        // This bus watches for that so that it can remove the errors that result from the inputs being cleared.
-        EventBus.$on('areaUpdatedManually', roomNumber => {
-            // We set the errors cleared field to true if the bus event room number matches the current room number.
-            if (this.roomsIndex + 1 === roomNumber) {
-                this.errorsCleared = true;
-            }
-        });
+        // // If the user updated the area manually then it will clear all these inputs.
+        // // This bus watches for that so that it can remove the errors that result from the inputs being cleared.
+        // EventBus.$on('areaUpdatedManually', roomNumber => {
+        //     // We set the errors cleared field to true if the bus event room number matches the current room number.
+        //     if (this.roomsIndex + 1 === roomNumber) {
+        //         this.errorsCleared = true;
+        //     }
+        // });
 
-        EventBus.$on('measurementsCleared', () => {
-            // Update the measurement so it is matching the new currently cleared measurement and then get rid of the errors.
-            this.currentMeasurement = this.currentRoom[this.type];
-            this.errorsCleared = true;
-        });
+        // EventBus.$on('measurementsCleared', () => {
+        //     // Update the measurement so it is matching the new currently cleared measurement and then get rid of the errors.
+        //     this.currentMeasurement = this.currentRoom[this.type];
+        //     this.errorsCleared = true;
+        // });
     },
 
     methods: {

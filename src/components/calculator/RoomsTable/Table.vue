@@ -29,13 +29,13 @@
 
         <el-table-column label="Occupants" min-width='100px'>
             <template scope="scope">
-                <Occupants :index="scope.row.roomsIndex" @occupantsUpdated="occupantsUpdated"></Occupants>
+                <Occupants :roomsIndex="scope.row.roomsIndex" @occupantsUpdated="occupantsUpdated"></Occupants>
             </template>
         </el-table-column>
 
         <el-table-column label="Payment" min-width='100px'>
             <template scope="scope">
-                <Payment :index="scope.row.roomsIndex"></Payment>
+                <Payment :roomsIndex="scope.row.roomsIndex"></Payment>
             </template>
         </el-table-column>
     </el-table>

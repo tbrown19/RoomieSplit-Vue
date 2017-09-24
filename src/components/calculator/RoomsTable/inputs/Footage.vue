@@ -21,8 +21,9 @@ export default {
 
     computed: {
         roundedArea: function() {
-            if (this.$store.getters.rooms[this.roomsIndex].area === '' || this.$store.getters.rooms[this.roomsIndex].area === 0.00) return 0;
-            return parseFloat(this.$store.getters.rooms[this.roomsIndex].area).toFixed(2);
+            const roomArea = this.$store.getters.rooms[this.roomsIndex].area;
+            if (roomArea === '' || roomArea === 0.00) return 0;
+            return parseFloat(roomArea).toFixed(2);
         },
         currentArea() {
             return this.$store.getters.rooms[this.roomsIndex].area;
@@ -30,10 +31,12 @@ export default {
     },
 
     watch: {
+        // Watches the area in the store - if it's changed then editing area should also be changed.
         currentArea() {
             this.editingArea = this.$store.getters.rooms[this.roomsIndex].area;
         }
     },
+
     methods: {
         checkArea(area) {
             this.editingArea = validateInput(area, 0, 999, 0);

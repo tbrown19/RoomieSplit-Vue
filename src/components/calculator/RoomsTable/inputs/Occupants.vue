@@ -4,7 +4,11 @@
             @input="checkOccupants(occupants)" 
             v-model.number="occupants" 
             v-validate="'required'" 
-            :class="{'is-danger': errors.has('occupants'), 'is-success': !errors.has('occupants') && this.occupants != ''}" 
+            :class=
+            "{
+                'is-danger': errors.has('occupants'), 
+                'is-success': !errors.has('occupants') && this.occupants != ''
+            }"
             type="number" 
             placeholder="0" 
             name="occupants">
@@ -13,23 +17,23 @@
 <script>
 import { validateInput } from '../../../../utils/helpers/input-helpers.js';
 export default {
-    props: ['index'],
+    props: ['roomsIndex'],
 
     computed: {
         displayOccupants() {
-            return this.$store.getters.roomArea(this.index) > 0;
+            return this.occupants > 0;
         }
     },
     methods: {
         checkOccupants(occupants) {
             this.occupants = validateInput(occupants, 1, 5, 1);
-            this.$emit('occupantsUpdated', this.index, this.occupants);
+            this.$emit('occupantsUpdated', this.roomsIndex, this.occupants);
         }
     },
 
     data: function () {
         return {
-            occupants: this.$store.getters.occupants(this.index)
+            occupants: this.$store.getters.occupants(this.roomsIndex)
         };
     }
 };

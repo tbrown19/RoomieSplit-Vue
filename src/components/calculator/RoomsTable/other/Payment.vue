@@ -17,16 +17,16 @@
 import fade from '../../../transitions/SlideFadeSlow.vue';
 export default {
     name: 'payment',
-    props: ['index'],
+    props: ['roomsIndex'],
     components: {
         fade
     },
     computed: {
         roundedPayment: function () {
-            return parseFloat(this.$store.getters.payment(this.index)).toFixed(2);
+            return parseFloat(this.$store.getters.payment(this.roomsIndex)).toFixed(2);
         },
         occupants: function () {
-            return this.$store.getters.occupants(this.index);
+            return this.$store.getters.occupants(this.roomsIndex);
         }
     }
 };
