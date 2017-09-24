@@ -10,7 +10,7 @@ export default {
 
     computed: {
         displayOccupants() {
-            return this.occupants > 0;
+            return this.$store.getters.roomArea(this.roomsIndex) > 0;
         },
         occupantsFromStore() {
             return this.$store.getters.occupants(this.roomsIndex);
