@@ -4,11 +4,8 @@
             @input="checkOccupants(occupants)" 
             v-model.number="occupants" 
             v-validate="'required'" 
-            :class=
-            "{
-                'is-danger': errors.has('occupants'), 
-                'is-success': !errors.has('occupants') && this.occupants != ''
-            }"
+            :class="{'is-danger': errors.has('occupants'), 
+                    'is-success': !errors.has('occupants') && this.occupants != ''}" 
             type="number" 
             placeholder="0" 
             name="occupants">

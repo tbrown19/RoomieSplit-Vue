@@ -11,13 +11,13 @@
 
         <el-table-column label="Length" min-width='120px'>
             <template scope="scope">
-                <Measurement :roomsIndex="currentIndex(scope)" :measurement="currentRoom(scope).length" type='length' @measurementUpdated="measurementUpdated"></Measurement>
+                <Measurement :roomsIndex="currentIndex(scope)" type='length' @measurementUpdated="measurementUpdated"></Measurement>
             </template>
         </el-table-column>
 
         <el-table-column label="Width" min-width='120px'>
             <template scope="scope">
-                <Measurement :roomsIndex="currentIndex(scope)" :measurement="currentRoom(scope).width" type='width' @measurementUpdated="measurementUpdated"></Measurement>
+                <Measurement :roomsIndex="currentIndex(scope)" type='width' @measurementUpdated="measurementUpdated"></Measurement>
             </template>
         </el-table-column>
 

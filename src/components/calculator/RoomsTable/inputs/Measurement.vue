@@ -20,7 +20,7 @@
 import { validateInput } from '../../../../utils/helpers/input-helpers.js';
 // import { EventBus } from '../../../../utils/event-bus.js';
 export default {
-    props: ['roomsIndex', 'measurement', 'type'],
+    props: ['roomsIndex', 'type'],
 
     computed: {
         feetHasErrors() {
@@ -30,35 +30,20 @@ export default {
             }
             return this.errors.has(`feet${this.roomsIndex}`);
         },
+
         measurementFromStore() {
-            return this.$store.getters.rooms[this.roomsIndex][this.type].feet;
+            return this.$store.getters.rooms[this.roomsIndex][this.type];
         }
     },
 
     watch: {
-        measurementFromStore() {
-            console.log('the measurement changed in the store.');
-            this.currentMeasurement = {...this.$store.getters.rooms[this.roomsIndex][this.type]};
-            this.errorsCleared = true;
+        measurementFromStore: {
+            handler: function(newMeasurement) {
+                this.currentMeasurement = {...newMeasurement};
+                this.errorsCleared = true;
+            },
+            deep: true
         }
-    },
-
-    created() {
-        console.log(this.measurementFromStore);
-        // // If the user updated the area manually then it will clear all these inputs.
-        // // This bus watches for that so that it can remove the errors that result from the inputs being cleared.
-        // EventBus.$on('areaUpdatedManually', roomNumber => {
-        //     // We set the errors cleared field to true if the bus event room number matches the current room number.
-        //     if (this.roomsIndex + 1 === roomNumber) {
-        //         this.errorsCleared = true;
-        //     }
-        // });
-
-        // EventBus.$on('measurementsCleared', () => {
-        //     // Update the measurement so it is matching the new currently cleared measurement and then get rid of the errors.
-        //     this.currentMeasurement = this.currentRoom[this.type];
-        //     this.errorsCleared = true;
-        // });
     },
 
     methods: {
@@ -74,9 +59,11 @@ export default {
     },
 
     data: function() {
+        // Creates a copy of the measurement values so that we are not directly editing the store.
+        const initalMeasurement = {...this.$store.getters.rooms[this.roomsIndex][this.type]};
         // Get the current row, and then get the current measurement type either length or width.
         return {
-            currentMeasurement: { ...this.measurement }, // creates a copy of the measurement values so that we are not directly editing the store.
+            currentMeasurement: initalMeasurement,
             errorsCleared: false
         };
     }
