@@ -1,12 +1,12 @@
 <template>
     <div>
         <updatable-inputs :inputs="inputs" :roomConfiguration="this.$store.getters.roomConfiguration" @saveInput="triggerRoomConfigruationUpdate"></updatable-inputs>
-        
+
         <errors-on-table></errors-on-table>
-        
+
         <rooms-table :RoomSplitter="roomSplitter"></rooms-table>
-        
-        <action-buttons :isSaving="savingTable" :showRentGraph="roomSplitter.allRoomsValid" @save="save" @clearAll="clearAll" @updateRoomConfiguration="triggerRoomConfigruationUpdate" ></action-buttons>
+
+        <action-buttons :isSaving="savingTable" :showRentGraph="roomSplitter.allRoomsValid" @save="save" @clearAll="clearAll" @updateRoomConfiguration="triggerRoomConfigruationUpdate"></action-buttons>
     </div>
 </template>
 
@@ -64,12 +64,16 @@ export default {
         },
 
         clearAll() {
-            this.roomSplitter.clearRoomObjects();
-            // EventBus.$emit('measurementsCleared');
+            const rooms = this.roomSplitter.rooms;
+            rooms.map((room) => {
+                this.$store.commit('RESET_A_ROOM', {
+                    roomsIndex: room.roomsIndex
+                });
+            });
         }
     },
 
-    data: function () {
+    data: function() {
         let roomConfiguration = this.$store.getters.roomConfiguration;
         let roomSplitter = new RoomSplitter(this.$store.getters.roomConfiguration);
         return {
