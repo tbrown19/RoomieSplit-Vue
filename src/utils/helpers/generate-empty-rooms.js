@@ -16,7 +16,7 @@ export function createEmptyRooms(numRooms) {
 
             area: '',
 
-            occupants: 1,
+            occupants: 0,
 
             percentOfTotalSpace: 0,
 
@@ -30,11 +30,11 @@ export function createEmptyRooms(numRooms) {
 
             positiveValue: 0,
 
-            positiveValues: '',
+            positiveValues: {},
 
             negativeValue: 0,
 
-            negativeValues: '',
+            negativeValues: {},
 
             note: ''
         });

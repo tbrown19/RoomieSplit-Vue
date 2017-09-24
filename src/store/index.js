@@ -63,17 +63,26 @@ export default new Vuex.Store({
             state.rooms[payload.roomsIndex][payload.attribute][payload.nested] = payload.value;
         },
         RESET_A_ROOM(state, payload) {
-            console.log(state.rooms[payload.roomsIndex]);
             const room = state.rooms[payload.roomsIndex];
-
             // Reset footage related values
             room.area = 0;
             room.width.feet = '';
             room.width.inches = '';
             room.length.feet = '';
             room.length.inches = '';
-
+            room.percentOfPrivateSpace = 0;
+            room.percentOfTotalSpace = 0;
+            // Reset payment related values
+            room.payment = 0;
+            room.negativeValue = 0;
+            room.negativeValues = {};
+            room.positiveValue = 0;
+            room.positiveValues = {};
+            room.privatePayment = 0;
+            // Reset other values
+            room.eachOccupantsPercentOfPrivateSpace = 0;
             room.occupants = 0;
+            room.note = 0;
         },
         ADD_TABLE_ERROR(state, errorName) {
             if (!state.currentTableErrors.includes(errorName)) {
