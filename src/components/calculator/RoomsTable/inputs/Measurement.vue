@@ -1,24 +1,37 @@
 <template>
     <div>
         <el-form :inline="true">
+            
             <el-form-item class="measurement-input">
                 <input 
-                class = 'input'
+                class="input"
                 @input="checkFeet(currentMeasurement.feet)" v-model.number="currentMeasurement.feet" 
                 v-validate="'required|between:1,99'" 
-                :class="{'is-danger': feetHasErrors, 'is-success': !feetHasErrors && currentMeasurement.feet != ''}" type="number" placeholder="ft" :name="'feet' + roomsIndex.toString()">
+                :class="{'is-danger': feetHasErrors, 
+                         'is-success': !feetHasErrors && currentMeasurement.feet != ''}" 
+                type="number" 
+                placeholder="ft" 
+                :name="'feet' + roomsIndex.toString()">
             </el-form-item>
 
             <el-form-item class="measurement-input">
-                <input @input="checkInches(currentMeasurement.inches)" v-model.number="currentMeasurement.inches" v-validate="'between:0,12'" :class="{'input': true, 'is-danger': errors.has('inches'), 'is-success': !errors.has('inches') && this.currentMeasurement.inches != ''}" type="number" placeholder="in" :name="'inches' + roomsIndex.toString()">
+                <input
+                class="input"
+                @input="checkInches(currentMeasurement.inches)" v-model.number="currentMeasurement.inches" 
+                v-validate="'between:0,12'" 
+                :class="{'is-danger': errors.has('inches'), 
+                    'is-success': !errors.has('inches') && this.currentMeasurement.inches != ''}" 
+                type="number" 
+                placeholder="in" 
+                :name="'inches' + roomsIndex.toString()">
             </el-form-item>
+            
         </el-form>
     </div>
 </template>
 
 <script>
 import { validateInput } from '../../../../utils/helpers/input-helpers.js';
-// import { EventBus } from '../../../../utils/event-bus.js';
 export default {
     props: ['roomsIndex', 'type'],
 

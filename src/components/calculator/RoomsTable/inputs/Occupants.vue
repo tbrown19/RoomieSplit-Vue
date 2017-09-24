@@ -1,14 +1,6 @@
 <template>
-    <input v-if="displayOccupants" 
-            class='occupants-input input' 
-            @input="checkOccupants(occupants)" 
-            v-model.number="occupants" 
-            v-validate="'required'" 
-            :class="{'is-danger': errors.has('occupants'), 
-                    'is-success': !errors.has('occupants') && this.occupants != ''}" 
-            type="number" 
-            placeholder="0" 
-            name="occupants">
+    <input v-if="displayOccupants" class='occupants-input input' @input="checkOccupants(occupants)" v-model.number="occupants" v-validate="'required'" :class="{'is-danger': errors.has('occupants'), 
+                        'is-success': !errors.has('occupants') && this.occupants != ''}" type="number" placeholder="0" name="occupants">
 </template>
 
 <script>
@@ -19,6 +11,14 @@ export default {
     computed: {
         displayOccupants() {
             return this.occupants > 0;
+        },
+        occupantsFromStore() {
+            return this.$store.getters.occupants(this.roomsIndex);
+        }
+    },
+    watch: {
+        occupantsFromStore(newOccupants) {
+            this.occupants = newOccupants;
         }
     },
     methods: {
@@ -28,7 +28,7 @@ export default {
         }
     },
 
-    data: function () {
+    data: function() {
         return {
             occupants: this.$store.getters.occupants(this.roomsIndex)
         };
