@@ -23,9 +23,7 @@ function signInAnonUser() {
 
 // Check to see if the user already has an anon account, if not, create one for them.
 FirebaseApp.auth().onAuthStateChanged(function (user) {
-    if (user) {
-        // User is signed in.
-    } else {
+    if (!user) {
         signInAnonUser();
     }
 });

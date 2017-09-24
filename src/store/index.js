@@ -6,6 +6,7 @@ import room from './modules/room/room.js';
 import firebase from './modules/firebase/firebase.js';
 
 Vue.use(Vuex);
+
 const debug = process.env.NODE_ENV !== 'production';
 
 export default new Vuex.Store({
@@ -60,6 +61,19 @@ export default new Vuex.Store({
         },
         UPDATE_A_ROOMS_NESTED_ATTRIBUTE(state, payload) {
             state.rooms[payload.roomsIndex][payload.attribute][payload.nested] = payload.value;
+        },
+        RESET_A_ROOM(state, payload) {
+            console.log(state.rooms[payload.roomsIndex]);
+            const room = state.rooms[payload.roomsIndex];
+
+            // Reset footage related values
+            room.area = 0;
+            room.width.feet = '';
+            room.width.inches = '';
+            room.length.feet = '';
+            room.length.inches = '';
+
+            room.occupants = 0;
         },
         ADD_TABLE_ERROR(state, errorName) {
             if (!state.currentTableErrors.includes(errorName)) {

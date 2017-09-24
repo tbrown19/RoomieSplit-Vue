@@ -42,6 +42,7 @@ export function updateRoomConfigurationInDB(id, roomConfiguration) {
     // Update each room and assign the promise object to a variable.
     const updatedNumRooms = updateConfigurationNumRooms(id, roomConfiguration.numRooms);
     const updatedArea = updateConfigurationArea(id, roomConfiguration.area);
+    console.log('area prom', updatedArea);
     const updatedRent = updateConfigurationRent(id, roomConfiguration.rent);
     const updatedCommonSpaceValueModifier = commonSpaceValueModifier(id, roomConfiguration.commonSpaceValueModifier);
 
@@ -50,6 +51,7 @@ export function updateRoomConfigurationInDB(id, roomConfiguration) {
             // Do nothing on success. there is no need for the values to be returned as they are already in the store.
             resolve();
         }, error => {
+            console.log(error);
             // If we get an error while updating any of the values then we reject the entire promise and return the error.
             reject(error);
         });
@@ -95,6 +97,7 @@ function commonSpaceValueModifier(id, commonSpaceValueModifier) {
         });
     });
 }
+
 export function updateRoomConfigruationRoomsInDB(id, rooms) {
     return new Promise((resolve, reject) => {
         // If its the example, don't actually let it updaate.

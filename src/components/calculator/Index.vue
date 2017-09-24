@@ -60,7 +60,7 @@ export default {
             this.roomSplitter.updatePaymentRelatedValues();
         },
         save() {
-            this.$emit('updateRooms');
+            this.$emit('saveRooms');
         },
 
         clearAll() {

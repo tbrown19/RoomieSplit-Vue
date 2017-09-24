@@ -19,50 +19,10 @@ export default class Room {
     }
 
     clear() {
-        console.log('why is this not a function');
-        let tempRoom = {
-            roomNumber: this.roomNumber,
-
-            roomsIndex: this.roomsIndex,
-
-            length: {
-                feet: '',
-                inches: ''
-            },
-
-            width: {
-                feet: '',
-                inches: ''
-            },
-
-            area: '',
-
-            occupants: 1,
-
-            percentOfTotalSpace: 0,
-
-            percentOfPrivateSpace: 0,
-
-            eachOccupantsPercentOfPrivateSpace: 0,
-
-            privatePayment: 0,
-
-            payment: 0,
-
-            positiveValue: 0,
-
-            positiveValues: '',
-
-            negativeValue: 0,
-
-            negativeValues: '',
-
-            notes: ''
-        };
-        store.commit('UPDATE_A_ROOM', {
-            roomsIndex: this.roomsIndex,
-            value: tempRoom
+        store.commit('RESET_A_ROOM', {
+            roomsIndex: this.roomsIndex
         });
+        // Clear the measurements since they will no longer be valid if the user manually changed the area
     }
 
     updateAreaFromInputs(area) {

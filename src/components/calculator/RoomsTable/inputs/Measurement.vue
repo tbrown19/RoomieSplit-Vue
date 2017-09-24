@@ -2,15 +2,11 @@
     <div>
         <el-form :inline="true">
             <el-form-item class="measurement-input">
-                <input @input="checkFeet(currentMeasurement.feet)" v-model.number="currentMeasurement.feet" v-validate="'required|between:1,99'" 
-                :class="{'input': true, 'is-danger': feetHasErrors, 'is-success': !feetHasErrors && this.currentMeasurement.feet != ''}" type="number" placeholder="ft" 
-                :name="'feet' + roomsIndex.toString()">
+                <input @input="checkFeet(currentMeasurement.feet)" v-model.number="currentMeasurement.feet" v-validate="'required|between:1,99'" :class="{'input': true, 'is-danger': feetHasErrors, 'is-success': !feetHasErrors && this.currentMeasurement.feet != ''}" type="number" placeholder="ft" :name="'feet' + roomsIndex.toString()">
             </el-form-item>
-    
+
             <el-form-item class="measurement-input">
-                <input @input="checkInches(currentMeasurement.inches)" v-model.number="currentMeasurement.inches" v-validate="'between:0,12'" 
-                :class="{'input': true, 'is-danger': errors.has('inches'), 'is-success': !errors.has('inches') && this.currentMeasurement.inches != ''}" type="number" placeholder="in" 
-                :name="'inches' + roomsIndex.toString()">
+                <input @input="checkInches(currentMeasurement.inches)" v-model.number="currentMeasurement.inches" v-validate="'between:0,12'" :class="{'input': true, 'is-danger': errors.has('inches'), 'is-success': !errors.has('inches') && this.currentMeasurement.inches != ''}" type="number" placeholder="in" :name="'inches' + roomsIndex.toString()">
             </el-form-item>
         </el-form>
     </div>
@@ -22,7 +18,29 @@ import { EventBus } from '../../../../utils/event-bus.js';
 export default {
     props: ['roomsIndex', 'measurement', 'type'],
 
+    computed: {
+        feetHasErrors() {
+            if (this.errorsCleared) {
+                this.errorsCleared = false;
+                return false;
+            }
+            return this.errors.has(`feet${this.roomsIndex}`);
+        },
+        measurementFromStore() {
+            return this.$store.getters.rooms[this.roomsIndex][this.type].feet;
+        }
+    },
+
+    watch: {
+        measurementFromStore() {
+            console.log('the measurement changed in the store.');
+            this.currentMeasurement = {...this.$store.getters.rooms[this.roomsIndex][this.type]};
+            this.errorsCleared = true;
+        }
+    },
+
     created() {
+        console.log(this.measurementFromStore);
         // If the user updated the area manually then it will clear all these inputs.
         // This bus watches for that so that it can remove the errors that result from the inputs being cleared.
         EventBus.$on('areaUpdatedManually', roomNumber => {
@@ -39,16 +57,6 @@ export default {
         });
     },
 
-    computed: {
-        feetHasErrors() {
-            if (this.errorsCleared) {
-                this.errorsCleared = false;
-                return false;
-            }
-            return this.errors.has(`feet${this.roomsIndex}`);
-        }
-    },
-
     methods: {
         checkFeet(feetValue) {
             this.currentMeasurement.feet = validateInput(feetValue, 0, 99, '');
@@ -61,10 +69,10 @@ export default {
         }
     },
 
-    data: function () {
+    data: function() {
         // Get the current row, and then get the current measurement type either length or width.
         return {
-            currentMeasurement: {...this.measurement}, // creates a copy of the measurement values so that we are not directly editing the store.
+            currentMeasurement: { ...this.measurement }, // creates a copy of the measurement values so that we are not directly editing the store.
             errorsCleared: false
         };
     }

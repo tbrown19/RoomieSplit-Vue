@@ -14,7 +14,7 @@
             </el-row>
     
             <div v-if="roomConfiguration.numRooms != 0 && !loading && !error" key="loaded">
-                <index :inputs="inputs" @updateRoomConfiguration="handleUpdateRoomConfiguration" @updateRooms="handleUpdateRooms"></index>
+                <index :inputs="inputs" @updateRoomConfiguration="handleUpdateRoomConfiguration" @saveRooms="saveRooms"></index>
             </div>
         </slide-fade-out-in>
     
@@ -24,27 +24,26 @@
 <script>
 import Index from '../components/calculator/Index.vue';
 import SlideFadeOutIn from '../components/transitions/SlideFadeOutIn.vue';
-// import { updateRoomConfigruationRooms } from '../services/firebase-actions.js';
 import { namedInputsWithoutValue } from '../config/room-configuration.js';
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
-
-    created() {
-        if (this.$store.getters.rooms.length === 0) {
-            this.loadRoomConfiguration(this.$route.params.configId);
-        }
-    },
-
     components: {
         Index, SlideFadeOutIn
     },
+
     computed: {
         ...mapGetters({
             loading: 'isLoadingFromDatabase',
             error: 'getFirebaseActionErrors',
             roomConfiguration: 'roomConfiguration'
         })
+    },
+
+    created() {
+        if (this.$store.getters.rooms.length === 0) {
+            this.loadRoomConfiguration(this.$route.params.configId);
+        }
     },
 
     methods: {
@@ -54,11 +53,13 @@ export default {
             'updateRooms'
         ]),
 
+        // Called if the user changed one of the three primary inputs.
         handleUpdateRoomConfiguration() {
             this.updateRoomConfiguration(this.routeId);
             this.updateRooms(this.routeId);
         },
-        handleUpdateRooms() {
+
+        saveRooms() {
             this.updateRooms(this.routeId);
         }
     },

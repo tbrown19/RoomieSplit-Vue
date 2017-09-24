@@ -1,5 +1,5 @@
 // initial state
-import * as getters from './getters';
+// import * as getters from './getters';
 import * as actions from './actions';
 
 const state = {
@@ -8,7 +8,12 @@ const state = {
     savingRoomsToDatabase: false
 };
 
-// actions
+const getters = {
+    isLoadingFromDatabase: state => state.loadingFromDatabase,
+    getFirebaseActionErrors: state => state.firebaseActionErrors,
+    isSavingRoomsToDatabase: state => state.savingRoomsToDatabase
+};
+
 const mutations = {
     SET_LOADING_FROM_DATABASE(state, isLoading) {
         state.loadingFromDatabase = isLoading;
