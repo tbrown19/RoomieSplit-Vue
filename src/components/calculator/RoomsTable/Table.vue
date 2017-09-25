@@ -56,6 +56,7 @@ export default {
     components: {
         Measurement, Footage, Occupants, Payment, ExtraInfoRow
     },
+
     computed: {
         roomsData() {
             return this.$store.getters.rooms;
@@ -67,32 +68,24 @@ export default {
             return scope.row.roomsIndex;
         },
 
-        currentRoom(scope) {
-            const index = scope.row.roomsIndex;
-            return this.$store.getters.rooms[index];
+        currentRoom(roomsIndex) {
+            return this.RoomSplitter.rooms[roomsIndex];
         },
 
-        clearRoom(index) {
-            const room = this.RoomSplitter.rooms[index];
+        clearRoom(roomsIndex) {
+            const room = this.RoomSplitter.rooms[roomsIndex];
             room.clear();
         },
 
-        measurementUpdated(roomsIndex, type, measurementType, measurement) {
-            // Update the rooms footage by calculating it with the measurement values.
+        measurementUpdated(roomsIndex, type, measurementUnit, measurement) {
             const room = this.RoomSplitter.rooms[roomsIndex];
-            this.$store.dispatch(`${type}${measurementType}`, {
-                roomsIndex: roomsIndex,
-                value: measurement
-            });
-            room.updateAreaFromMeasurements();
+            room.updateAreaFromMeasurements(type, measurementUnit, measurement);
             this.updateARoomRelatedValues(room);
         },
 
         areaUpdated(roomsIndex, area) {
             const room = this.RoomSplitter.rooms[roomsIndex];
-            // Call the function on the room which will clear the measurement inputs and update the room's area.
             room.updateAreaFromInputs(area);
-            // Then emit an event on the bus so that the measurement inputs can be aware that this input was updated manually.
             this.updateARoomRelatedValues(room);
         },
 
@@ -103,10 +96,7 @@ export default {
         },
 
         updateARoomRelatedValues(room) {
-            // this.$store.commit('SET_ROOMS', this.RoomSplitter.rooms);
-            // Update the total area and other related values on the room splitter.
             this.RoomSplitter.updateAreaRelatedValues();
-            // Then update values related to the payment.
             this.RoomSplitter.updatePaymentRelatedValues();
         },
 
