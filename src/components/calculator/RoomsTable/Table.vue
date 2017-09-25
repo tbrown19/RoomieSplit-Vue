@@ -1,6 +1,6 @@
 <template>
     <el-table :data="roomsData" style="width: 100%" stripe tooltip-effect="dark">
-        Settings
+        
         <el-table-column label="Actions" type="expand">
             <template scope="scope">
                 <ExtraInfoRow :index="currentIndex(scope)" @clearRoom="clearRoom" @recalculatePayment="recalculatePayment"></ExtraInfoRow>
@@ -29,13 +29,13 @@
 
         <el-table-column label="Occupants" min-width='100px'>
             <template scope="scope">
-                <Occupants :roomsIndex="scope.row.roomsIndex" @occupantsUpdated="occupantsUpdated"></Occupants>
+                <Occupants :roomsIndex="currentIndex(scope)" @occupantsUpdated="occupantsUpdated"></Occupants>
             </template>
         </el-table-column>
 
         <el-table-column label="Payment" min-width='100px'>
             <template scope="scope">
-                <Payment :roomsIndex="scope.row.roomsIndex"></Payment>
+                <Payment :roomsIndex="currentIndex(scope)"></Payment>
             </template>
         </el-table-column>
     </el-table>
@@ -47,7 +47,6 @@ import Footage from './inputs/Footage.vue';
 import Occupants from './inputs/Occupants.vue';
 import Payment from './other/Payment.vue';
 import ExtraInfoRow from './other/ExtraInfoRow.vue';
-import { EventBus } from '../../../utils/event-bus.js';
 
 export default {
     name: 'Rooms-Table',
@@ -67,20 +66,20 @@ export default {
         currentIndex(scope) {
             return scope.row.roomsIndex;
         },
+
         currentRoom(scope) {
             const index = scope.row.roomsIndex;
             return this.$store.getters.rooms[index];
         },
+
         clearRoom(index) {
-            let room = this.RoomSplitter.rooms[index];
+            const room = this.RoomSplitter.rooms[index];
             room.clear();
-            // this.updateARoomRelatedValues(room);
-            // room.updateAreaFromMeasurements();
         },
 
         measurementUpdated(roomsIndex, type, measurementType, measurement) {
             // Update the rooms footage by calculating it with the measurement values.
-            let room = this.RoomSplitter.rooms[roomsIndex];
+            const room = this.RoomSplitter.rooms[roomsIndex];
             this.$store.dispatch(`${type}${measurementType}`, {
                 roomsIndex: roomsIndex,
                 value: measurement
@@ -90,19 +89,16 @@ export default {
         },
 
         areaUpdated(roomsIndex, area) {
-            let room = this.RoomSplitter.rooms[roomsIndex];
+            const room = this.RoomSplitter.rooms[roomsIndex];
             // Call the function on the room which will clear the measurement inputs and update the room's area.
             room.updateAreaFromInputs(area);
             // Then emit an event on the bus so that the measurement inputs can be aware that this input was updated manually.
-            EventBus.$emit('areaUpdatedManually', room.roomNumber);
             this.updateARoomRelatedValues(room);
         },
 
         occupantsUpdated(roomsIndex, occupants) {
-            this.$store.dispatch('occupants', {
-                roomsIndex: roomsIndex,
-                value: occupants
-            });
+            const room = this.RoomSplitter.rooms[roomsIndex];
+            room.updateOccupants(occupants);
             this.RoomSplitter.updatePaymentRelatedValues();
         },
 
@@ -117,12 +113,6 @@ export default {
         recalculatePayment() {
             this.RoomSplitter.updatePaymentRelatedValues();
         }
-    },
-
-    data() {
-        return {
-
-        };
     }
 };
 </script>

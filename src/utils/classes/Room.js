@@ -69,4 +69,11 @@ export default class Room {
         return totalLength * totalWidth;
     }
 
+    updateOccupants(occupants) {
+        store.dispatch('occupants', {
+            roomsIndex: this.roomsIndex,
+            value: occupants
+        });
+    }
+
 }
