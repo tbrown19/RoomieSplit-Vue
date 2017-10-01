@@ -24,6 +24,7 @@ import List from './List.vue';
 import AddNew from './AddNew.vue';
 export default {
     name: 'ValuesModal',
+
     props: ['index', 'type'],
 
     components: {
@@ -55,7 +56,6 @@ export default {
             }
         },
         removeValue(name) {
-            console.log('we at least get here.. right?');
             let value = this.currentValues[name];
             this.$store.dispatch('removeValue', {
                 roomsIndex: this.index,

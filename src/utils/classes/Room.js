@@ -49,9 +49,9 @@ export default class Room {
         });
     }
 
-    updateAreaFromMeasurements(type, measurementUnit, measurement) {
+    updateAreaFromMeasurements(type, unit, measurement) {
         // Commit the measurement change.
-        store.dispatch(`${type}${measurementUnit}`, {
+        store.dispatch(`${type}${unit}`, {
             roomsIndex: this.roomsIndex,
             value: measurement
         });

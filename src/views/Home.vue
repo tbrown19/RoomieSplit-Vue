@@ -1,15 +1,18 @@
 <template>
     <div>
         <div id="intro-text" class="has-text-centered">
-            <h1 class="title">Calculate how much each person should contribute to the rent.</h1>
+            <h1 class="title">See how much each person should contribute to the rent.</h1>
             <h1 class="title">Get started by filling out the information below.</h1>
         </div>
+        
         <primary-inputs :inputs="inputs" @inputsValidnessChanged="inputsValidnessChanged"></primary-inputs>
+        
         <slide-fade>
             <el-row type="flex" justify="center" v-if="mainInputsCompleted">
                 <button id="nextStepButton" @click='proceedToNextStep' class="button is-primary is-large is-outlined">Next Step</button>
             </el-row>
         </slide-fade>
+
         <div id="example-text" class="has-text-centered">
             <h1 class="title"> Or
                 <a href="https://roomiesplit.com/calculator/-KpuPGVGGs9DbehcO4xV"> check out an example.</a>
@@ -45,11 +48,11 @@ export default {
             });
         },
 
-        inputsToroomConfigruation(inputs) {
+        inputsToroomConfigruation({rooms, area, rent}) {
             let roomConfigruation = {
-                'numRooms': inputs.rooms.value,
-                'area': inputs.area.value,
-                'rent': inputs.rent.value,
+                'numRooms': rooms.value,
+                'area': area.value,
+                'rent': rent.value,
                 'commonSpaceValueModifier': 1.5
             };
             return roomConfigruation;
@@ -88,6 +91,6 @@ export default {
 
 <style lang="scss">
 #example-text {
-    padding-top: 1rem;
+    padding-top: 2rem;
 }
 </style>

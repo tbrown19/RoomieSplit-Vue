@@ -68,25 +68,21 @@ export default {
             return scope.row.roomsIndex;
         },
 
-        currentRoom(roomsIndex) {
-            return this.RoomSplitter.rooms[roomsIndex];
-        },
-
         clearRoom(roomsIndex) {
             const room = this.RoomSplitter.rooms[roomsIndex];
             room.clear();
         },
 
-        measurementUpdated(roomsIndex, type, measurementUnit, measurement) {
+        measurementUpdated(roomsIndex, type, unit, measurement) {
             const room = this.RoomSplitter.rooms[roomsIndex];
-            room.updateAreaFromMeasurements(type, measurementUnit, measurement);
-            this.updateARoomRelatedValues(room);
+            room.updateAreaFromMeasurements(type, unit, measurement);
+            this.updateAllRoomsValues();
         },
 
         areaUpdated(roomsIndex, area) {
             const room = this.RoomSplitter.rooms[roomsIndex];
             room.updateAreaFromInputs(area);
-            this.updateARoomRelatedValues(room);
+            this.updateAllRoomsValues();
         },
 
         occupantsUpdated(roomsIndex, occupants) {
@@ -95,7 +91,7 @@ export default {
             this.RoomSplitter.updatePaymentRelatedValues();
         },
 
-        updateARoomRelatedValues(room) {
+        updateAllRoomsValues() {
             this.RoomSplitter.updateAreaRelatedValues();
             this.RoomSplitter.updatePaymentRelatedValues();
         },

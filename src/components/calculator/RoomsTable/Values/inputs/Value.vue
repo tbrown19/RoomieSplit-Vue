@@ -19,7 +19,6 @@ export default {
         valueAddedToList() {
             // Update the value to nothing, then give vue a chance to commit the change to the model before clearing the errors on vee validate.
             this.newItemValue = '';
-            this.errors.clear();
             this.$nextTick(function () {
                 this.errors.clear();
             });
