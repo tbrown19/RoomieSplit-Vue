@@ -1,10 +1,12 @@
 <template>
     <card>
         <div slot="content">
+
             <el-tooltip class="item" effect="dark" placement="top">
                 <div slot="content" class="has-text-centered input-tool-tip">
                     {{ tooltip}}
-                    <br> Value can be between {{ min }} and {{ max }}
+                    <br> 
+                    Value can be between {{ min }} and {{ max }}
                 </div>
                 <h2 class="is-title">
                     {{ capitalizedName }}
@@ -13,10 +15,19 @@
     
             <hr>
     
-            <input :id="name" v-model.number="value" v-validate="`required|between:${min},${max}`" @input="valueChanged" :class="{'input': true, 'is-danger': errors.has(name), 'is-success': validInput }" type="number" :placeholder="0" :name="name">
-            <slide-fade>
-                <p v-if="errors.has(name)" class="input-error help is-danger has-text-centered">{{ errors.first(name) }}</p>
+            <input 
+            v-model.number="value" 
+            v-validate="`required|between:${min},${max}`" 
+            @input="valueChanged" 
+            :class="{'input': true, 'is-danger': errors.has(name), 'is-success': validInput }" type="number" 
+            :placeholder="0" 
+            :name="name">
+            <slide-fade> 
+                <p v-if="errors.has(name)" class="input-error help is-danger has-text-centered">
+                    {{ errors.first(name) }}
+                </p>
             </slide-fade>
+            
         </div>
     </card>
 </template>

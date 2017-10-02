@@ -2,7 +2,8 @@
     <div>
         <hr>
         <el-row type="flex" justify="center" :gutter="20">
-            <el-col :span="8" v-for="(input, index) in inputs" v-bind:input="input" v-bind:index="index" v-bind:key="input.id">
+            <el-col :span="8" v-for="(input, index) in inputs" 
+                    :input="input" :index="index" :key="input.id">
                 <primary-input @inputValueChanged="inputsChanged" :name="index" v-bind="input"></primary-input>
             </el-col>
         </el-row>
@@ -37,14 +38,13 @@ export default {
         },
 
         checkAllInputsCompletion() {
-            const allInputsValid = this.completedInputs.size === this.numberInputs;
+            const allInputsValid = this.completedInputs.size === Object.keys(this.inputs).length;
             this.$emit('inputsValidnessChanged', allInputsValid);
         }
     },
 
     data: function () {
         return {
-            numberInputs: Object.keys(this.inputs).length,
             completedInputs: new Set()
         };
     }
