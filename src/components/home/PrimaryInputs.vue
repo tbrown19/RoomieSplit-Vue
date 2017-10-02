@@ -3,7 +3,7 @@
         <hr>
         <el-row type="flex" justify="center" :gutter="20">
             <el-col :span="8" v-for="(input, index) in inputs" v-bind:input="input" v-bind:index="index" v-bind:key="input.id">
-                <primary-input v-on:inputValueChanged="inputsChanged" :name="index" v-bind="input"></primary-input>
+                <primary-input @inputValueChanged="inputsChanged" :name="index" v-bind="input"></primary-input>
             </el-col>
         </el-row>
         <hr>

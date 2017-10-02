@@ -4,21 +4,21 @@
             <h1 class="title">See how much each person should contribute to the rent.</h1>
             <h1 class="title">Get started by filling out the information below.</h1>
         </div>
-        
+
         <primary-inputs :inputs="inputs" @inputsValidnessChanged="inputsValidnessChanged"></primary-inputs>
-        
-        <slide-fade>
-            <el-row type="flex" justify="center" v-if="mainInputsCompleted">
-                <button id="nextStepButton" @click='proceedToNextStep' class="button is-primary is-large is-outlined">Next Step</button>
-            </el-row>
-        </slide-fade>
+
+        <el-row type="flex" justify="center" v-if="mainInputsCompleted">
+            <slide-fade>
+                <button @click='proceedToNextStep' class="button is-primary is-large is-outlined">Next Step</button>
+            </slide-fade>
+        </el-row>
 
         <div id="example-text" class="has-text-centered">
             <h1 class="title"> Or
                 <a href="https://roomiesplit.com/calculator/-KpuPGVGGs9DbehcO4xV"> check out an example.</a>
             </h1>
         </div>
-    
+
     </div>
 </template>
 
@@ -48,18 +48,17 @@ export default {
             });
         },
 
-        inputsToroomConfigruation({rooms, area, rent}) {
-            let roomConfigruation = {
+        inputsToroomConfigruation({ rooms, area, rent }) {
+            return {
                 'numRooms': rooms.value,
                 'area': area.value,
                 'rent': rent.value,
                 'commonSpaceValueModifier': 1.5
             };
-            return roomConfigruation;
         }
     },
 
-    data: function () {
+    data: function() {
         return {
             inputs: {
                 'rooms': {
@@ -82,7 +81,6 @@ export default {
                 }
             },
             roomConfigruation: {},
-            inputsStarted: false,
             mainInputsCompleted: false
         };
     }

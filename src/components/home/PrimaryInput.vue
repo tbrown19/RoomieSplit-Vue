@@ -13,7 +13,7 @@
     
             <hr>
     
-            <input :id="name" v-model.number="value" v-validate="`required|between:${min},${max}`" :class="{'input': true, 'is-danger': errors.has(name), 'is-success': validInput }" type="number" :placeholder="0" :name="name">
+            <input :id="name" v-model.number="value" v-validate="`required|between:${min},${max}`" @input="valueChanged" :class="{'input': true, 'is-danger': errors.has(name), 'is-success': validInput }" type="number" :placeholder="0" :name="name">
             <slide-fade>
                 <p v-if="errors.has(name)" class="input-error help is-danger has-text-centered">{{ errors.first(name) }}</p>
             </slide-fade>
@@ -44,8 +44,8 @@ export default {
         }
     },
 
-    watch: {
-        value: function () {
+    methods: {
+        valueChanged() {
             this.$emit('inputValueChanged', this.name, this.value, this.validInput);
         }
     },

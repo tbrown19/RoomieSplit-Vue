@@ -1,6 +1,7 @@
 <template>
     <li>
         <el-row :gutter="20">
+
             <el-col :span="4">
                 <span :class="type">
                     <b-icon v-if="type === 'positive'" icon="add"></b-icon>
@@ -10,11 +11,12 @@
                     </span>
                 </span>
             </el-col>
+
             <el-col :span="18" class="valueName">
                 {{ name }}
             </el-col>
+
             <el-col :span="2">
-    
                 <a class='negative' @click="$emit('removeValue', name)">
                     <b-icon icon="delete"></b-icon>
                 </a>
@@ -28,9 +30,7 @@
 
 <script>
 export default {
-    props: ['name', 'value', 'index', 'type'],
-    computed: {
-    }
+    props: ['name', 'value', 'index', 'type']
 };
 </script>
 
