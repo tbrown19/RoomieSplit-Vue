@@ -22,9 +22,6 @@
                 </a>
             </el-col>
         </el-row>
-        </div>
-        </div>
-    
     </li>
 </template>
 

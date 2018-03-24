@@ -12,7 +12,7 @@
             </el-col>
         </el-row>
         <el-row type="flex" justify="center">
-            <button :disabled="!saveDisabled" @click.prevent="addNew" id="addButton" class="button is-primary is-large"> Add </button>
+            <button :disabled="!saveDisabled" @click.prevent="addNew" id="addButton" class="button is-primary"> Add </button>
         </el-row>
     </div>
 </template>

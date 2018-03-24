@@ -1,6 +1,6 @@
 <template>
     <div>
-        <p class="inputDescription">
+        <div class="inputDescription">
             <div v-if="currentValues">
                 <transition-group name="values-list" class="values-list-group" tag="ul">
                     <li is="list-item" v-for="(value, key, index) in currentValues" v-bind:key="key" :name="key" :value="value" :index="index" :type="type" class='list-item' @removeValue="removeValue">
@@ -10,7 +10,7 @@
             <div v-else>
                 Currently no additonal values. You can add one below!
             </div>
-        </p>
+        </div>
     </div>
 </template>
 
