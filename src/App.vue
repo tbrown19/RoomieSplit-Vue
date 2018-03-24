@@ -33,6 +33,14 @@ $primary: #00d1b2;
 @import "~bulma";
 @import "~buefy/src/scss/buefy";
 
+html { 
+    box-sizing: border-box; 
+} 
+
+*, *:before, *:after { 
+    box-sizing: inherit; 
+}
+
 body {
     margin: 0 !important;
     padding-bottom: 20rem;
