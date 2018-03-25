@@ -70,10 +70,7 @@ export default {
 }
 
 .slide-fade-enter,
-.slide-fade-leave-to
-/* .slide-fade-leave-active for <2.1.8 */
-
-{
+.slide-fade-leave-to {
     transform: translateY(10px);
     opacity: 0;
 }
