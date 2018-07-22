@@ -73,6 +73,7 @@ export default {
 <style lang="scss" scoped>
 .input {
     max-width: 75%;
+    margin-bottom: .7rem;
 }
 
 .is-title {
